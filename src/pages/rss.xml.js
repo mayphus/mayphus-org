@@ -11,6 +11,7 @@ export async function GET(context) {
 		items: notes.map((note) => ({
 			...note.data,
 			link: `/notes/${note.slug}/`,
+			pubDate: note.data.date,
 		})),
 	});
 }
