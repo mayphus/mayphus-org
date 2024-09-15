@@ -1,7 +1,5 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
@@ -11,40 +9,45 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			<article>
+				<h1><a href="/">{SITE_TITLE}'s Digital Space</a></h1>
+
+				<p>Welcome! I'm Mayphus Tang, an innovator, creator, 
+          and lifelong learner whose journey spans across multiple disciplines and interests. 
+          My path has been shaped by an insatiable curiosity and a deep-seated desire to understand the world around us. 
+          Through years of exploration and experimentation, I've cultivated a unique perspective that bridges technology, 
+          nature, and human knowledge.</p>
+
+				<p>As a technologist, I'm fascinated by the endless possibilities that emerge when we push the boundaries of what's possible. 
+          My work often involves exploring cutting-edge technologies, from artificial intelligence to distributed systems, 
+          always with an eye toward creating solutions that make a meaningful impact. Yet, my interests extend far beyond the digital realm.</p>
+
+				<p>Nature has always been one of my greatest teachers.
+          Whether I'm hiking through mountain trails or observing the intricate patterns in a leaf, 
+          I find endless inspiration in the natural world. This connection to nature influences my approach to problem-solving and innovation, 
+          reminding me that the most elegant solutions often mirror patterns found in the natural world.</p>
+
+				<p>Knowledge, in all its forms, is what drives me forward.
+          I believe in the power of continuous learning and the importance of sharing what we learn with others. 
+          This space reflects my commitment to both personal growth and collective wisdom, serving as a platform where ideas can flourish and inspire.</p>
+
+				<p>This website is a digital space where I cultivate my thoughts, ideas, and projects.
+					It's a place for me to share my journey, learnings, and creations with the world.
+					Here, you'll find a mix of contents.</p>
+				<ul>
+					<li><a href="/notes/">Notes</a> are all my short notes</li>
+					<li><a href="/articles/">Articles</a> are notes tagged as article with deep research and thoughts</li>
+
+					<li><a href="/projects/">Projects</a> are all my projects</li>
+
+					<li><a href="/podcasts/">Podcasts</a> are my daily podcasts with thoughts</li>
+					<li><a href="/videos/">Videos</a> are my videos on YouTube</li>
+				</ul>
+			</article>
 		</main>
-		<Footer />
+		<footer>
+      <p>by Mayphus</p>
+		</footer>
 	</body>
 </html>

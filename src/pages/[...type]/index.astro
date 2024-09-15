@@ -1,0 +1,77 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+
+import { collections } from '../../content/config';
+
+export async function getStaticPaths() {
+    return Object.keys(collections).map(collectionName => ({
+        params: { type: collectionName }
+    }));
+}
+
+const { type } = Astro.params as { type: keyof typeof collections };
+
+let collection;
+if (!Object.keys(collections).includes(type)) {
+    return Astro.redirect('/404');
+}
+collection = await getCollection(type);
+
+const nodes = collection
+    .filter((node: any) => node.data)
+    .sort((a: any, b: any) => {
+        const dateA = a.data.date?.valueOf() || 0;
+        const dateB = b.data.date?.valueOf() || 0;
+        return dateB - dateA;
+    });
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<main>
+			<article>
+				<h1><a href="/">{type}</a></h1>
+				<p>Here are my {type}.</p>
+				<ul>
+					{
+						nodes.map((node: any) => (
+							<li>
+								<p>
+									<span class="date" style="font-size: 0.9em; margin-right: .6em; font-family: monospace;">
+										{node.data.date ? node.data.date.toLocaleDateString('en-US', {
+											day: '2-digit',
+											month: 'short',
+											year: 'numeric',
+										}) : 'Lost in time'}
+									</span>
+									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
+										<a href={`/${type}/${node.slug}/`}>
+											{node.data.title || 'Untitled'}
+										</a>
+									</span>
+								</p>
+							</li>
+						))
+					}
+				</ul>
+			</article>
+		</main>
+	</body>
+</html>
+
+<style>
+	ul {
+		list-style: none;
+		padding-left: 0;
+	}
+	p a {
+		text-decoration: none;
+		color: inherit;
+	}
+</style>
