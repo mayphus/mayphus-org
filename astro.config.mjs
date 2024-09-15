@@ -1,11 +1,15 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-
 import sitemap from '@astrojs/sitemap';
+import org from 'astro-org';
+import { customKeywordsToFrontmatter } from './src/lib/keywords';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
-	integrations: [mdx(), sitemap()],
+	site: 'https://felixmurraytang.com',
+	integrations: [
+		org({
+			uniorgPlugins: [customKeywordsToFrontmatter],
+		}),
+		sitemap(),
+	],
 });
