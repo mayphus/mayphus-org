@@ -15,13 +15,14 @@ const notes = (await getCollection('notes')).sort(
 	</head>
 	<body>
 		<main>
+			<p>All notes</p>
 			<section>
 				<ul>
 					{
 						notes.map((note) => (
 							<li>
 								<a href={`/notes/${note.slug}/`}>
-									<h4 class="title">{note.data.title}</h4>
+									<h4 class="title">{note.id}</h4>
 								</a>
 							</li>
 						))
