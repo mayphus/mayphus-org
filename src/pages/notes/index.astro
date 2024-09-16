@@ -15,17 +15,15 @@ const notes = (await getCollection('notes')).sort(
 	</head>
 	<body>
 		<main>
-			<p>All notes</p>
+			<h1>Felix Murray Tang's Notes</h1>
 			<section>
 				<ul>
 					{
 						notes.map((note) => (
 							<li>
-								<p>
-									<a href={`/notes/${note.slug}/`}>
-										{note.id}
-									</a>
-								</p>
+								<a href={`/notes/${note.slug}/`}>
+									{note.id}
+								</a>
 							</li>
 						))
 					}
@@ -34,3 +32,10 @@ const notes = (await getCollection('notes')).sort(
 		</main>
 	</body>
 </html>
+
+<style>
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+	}
+</style>
