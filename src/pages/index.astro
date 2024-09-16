@@ -3,9 +3,9 @@ import BaseHead from '../components/BaseHead.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
-const notes = (await getCollection('notes')).sort(
-	(a, b) => b.data.date.valueOf() - a.data.date.valueOf()
-).slice(0, 5);
+const notes = await getCollection('notes');
+const readmeNote = notes.find(note => note.id.toLowerCase() === "readme.org");
+const { Content } = await readmeNote?.render() ?? { Content: () => null };
 ---
 
 <!doctype html>
@@ -15,121 +15,10 @@ const notes = (await getCollection('notes')).sort(
 	</head>
 	<body>
 		<main>
-			<h1>Welcome to {SITE_TITLE}'s website</h1>
-			<p>
-				I'm Felix Murray Tang, a creator and innovator based in Hangzhou, China. 
-				I'm passionate about exploring various fields, including programming, electronics, and mechanical engineering. 
-				
-				When I'm not tinkering with technology, you'll likely find me running, trail running, or hiking in nature. 
-				I'm also deeply interested in history, geography, and the universal aspects of human knowledge. 
-				And of course, I always make time for my adorable, albeit lazy, cat 🐾.
-			</p>
-
-			<h2>Projects, or what I'm doing</h2>
-			<ul>
-				<li>
-					Software
-					<p>
-						I'm captivated by programming because it empowers me to transform ideas
-						into reality and tackle intricate challenges with elegance and efficiency.
-					</p>
-					<ol>
-						<li>
-							Personal Website
-							<p>
-								Create a basic website with astro, and write notes daily.
-							</p>
-						</li>
-						<li>
-							FreeBSD
-							<p>
-								FreeBSD is a powerful operating system that I use for various tasks, including web hosting, 
-								networking, and security. I'm particularly interested in its advanced networking capabilities 
-								and its role in maintaining a secure and reliable computing environment.
-							</p>
-							<p>
-								Currently I use FreeBSD as my main server operating system running on a mini pc for host Jails and Bhyve VMs.
-							</p>
-						</li>
-					</ol>
-				</li>
-				<li>
-					Electronics
-					<p>
-						I'm currently learning about electronics, and I'm interested in microcontrollers, circuits, and electronics.
-						I also learning about PCB design, and I'm using <a href="https://kicad.org">KiCad</a> as my PCB design software.
-					</p>
-				</li>
-				<li>
-					Mechanics
-					<p>
-						I'm also interested in mechanics, and I love to build things with my hands.
-						I use <a href="https://freecad.org">FreeCAD</a> as my mechanical design software.
-						I have got a 3D printer as my birthday gift, and I'm learning how to use it to build things like case for my electronic projects.
-					</p>
-				</li>
-				<li>
-					Reading
-					<p>
-						I basicly treat reading as a long term project task, and try to read at least 1 hour daily.
-					</p>
-				</li>
-			</ul>
-
-			<h2>Notes</h2>
-			<ul>
-				{notes.map((note) => (
-					<li>
-						<a href={`/notes/${note.slug}/`}>
-							{note.data.title}
-						</a>
-					</li>
-				))}
-			</ul>
-			<p>
-				I don't categorize my content into separate sections like notes, blog posts, or documentation. 
-				Instead, I keep everything in one place for simplicity and ease of access. 
-				However, I do have some 'meta' notes that serve as indexes for related topics, 
-				which can be helpful for quick navigation.
-			</p>
-			<p>
-				If you're interested in exploring all of my thoughts, ideas, and documentation, 
-				feel free to <a href="/notes">browse through all my notes</a>. You might discover unexpected connections or insights across various topics!
-			</p>
-
-			<h2>About this Website</h2>
-			<p>
-				After experimenting with numerous website frameworks and static site generators, 
-				I've found Astro to be my current favorite due to its flexibility and performance.
-			</p>
-			<p>
-				I've explored various CSS frameworks but ultimately decided to embrace simplicity. By leveraging the browser's user agent stylesheet, 
-				I've maintained a clean, minimalist style that focuses on content.
-			</p>
-			<p>
-				This website serves as a hub for my notes, blog posts, and project documentation. 
-				I invite you to explore and discover more about my work and interests!
-			</p>
-			<p>This website's source code is available on <a href="https://github.com/felixmurraytang/www">felixmurraytang/www</a>.</p>
-			<p>This website's content is available on <a href="https://github.com/felixmurraytang/notes">felixmurraytang/notes</a>.</p>
-			<p>
-				This website uses <a href="https://astro.build">Astro</a> as its framework and 
-				<a href="https://github.com/rasendubi/uniorg">uniorg</a>,
-				specifically <a href="https://github.com/rasendubi/uniorg/tree/master/packages/astro-org">astro-org</a>, as its org-mode content parser.
-			</p>
-			<h3>Workflow</h3>
-			<ol>
-				<li>I catch my ideas with any tools and put them into my org-mode notes.</li> 
-				<li>
-					I compose my notes using <a href="https://orgmode.org">org-mode</a> in <a href="https://www.gnu.org/software/emacs/">Emacs</a>, 
-					utilizing <a href="https://github.com/protesilaos/denote">denote</a> 
-					instead of <a href="https://github.com/org-roam/org-roam">org-roam</a> for simpler management.
-				</li>
-				<li>Since I separate the website's source code and content, 
-					I use GitHub Actions repository-dispatch to trigger the source code's build each time I push updates to the notes repository.
-				</li>
-			</ol>
-			<p>This streamlined workflow allows me to focus on creating content while maintaining an up-to-date and efficient website.</p>
+			<article>
+				<h1>Curiosity Unleashed: Dive into My Notes</h1>
+				<Content />
+			</article>
 		</main>
 	</body>
 </html>
