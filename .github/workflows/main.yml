@@ -6,8 +6,6 @@ on:
   workflow_dispatch:
   repository_dispatch:
     types: [notes-update]
-  schedule:
-    - cron: '0 0 * * *'
 
 permissions:
   contents: read
