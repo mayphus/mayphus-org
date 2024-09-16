@@ -22,7 +22,7 @@ const notes = (await getCollection('notes')).sort(
 						notes.map((note) => (
 							<li>
 								<a href={`/notes/${note.slug}/`}>
-									<h4>{note.id}</h4>
+									<p>{note.id}</p>
 								</a>
 							</li>
 						))
