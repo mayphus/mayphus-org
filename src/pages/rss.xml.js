@@ -8,10 +8,12 @@ export async function GET(context) {
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
 		site: context.site,
-		items: notes.map((note) => ({
-			...note.data,
-			link: `/notes/${note.slug}/`,
-			pubDate: note.data.date,
-		})),
+		items: notes
+			.filter(note => note.id.toLowerCase() !== 'readme.org')
+			.map((note) => ({
+				...note.data,
+				link: `/notes/${note.slug}/`,
+				pubDate: note.data.date,
+			})),
 	});
 }
