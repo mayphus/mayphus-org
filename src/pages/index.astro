@@ -17,39 +17,37 @@ const notes = (await getCollection('notes')).sort(
 		<main>
 			<h1>Welcome to {SITE_TITLE}'s website</h1>
 			<p>
-				I'm Felix Murray Tang, a creater and maker based in Hangzhou, China. Love but not good at many things.
-				such as programming, electronics making, 3D printing, and etc.
-				I'm probably playing with my lazy cat 🐾.
+				I'm Felix Murray Tang, a creator and innovator based in Hangzhou, China. I'm passionate about exploring various fields, including programming, electronics, and mechanical engineering. When I'm not tinkering with technology, you'll likely find me running, trail running, or hiking in nature. I'm also deeply interested in history, geography, and the universal aspects of human knowledge. And of course, I always make time for my adorable, albeit lazy, cat 🐾.
 			</p>
 
 			<h2>What I Do</h2>
 			<ul>
 				<li>
-					<a href="/software">Software Development</a>
+					<a href="/software">Software</a>
 					<p>
-						I love programming because it allows me to bring ideas to life and solve complex problems.
+						I'm captivated by programming because it empowers me to transform ideas into reality and tackle intricate challenges with elegance and efficiency.
 					</p>
 				</li>
 				<li>
 					<a href="/electronics">Electronics</a>
 					<p>
-						Exploring the world of circuits and microcontrollers is my passion.
+						Delving into the fascinating world of circuits and microcontrollers is my true passion. I love unraveling the mysteries of electronic systems and creating innovative solutions.
 					</p>
 				</li>
 				<li>
-					<a href="/hardware">Hardware Projects</a>
+					<a href="/hardware">Hardware</a>
 					<p>
-						From 3D printing to custom PCB designs, I enjoy creating tangible solutions.
+						From bringing designs to life with 3D printing to crafting custom PCB designs, I thrive on creating tangible solutions that bridge the gap between digital concepts and physical reality.
 					</p>
 				</li>
 			</ul>
 
-			<h2>Recent</h2>
+			<h2>Notes</h2>
 			<ul>
 				{notes.map((note) => (
 					<li>
 						<a href={`/notes/${note.slug}/`}>
-							<p>{note.data.title}</p>
+							{note.data.title}
 						</a>
 					</li>
 				))}
@@ -59,43 +57,28 @@ const notes = (await getCollection('notes')).sort(
 			</p>
 
 			<h2>Projects</h2>
-			<ul>
-				<li>
-					<a href="/projects/my-programming-language"></a>
-					<p>
-						I'm working on a new programming language.
-					</p>
-				</li>
-			</ul>
+			<p>I list my projects here to remind myself of the exciting work ahead and to stay motivated.</p>
 
-			<h2>About this website</h2>
-			<p>I tried many website frameworks and static site generators. Astro is the current favorite.</p>
-			<p>I tried many css frameworks. Finnaly I delete then all. Just let browser's user agent stylesheet to do the job.</p>
+			<h2>About this Website</h2>
+			<p>After experimenting with numerous website frameworks and static site generators, I've found Astro to be my current favorite due to its flexibility and performance.</p>
+			<p>I've explored various CSS frameworks but ultimately decided to embrace simplicity. By leveraging the browser's user agent stylesheet, I've maintained a clean, minimalist style that focuses on content.</p>
 			<p>
-				This website is where I share my notes, blog posts, and project documentations. 
-				Feel free to explore and learn more about my work!
+				This website serves as a hub for my notes, blog posts, and project documentation. 
+				I invite you to explore and discover more about my work and interests!
 			</p>
 			<p>This website's source code is available on <a href="https://github.com/felixmurraytang/www">felixmurraytang/www</a>.</p>
 			<p>This website's content is available on <a href="https://github.com/felixmurraytang/notes">felixmurraytang/notes</a>.</p>
 			<p>
-				This website used <a href="https://astro.build">Astro</a> as framework, 
-				<a href="https://github.com/rasendubi/uniorg">uniorg</a>
-				specially <a href="https://github.com/rasendubi/uniorg/packages/uniorg-astro">uniorg-astro</a> as markdown parser.
+				This website uses <a href="https://astro.build">Astro</a> as its framework and 
+				<a href="https://github.com/rasendubi/uniorg">uniorg</a>,
+				specifically <a href="https://github.com/rasendubi/uniorg/tree/master/packages/astro-org">astro-org</a>, as its org-mode content parser.
 			</p>
 			<h3>Workflow</h3>
-			<p>
-				<ol> 
-					<li>I write my notes with <a href="https://orgmode.org">org-mode</a> with <a href="https://www.gnu.org/software/emacs/">emacs</a>.</li>
-					<li>Then I use <a href="https://github.com/renovatebot/renovate">renovate</a> to update this website.</li>
-					<li>
-						Renovate will create a pull request to update this website.
-						I will review the pull request and merge it if everything looks good.
-					</li>
-					<li>
-						After the pull request is merged, Renovate will automatically deploy the website.
-					</li>
-				</ol>
-			</p>
+			<ol> 
+				<li>I compose my notes using <a href="https://orgmode.org">org-mode</a> in <a href="https://www.gnu.org/software/emacs/">Emacs</a>, utilizing <a href="https://github.com/protesilaos/denote">denote</a> instead of <a href="https://github.com/org-roam/org-roam">org-roam</a> for simpler management.</li>
+				<li>Since I separate the website's source code and content, I use GitHub Actions repository-dispatch to trigger the source code's build each time I push updates to the notes repository.</li>
+			</ol>
+			<p>This streamlined workflow allows me to focus on creating content while maintaining an up-to-date and efficient website.</p>
 		</main>
 	</body>
 </html>
