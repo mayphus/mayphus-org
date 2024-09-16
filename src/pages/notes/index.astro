@@ -2,7 +2,6 @@
 import BaseHead from '../../components/BaseHead.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
-import Footer from '../../components/Footer.astro';
 
 const notes = (await getCollection('notes')).sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -30,15 +29,5 @@ const notes = (await getCollection('notes')).sort(
 				</ul>
 			</section>
 		</main>
-		<Footer />
 	</body>
 </html>
-
-<style>
-a {
-	color: inherit;
-}
-li {
-	list-style: armenian;
-}
-</style>

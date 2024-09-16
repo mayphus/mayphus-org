@@ -1,7 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 
 type Props = CollectionEntry<'notes'>['data'];
 
@@ -11,13 +10,6 @@ const { title, description, date, } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead title={title} description="felix murray tang's notes" />
-		<style>
-			.title {
-				margin-bottom: 1em;
-				text-align: center;
-				line-height: 1;
-			}
-		</style>
 	</head>
 
 	<body>
@@ -31,6 +23,5 @@ const { title, description, date, } = Astro.props;
 				</div>
 			</article>
 		</main>
-		<Footer />
 	</body>
 </html>
