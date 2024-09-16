@@ -1,0 +1,17 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<main>
+			<h1>404: Page not found</h1>
+			<p>Go back to the <a href="/">homepage</a>.</p>
+		</main>
+	</body>
+</html>
