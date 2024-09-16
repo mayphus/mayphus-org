@@ -1,10 +1,10 @@
 export const config = {
 	uniorgPlugins: [
-		customKeywordsToFrontmatter,
+		customFrontmatter,
 	],
 };
 
-function customKeywordsToFrontmatter() {
+function customFrontmatter() {
 	return (_tree: any, file: any) => {
 		const keywords = file.data.keywords || {};
 
