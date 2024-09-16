@@ -3,9 +3,11 @@ import BaseHead from '../../../components/BaseHead.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../../consts';
 import { getCollection } from 'astro:content';
 
-const notes = (await getCollection('notes')).sort(
+const notes = (await getCollection('notes'))
+.sort(
 	(a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
-).filter(note => note.id.toLowerCase() !== 'readme.org')
+)
+.filter(note => note.id.toLowerCase() !== 'readme.org')
 .filter(note => note.id.toLowerCase().includes('projects/'));
 ---
 

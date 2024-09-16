@@ -7,3 +7,10 @@ a {
     color: inherit;
     text-decoration: none;
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+    }
+}
