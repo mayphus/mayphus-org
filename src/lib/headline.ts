@@ -21,30 +21,3 @@ export function customHeadline() {
     })
   }
 }
-
-export function customHeadlineColor() {
-  return (tree: any) => {
-    visit(tree, 'headline', (node: Headline) => {
-      node.data = node.data || {};
-      node.data.hProperties = node.data.hProperties || {};
-      
-      switch (node.level) {
-        case 2:
-          node.data.hProperties.style = 'color: #FF595E;';
-          break;
-        case 3:
-          node.data.hProperties.style = 'color: #FFCA3A;';
-          break;
-        case 4:
-          node.data.hProperties.style = 'color: #8AC926;';
-          break;
-        case 5:
-          node.data.hProperties.style = 'color: #1982C4;';
-          break;
-        case 6:
-          node.data.hProperties.style = 'color: #6A4C93;';
-          break;
-      }
-    })
-  }
-}
