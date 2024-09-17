@@ -9,9 +9,13 @@ function customFrontmatter() {
 		const keywords = file.data.keywords || {};
 
 		if (keywords.date) {
-            const dateMatch = keywords.date.match(/\[(\d{4}-\d{2}-\d{2})/);
-            if (dateMatch) {
-				keywords.date = dateMatch[1];
+			const dateMatch = keywords.date
+				.match(/\[(\d{4}-\d{2}-\d{2}) (\w{3}) (\d{2}:\d{2})\]/);
+			if (dateMatch) {
+				const [, datePart, _dayPart, timePart] = dateMatch;
+				console.log(datePart, timePart);
+				const date = new Date(`${datePart}T${timePart}`);
+				keywords.date = date;
 			}
 		}
 
