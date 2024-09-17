@@ -2,4 +2,4 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 
 export const SITE_TITLE = 'Felix Murray Tang';
-export const SITE_DESCRIPTION = 'notes, thoughts, and make';
+export const SITE_DESCRIPTION = 'felix murray tang\'s personal website';
