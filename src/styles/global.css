@@ -28,6 +28,9 @@ a {
     color: inherit;
     text-decoration: none;
 }
+span {
+    font-family: monospace;
+}
 
 .todo-keyword { 
     color: #ffa500;
