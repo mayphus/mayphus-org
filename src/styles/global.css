@@ -28,6 +28,9 @@ a {
     color: inherit;
     text-decoration: none;
 }
+code {
+    color: #666;
+}
 span {
     font-family: monospace;
 }
