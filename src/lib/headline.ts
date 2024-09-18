@@ -14,7 +14,6 @@ interface Headline extends Node {
 export function customHeadline() {
   return (tree: any) => {
     visit(tree, 'headline', (node: Headline) => { 
-      console.log(node)     
       if (node.level < 6) {
         node.level += 1
       }
