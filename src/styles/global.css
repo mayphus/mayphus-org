@@ -29,7 +29,7 @@ a {
     text-decoration: none;
 }
 a:hover {
-    background-color: #f0f0f0;
+    text-decoration: underline;
 }
 code {
     color: #666;
