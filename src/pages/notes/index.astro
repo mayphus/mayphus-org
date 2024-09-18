@@ -26,7 +26,7 @@ const notes = (await getCollection('notes'))
 										const id = note.id.startsWith('projects/') ? note.id.slice(9) : note.id;
 										return (
 											<>
-												<span style="color: gray;">{id.slice(0, 8)}</span>
+												<span style="color: gray;">{id.slice(0, 4)}-{id.slice(4, 6)}</span>
 												{id.includes('__') && id.endsWith('.org') ? (
 													<>
 														<span>{id.slice(17, id.lastIndexOf('__'))}</span>
