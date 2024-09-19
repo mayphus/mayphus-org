@@ -37,6 +37,9 @@ code {
 ul, ol {
     font-family: monospace;
 }
+ul li p, ol li p {
+    margin: 0;
+}
 
 .todo-keyword { 
     color: #ffa500;
