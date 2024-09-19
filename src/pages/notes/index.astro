@@ -15,8 +15,9 @@ const notes = (await getCollection('notes'))
 	</head>
 	<body>
 		<main>
-			<h1><a href="/">notes</a></h1>
-			<section>
+			<article>
+				<h1><a href="/">notes</a></h1>
+				<p>All my notes, in order.</p>
 				<ul>
 					{
 						notes.map((note) => (
@@ -43,7 +44,7 @@ const notes = (await getCollection('notes'))
 						))
 					}
 				</ul>
-			</section>
+			</article>
 		</main>
 	</body>
 </html>
