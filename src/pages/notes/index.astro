@@ -23,22 +23,9 @@ const notes = (await getCollection('notes'))
 						notes.map((note) => (
 							<li>
 								<a href={`/notes/${note.slug}/`}>
-									{(() => {
-										const id = note.id.startsWith('projects/') ? note.id.slice(9) : note.id;
-										return (
-											<>
-												<span style="color: gray;">{id.slice(0, 4)}-{id.slice(4, 6)}</span>
-												{id.includes('__') && id.endsWith('.org') ? (
-													<>
-														<span>{id.slice(17, id.lastIndexOf('__')).replace(/-/g, ' ')}</span>
-														<span style="color: lightblue;">{id.slice(id.lastIndexOf('__') + 2, -4).replace(/_/g, ',')}</span>
-													</>
-												) : (
-													<span>{id.slice(17, -4).replace(/-/g, ' ')}</span>
-												)}
-											</>
-										);
-									})()}
+									<span style="color: gray;">{note.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short'})} </span>
+									{note.data.title}
+									<span style="color: lightblue;">{note.data.filetags?.map(tag => `${tag}`).join(',')}</span>
 								</a>
 							</li>
 						))
