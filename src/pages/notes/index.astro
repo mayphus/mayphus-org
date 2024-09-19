@@ -31,7 +31,7 @@ const notes = (await getCollection('notes'))
 												{id.includes('__') && id.endsWith('.org') ? (
 													<>
 														<span>{id.slice(17, id.lastIndexOf('__')).replace(/-/g, ' ')}</span>
-														<span style="color: lightblue;">{id.slice(id.lastIndexOf('__') + 2, -4).replace(/_/g, ' ')}</span>
+														<span style="color: lightblue;">{id.slice(id.lastIndexOf('__') + 2, -4).replace(/_/g, ',')}</span>
 													</>
 												) : (
 													<span>{id.slice(17, -4).replace(/-/g, ' ')}</span>
