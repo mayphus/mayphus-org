@@ -7,21 +7,6 @@ h1, h2, h3, h4, h5, h6 {
     font-style: oblique;
     font-weight: lighter;
 }
-h2 {
-    color: #1976D2;
-}
-h3 {
-    color: #0097A7;
-}
-h4 {
-    color: #00796B;
-}
-h5 {
-    color: #388E3C;
-}
-h6 {
-    color: #FBC02D;
-}
 p {
     font-family: 'Georgia', serif;
     line-height: 1.75;
@@ -38,13 +23,13 @@ a:hover {
 code {
     color: #666;
 }
-ul, ol {
-    font-family: monospace;
-}
 ul li p, ol li p {
     margin: 0;
 }
 
+.inline-verbatim {
+    color: rgb(60,120,120);
+}
 .todo-keyword { 
     color: #ffa500;
 }
