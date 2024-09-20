@@ -24,7 +24,7 @@ const notes = (await getCollection('notes'))
 							<li>
 								<p>
 									<a href={`/notes/${note.slug}/`}>
-										<span style="color: gray;">{note.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short'})} </span>
+										{/* <span style="color: gray;">{note.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short'})} </span> */}
 										{note.data.title}
 										<span style="color: lightblue;">{note.data.filetags?.map(tag => `${tag}`).join(',')}</span>
 									</a>
@@ -40,11 +40,10 @@ const notes = (await getCollection('notes'))
 
 <style>
 	ul {
-		list-style-type: none;
-		padding-left: 0;
+		padding-left: 1em;
 	}
 	p {
-		line-height: 1.2;
+		line-height: 1.5;
 	}
 	a {
 		border-bottom: none;
