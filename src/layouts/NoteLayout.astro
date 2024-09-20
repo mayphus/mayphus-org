@@ -4,7 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 
 type Props = CollectionEntry<'notes'>['data'];
 
-const { title } = Astro.props;
+const { title, date } = Astro.props;
 ---
 
 <html lang="en">
@@ -16,6 +16,15 @@ const { title } = Astro.props;
 		<main>
 			<article>
 				<h1><a href="/notes/">{title}</a></h1>
+				{date && (
+					<time style="color: gray; font-size: 0.9em;">
+						{new Date(date).toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric'
+						})}
+					</time>
+				)}
 				<slot />
 			</article>
 		</main>
