@@ -5,6 +5,7 @@ interface Headline extends Node {
     level: number
 }
 
+// fix headline level to meet seo standard
 export function customHeadline() {  
   return (tree: any) => {
     visit(tree, 'headline', (node: Headline) => { 

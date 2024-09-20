@@ -11,7 +11,7 @@ import uniorg from 'uniorg-parse';
 import orgPlugin, { type OrgPluginOptions } from 'rollup-plugin-orgx';
 import { extractKeywords } from 'uniorg-extract-keywords';
 import { uniorgSlug } from 'uniorg-slug';
-import { visitIds } from 'orgast-util-visit-ids';
+// import { visitIds } from 'orgast-util-visit-ids';
 
 // import { rehypeExportFrontmatter } from './plugin/rehype-export-frontmatter.js';
 
@@ -38,7 +38,6 @@ export default function org(options: OrgPluginOptions = {}): AstroIntegration {
     [extractKeywords, { name: 'keywords' }],
     keywordsToFrontmatter,
     uniorgSlug,
-    saveIds,
     ...(options.uniorgPlugins ?? []),
   ];
 
@@ -155,33 +154,5 @@ function keywordsToFrontmatter() {
       ...file.data.astro.frontmatter,
       ...file.data.keywords,
     };
-  }
-}
-
-function saveIds() {
-  return transformer;
-
-  function transformer(tree: any, file: any) {
-    const astro = file.data.astro;
-    const ids = astro.ids || (astro.ids = {});
-
-    visitIds(tree, (id, node) => {
-      if (node.type === 'org-data') {
-        ids['id:' + id] = '';
-      } else if (node.type === 'section') {
-        const headline = node.children[0];
-        const data: any = (headline.data = headline.data || {});
-        if (!data?.hProperties?.id) {
-          // The headline doesn't have an html id assigned.
-          //
-          // Assign an html id property based on org id property, so
-          // the links are not broken.
-          data.hProperties = data.hProperties || {};
-          data.hProperties.id = id;
-        }
-
-        ids['id:' + id] = '#' + data?.hProperties?.id;
-      }
-    });
   }
 }
