@@ -17,7 +17,7 @@ const { title, date } = Astro.props;
 			<article>
 				<h1><a href="/notes/">{title}</a></h1>
 				{date && (
-					<time style="color: gray; font-size: 0.9em;">
+					<time style="color: #555; font-size: 0.9em;">
 						{new Date(date).toLocaleDateString('en-US', {
 							year: 'numeric',
 							month: 'long',
