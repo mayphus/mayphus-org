@@ -40,6 +40,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
     [extractKeywords, { name: 'keywords' }],
     keywordsToFrontmatter,
     uniorgSlug,
+	...(options.uniorgPlugins ?? []),
   ];
 
   return {
