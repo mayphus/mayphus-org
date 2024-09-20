@@ -24,6 +24,12 @@ const notes = (await getCollection('notes'))
 							<li>
 								<p>
 									<a href={`/notes/${note.slug}/`}>
+										<span class="date" style="color: gray; font-size: 0.8em;">
+											{note.data.date.toLocaleDateString('en-US', {
+												month: '2-digit',
+												year: '2-digit',
+											})}
+										</span>
 										<span class="title">
 											{note.data.title}
 										</span>
@@ -43,11 +49,8 @@ const notes = (await getCollection('notes'))
 
 <style>
 	ul {
-		list-style-type: '- ';
-		padding-left: 0.6em;
-	}
-	ul li::marker {
-		color: gray;
+		list-style: none;
+		padding-left: 0;
 	}
 	p {
 		line-height: 1.5;
