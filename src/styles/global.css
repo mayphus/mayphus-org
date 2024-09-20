@@ -31,7 +31,7 @@ ul li p, ol li p {
     color: rgb(60,120,120);
 }
 .todo-keyword { 
-    color: #ff8c00;
+    color: green;
     font-weight: bold;
 }
 
