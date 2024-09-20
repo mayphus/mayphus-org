@@ -33,10 +33,10 @@ const notes = (await getCollection('notes'))
 										<span class="title">
 											{note.data.title}
 										</span>
-										<span class="tag" style="color: green;">
-											{note.data.filetags?.map(tag => `${tag}`).join(',')}
-										</span>
 									</a>
+									<span class="tag" style="color: gray; float: right;">
+										{note.data.filetags?.map(tag => `${tag}`).join(' ')}
+									</span>
 								</p>
 							</li>
 						))
@@ -59,6 +59,6 @@ const notes = (await getCollection('notes'))
 		border-bottom: none;
 	}
 	p a:hover {
-		border-bottom: 1px solid gray;
+		border-bottom: 1px solid lightgray;
 	}
 </style>
