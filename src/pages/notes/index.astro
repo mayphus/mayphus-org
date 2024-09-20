@@ -4,8 +4,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 
 const notes = (await getCollection('notes'))
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-	.filter(note => note.id.toLowerCase() !== 'readme.org');
+	.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf())
+	.filter((note: any) => note.id.toLowerCase() !== 'readme.org');
 ---
 
 <!doctype html>
@@ -20,7 +20,7 @@ const notes = (await getCollection('notes'))
 				<p>Here are all my notes, including notes, blogs, and projects and others.</p>
 				<ul>
 					{
-						notes.map((note) => (
+						notes.map((note: any) => (
 							<li>
 								<p>
 									<a href={`/notes/${note.slug}/`}>
@@ -34,7 +34,7 @@ const notes = (await getCollection('notes'))
 											{note.data.title}
 										</span>
 										<span class="tag" style="color: lightgreen; font-size: 0.8em;">
-											{note.data.filetags?.map(tag => `${tag}`).join(' ')}
+											{note.data.filetags?.map((tag: any) => `${tag}`).join(' ')}
 										</span>
 									</a>
 								</p>
