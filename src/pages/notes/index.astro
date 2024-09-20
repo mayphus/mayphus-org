@@ -24,8 +24,12 @@ const notes = (await getCollection('notes'))
 							<li>
 								<p>
 									<a href={`/notes/${note.slug}/`}>
-										{note.data.title}
-										<span style="color: #0077be;">{note.data.filetags?.map(tag => `${tag}`).join(',')}</span>
+										<span class="title">
+											{note.data.title}
+										</span>
+										<span class="tag" style="color: green;">
+											{note.data.filetags?.map(tag => `${tag}`).join(',')}
+										</span>
 									</a>
 								</p>
 							</li>
@@ -50,7 +54,6 @@ const notes = (await getCollection('notes'))
 	}
 	p a {
 		border-bottom: none;
-		font-family: monospace;
 	}
 	p a:hover {
 		border-bottom: 1px solid gray;

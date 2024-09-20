@@ -1,15 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
 body {
-    max-width: 45em;
+    max-width: 40em;
     margin: 0 auto;
     padding: 0 1rem;
+    font-family: 'EB Garamond', 'Georgia', serif;
 }
 h1, h2, h3, h4, h5, h6 {
+    font-family: 'EB Garamond', 'Georgia', serif;
     font-style: oblique;
-    font-weight: lighter;
 }
+h1 { font-style: italic; font-weight: 600; }
+h2 { font-weight: 800; }
+h3 { font-weight: 700; }
+h4 { font-weight: 600; }
+h5 { font-weight: 500; }
+h6 { font-weight: 400; }
 p {
-    font-family: 'Georgia', serif;
-    line-height: 1.75;
+    font-size: large;
+    line-height: 1.618;
 }
 a {
     color: inherit;
@@ -38,5 +47,11 @@ ul li p, ol li p {
     body {
         background-color: #1a1a1a;
         color: #e0e0e0;
+    }
+}
+
+@media print {
+    a {
+        border-bottom: none;
     }
 }
