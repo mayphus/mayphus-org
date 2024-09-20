@@ -32,7 +32,6 @@ ul li p, ol li p {
 }
 .todo-keyword { 
     color: green;
-    font-weight: bold;
 }
 
 @media (prefers-color-scheme: dark) {
