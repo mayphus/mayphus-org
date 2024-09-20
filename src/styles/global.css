@@ -1,13 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+@font-face {
+    font-family: 'EB Garamond';
+    src: url('/fonts/EBGaramond-VariableFont_wght.ttf') format('ttf');
+    font-weight: 400 800;
+    font-style: normal italic;
+}
 
 body {
     max-width: 40em;
     margin: 0 auto;
     padding: 0 1rem;
     font-family: 'EB Garamond', 'Georgia', serif;
+    font-size: large;
 }
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'EB Garamond', 'Georgia', serif;
     font-style: oblique;
 }
 h1 { font-style: italic; font-weight: 600; }
@@ -17,7 +22,6 @@ h4 { font-weight: 600; }
 h5 { font-weight: 500; }
 h6 { font-weight: 400; }
 p {
-    font-size: large;
     line-height: 1.618;
 }
 a {
