@@ -22,11 +22,13 @@ const notes = (await getCollection('notes'))
 					{
 						notes.map((note) => (
 							<li>
-								<a href={`/notes/${note.slug}/`}>
-									<span style="color: gray;">{note.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short'})} </span>
-									{note.data.title}
-									<span style="color: lightblue;">{note.data.filetags?.map(tag => `${tag}`).join(',')}</span>
-								</a>
+								<p>
+									<a href={`/notes/${note.slug}/`}>
+										<span style="color: gray;">{note.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short'})} </span>
+										{note.data.title}
+										<span style="color: lightblue;">{note.data.filetags?.map(tag => `${tag}`).join(',')}</span>
+									</a>
+								</p>
 							</li>
 						))
 					}
@@ -38,11 +40,14 @@ const notes = (await getCollection('notes'))
 
 <style>
 	ul {
-		font-family: monospace;
 		list-style-type: none;
 		padding-left: 0;
 	}
+	p {
+		line-height: 1.2;
+	}
 	a {
 		border-bottom: none;
+		font-family: monospace;
 	}
 </style>
