@@ -11,9 +11,6 @@ import uniorg from 'uniorg-parse';
 import orgPlugin, { type OrgPluginOptions } from 'rollup-plugin-orgx';
 import { extractKeywords } from 'uniorg-extract-keywords';
 import { uniorgSlug } from 'uniorg-slug';
-// import { visitIds } from 'orgast-util-visit-ids';
-
-// import { rehypeExportFrontmatter } from './plugin/rehype-export-frontmatter.js';
 
 declare module 'vfile' {
   interface DataMap {
@@ -23,7 +20,12 @@ declare module 'vfile' {
   }
 }
 
-export type Options = OrgPluginOptions;
+interface ExtendedOrgPluginOptions extends OrgPluginOptions {
+  uniorgPlugins?: any[];
+  rehypePlugins?: any[];
+}
+
+export type Options = ExtendedOrgPluginOptions;
 
 type SetupHookParams = HookParameters<'astro:config:setup'> & {
   // `addPageExtension` and `contentEntryType` are not a public APIs
@@ -32,13 +34,12 @@ type SetupHookParams = HookParameters<'astro:config:setup'> & {
   addContentEntryType: (contentEntryType: ContentEntryType) => void;
 };
 
-export default function org(options: OrgPluginOptions = {}): AstroIntegration {
+export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegration {
   const uniorgPlugins: PluggableList = [
     initFrontmatter,
     [extractKeywords, { name: 'keywords' }],
     keywordsToFrontmatter,
     uniorgSlug,
-    ...(options.uniorgPlugins ?? []),
   ];
 
   return {
@@ -111,7 +112,7 @@ export default function org(options: OrgPluginOptions = {}): AstroIntegration {
                   ],
                   development: false,
                   jsxImportSource: 'astro',
-                }),
+                } as ExtendedOrgPluginOptions),
               },
               {
                 name: 'astro-org/postprocess',
@@ -156,3 +157,4 @@ function keywordsToFrontmatter() {
     };
   }
 }
+
