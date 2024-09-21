@@ -10,6 +10,7 @@ body {
     margin: 0 auto;
     padding: 0 1rem;
     font-family: 'EB Garamond', 'Georgia', serif;
+    line-height: 1.618;
 }
 h1, h2, h3, h4, h5, h6 {
     font-style: oblique;
@@ -21,7 +22,6 @@ h4 { font-weight: 600; }
 h5 { font-weight: 500; }
 h6 { font-weight: 400; }
 p {
-    line-height: 1.618;
 }
 a {
     color: inherit;
@@ -35,8 +35,11 @@ a:hover {
 code {
     color: #666;
 }
+ul, ol {
+    margin: auto;
+}
 ul li p, ol li p {
-    margin: 0;
+    margin: auto;
 }
 
 .inline-verbatim {
