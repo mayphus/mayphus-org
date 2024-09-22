@@ -29,8 +29,8 @@ const notes = (await getCollection('notes'))
 											year: 'numeric',
 										})}
 									</span>
-									<span class="tag" style="color: gray; font-size: 0.8em;">
-										#{note.data.filetags?.map((tag: any) => `${tag}`).join(' ')}
+									<span class="tag" style="font-size: 0.8em;">
+										{note.data.filetags?.map((tag: any) => `${tag}`).join(' ')}
 									</span>
 									<h2 class="title" style="font-size: large; margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
 										<a href={`/notes/${note.slug}/`}>
