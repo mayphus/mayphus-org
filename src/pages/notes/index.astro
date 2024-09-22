@@ -27,6 +27,12 @@ const projects = allNotes.filter((note: any) => note.data.filetags?.includes('pr
 						projects.map((note: any) => (
 							<li>
 								<p>
+									<span class="date" style="color: gray; font-size: 0.8em;">
+										{note.data.date.toLocaleDateString('en-US', {
+											month: 'short',
+											year: 'numeric',
+										})}
+									</span>
 									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
 										<a href={`/notes/${note.slug}/`}>
 											{note.data.title}
