@@ -3,4 +3,5 @@
 }
 .todo-keyword { 
     color: green;
+    font-weight: lighter;
 }
