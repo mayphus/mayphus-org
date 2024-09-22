@@ -1,4 +1,5 @@
 @import './org-mode.css';
+@import './auto-number-headings.css';
 
 @font-face {
     font-family: 'EB Garamond';

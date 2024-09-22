@@ -20,17 +20,11 @@ const projects = collection.filter((note: any) => note.data.filetags?.includes('
 			<article>
 				<h1><a href="/">Projects</a></h1>
 				<p>Here are my projects, I mainly focus on making some creative, minimal, perfectistic things.</p>
-				<ul>
+				<ol>
 					{
 						projects.map((note: any) => (
 							<li>
 								<p>
-									<span class="date" style="color: gray; font-size: 0.8em;">
-										{note.data.date.toLocaleDateString('en-US', {
-											month: 'short',
-											year: 'numeric',
-										})}
-									</span>
 									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
 										<a href={`/node/${note.slug}/`}>
 											{note.data.title}
@@ -40,16 +34,19 @@ const projects = collection.filter((note: any) => note.data.filetags?.includes('
 							</li>
 						))
 					}
-				</ul>
+				</ol>
 			</article>
 		</main>
 	</body>
 </html>
 
 <style>
-	ul {
-		list-style: none;
-		padding-left: 0;
+	ol {
+		list-style: decimal-leading-zero;
+		padding-left: 1.4em;
+	}
+	ol li::marker {
+		color: gray;
 	}
 	p {
 		line-height: 1.5;
