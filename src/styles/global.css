@@ -15,7 +15,7 @@
 body {
     max-width: 36em;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 1rem 1.2rem;
     font-family: 'EB Garamond';
     line-height: 1.618;
 }
