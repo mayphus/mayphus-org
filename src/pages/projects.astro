@@ -20,7 +20,7 @@ const projects = collection.filter((note: any) => note.data.filetags?.includes('
 			<article>
 				<h1><a href="/">Projects</a></h1>
 				<p>Here are my projects, I mainly focus on making some creative, minimal, perfectistic things.</p>
-				<ol>
+				<ol reversed>
 					{
 						projects.map((note: any) => (
 							<li>
