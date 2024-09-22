@@ -9,7 +9,10 @@ const allNotes = (await getCollection('notes'))
 
 const blogs = allNotes.filter((note: any) => note.data.filetags?.includes('blog'));
 const projects = allNotes.filter((note: any) => note.data.filetags?.includes('project'));
-const notes = allNotes.filter((note: any) => !note.data.filetags?.includes('blog', 'project'));
+const notes = allNotes.filter((note: any) => {
+    const tags = note.data.filetags || [];
+    return !tags.includes('blog') && !tags.includes('project');
+});
 ---
 
 <!doctype html>
