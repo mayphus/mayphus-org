@@ -1,22 +1,34 @@
 @font-face {
+    font-family: 'Open Sans';
+    src: url('/fonts/OpenSans-VariableFont_wght.ttf') format('ttf') tech('variations'),
+         url('/fonts/OpenSans-Italic-VariableFont_wght.ttf') format('ttf') tech('variations');
+    font-weight: 300 800;
+    font-style: normal, italic;
+}
+@font-face {
     font-family: 'EB Garamond';
-    src: url('/fonts/EBGaramond-VariableFont_wght.ttf') format('ttf');
+    src: url('/fonts/EBGaramond-VariableFont_wght.ttf') format('ttf') tech('variations'),
+         url('/fonts/EBGaramond-Italic-VariableFont_wght.ttf') format('ttf') tech('variations');
     font-weight: 400 800;
-    font-style: normal italic;
+    font-style: normal, italic;
 }
 
 body {
     max-width: 36em;
     margin: 0 auto;
     padding: 0 1rem;
-    font-family: 'EB Garamond', 'Georgia', serif;
+    font-family: 'EB Garamond', serif;
     line-height: 1.618;
     font-size: large;
 }
-h1, h2, h3, h4, h5, h6 {
+h1 {
+    font-family: 'EB Garamond', serif;
     font-style: oblique;
+    font-weight: 400;
 }
-h1 { font-weight: 400; }
+h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+}
 h2 { font-weight: 800; }
 h3 { font-weight: 700; }
 h4 { font-weight: 600; }
@@ -41,26 +53,19 @@ ul li p, ol li p {
     margin: auto;
 }
 
-.inline-verbatim {
-    color: rgb(60,120,120);
-}
-.todo-keyword { 
-    color: green;
-}
+@import './org-mode.css';
 
 @media (min-width: 36em) {
     body {
         padding: 3rem 1rem;
     }
 }
-
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #1a1a1a;
         color: #e0e0e0;
     }
 }
-
 @media print {
     a {
         border-bottom: none;

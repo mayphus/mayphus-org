@@ -30,10 +30,10 @@ const notes = (await getCollection('notes'))
 												year: '2-digit',
 											})}
 										</span>
-										<span class="title" style="font-style: oblique;">
+										<span class="title">
 											{note.data.title}
 										</span>
-										<span class="tag" style="color: lightgreen; font-size: 0.8em;">
+										<span class="tag" style="color: gray; font-size: 0.8em;">
 											{note.data.filetags?.map((tag: any) => `${tag}`).join(' ')}
 										</span>
 									</a>
