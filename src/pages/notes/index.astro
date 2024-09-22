@@ -3,9 +3,13 @@ import BaseHead from '../../components/BaseHead.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 
-const notes = (await getCollection('notes'))
+const allNotes = (await getCollection('notes'))
 	.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf())
 	.filter((note: any) => note.id.toLowerCase() !== 'readme.org');
+
+const blogs = allNotes.filter((note: any) => note.data.filetags?.includes('blog'));
+const notes = allNotes.filter((note: any) => !note.data.filetags?.includes('blog'));
+const projects = allNotes.filter((note: any) => note.data.filetags?.includes('project'));
 ---
 
 <!doctype html>
@@ -16,11 +20,27 @@ const notes = (await getCollection('notes'))
 	<body>
 		<main>
 			<article>
-				<h1><a href="/">notes</a></h1>
-				<p>Here are all my notes, including notes, blogs, and projects and others.</p>
+				<h1><a href="/">notes, blogs, and projects</a></h1>
+				<p>Here are my projects, I mainly focus on making some creative, minimal, perfectistic things.</p>
 				<ul>
 					{
-						notes.map((note: any) => (
+						projects.map((note: any) => (
+							<li>
+								<p>
+									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
+										<a href={`/notes/${note.slug}/`}>
+											{note.data.title}
+										</a>
+									</span>
+								</p>
+							</li>
+						))
+					}
+				</ul>
+				<p>Here are my blogs, which are mostly about my life and thoughts. combination of knowledge and feelings.</p>
+				<ul>
+					{
+						blogs.map((note: any) => (
 							<li>
 								<p>
 									<span class="date" style="color: gray; font-size: 0.8em;">
@@ -37,6 +57,29 @@ const notes = (await getCollection('notes'))
 											{note.data.title}
 										</a>
 									</h2>
+								</p>
+							</li>
+						))
+					}
+				</ul>
+				<p>Here are my notes, which are short and simple but can be linked to each other.</p>
+				<ul>
+					{
+						notes.map((note: any) => (
+							<li>
+								<p>
+									<span class="date" style="color: gray; font-size: 0.8em;">
+										{note.data.date.toLocaleDateString('en-US', {
+											day: 'numeric',
+											month: 'short',
+											year: 'numeric',
+										})}
+									</span>
+									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
+										<a href={`/notes/${note.slug}/`}>
+											{note.data.title}
+										</a>
+									</span>
 								</p>
 							</li>
 						))
