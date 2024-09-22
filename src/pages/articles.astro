@@ -6,7 +6,7 @@ import { getCollection } from 'astro:content';
 const collection = (await getCollection('notes'))
 	.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf())
 	.filter((note: any) => note.id.toLowerCase() !== 'readme.org');
-const blogs = collection.filter((note: any) => note.data.filetags?.includes('blog'));
+const blogs = collection.filter((note: any) => note.data.filetags?.includes('article'));
 ---
 
 <!doctype html>
