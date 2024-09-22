@@ -6,11 +6,7 @@ import { getCollection } from 'astro:content';
 const collection = (await getCollection('notes'))
 	.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf())
 	.filter((note: any) => note.id.toLowerCase() !== 'readme.org');
-
-const notes = collection.filter((note: any) => {
-    const tags = note.data.filetags || [];
-    return !tags.includes('blog') && !tags.includes('project');
-});
+const blogs = collection.filter((note: any) => note.data.filetags?.includes('blog'));
 ---
 
 <!doctype html>
@@ -21,25 +17,27 @@ const notes = collection.filter((note: any) => {
 	<body>
 		<main>
 			<article>
-				<h1><a href="/">Notes</a></h1>
-				<p>Here are my notes, which are short and simple but can be linked to each other.</p>
+				<h1><a href="/">Blogs</a></h1>
+				<p>Here are my blogs, which are mostly about my life and thoughts. combination of knowledge and feelings.</p>
 				<ul>
 					{
-						notes.map((note: any) => (
+						blogs.map((note: any) => (
 							<li>
 								<p>
 									<span class="date" style="color: gray; font-size: 0.8em;">
 										{note.data.date.toLocaleDateString('en-US', {
-											day: 'numeric',
 											month: 'short',
 											year: 'numeric',
 										})}
 									</span>
-									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
+									<span class="tag" style="font-size: 0.8em;">
+										{note.data.filetags?.filter((tag: any) => tag !== 'blog').map((tag: any) => `${tag}`).join(' ')}
+									</span>
+									<h2 class="title" style="font-size: small; margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
 										<a href={`/notes/${note.slug}/`}>
 											{note.data.title}
 										</a>
-									</span>
+									</h2>
 								</p>
 							</li>
 						))

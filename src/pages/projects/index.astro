@@ -7,10 +7,7 @@ const collection = (await getCollection('notes'))
 	.sort((a: any, b: any) => b.data.date.valueOf() - a.data.date.valueOf())
 	.filter((note: any) => note.id.toLowerCase() !== 'readme.org');
 
-const notes = collection.filter((note: any) => {
-    const tags = note.data.filetags || [];
-    return !tags.includes('blog') && !tags.includes('project');
-});
+const projects = collection.filter((note: any) => note.data.filetags?.includes('project'));
 ---
 
 <!doctype html>
@@ -21,16 +18,15 @@ const notes = collection.filter((note: any) => {
 	<body>
 		<main>
 			<article>
-				<h1><a href="/">Notes</a></h1>
-				<p>Here are my notes, which are short and simple but can be linked to each other.</p>
+				<h1><a href="/">Projects</a></h1>
+				<p>Here are my projects, I mainly focus on making some creative, minimal, perfectistic things.</p>
 				<ul>
 					{
-						notes.map((note: any) => (
+						projects.map((note: any) => (
 							<li>
 								<p>
 									<span class="date" style="color: gray; font-size: 0.8em;">
 										{note.data.date.toLocaleDateString('en-US', {
-											day: 'numeric',
 											month: 'short',
 											year: 'numeric',
 										})}
