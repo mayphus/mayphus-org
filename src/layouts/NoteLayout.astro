@@ -15,16 +15,16 @@ const { title, date } = Astro.props;
 	<body>
 		<main>
 			<article>
-				<h1><a href="/notes/">{title}</a></h1>
 				{date && (
-					<time style="color: #555; font-size: 0.9em;">
+					<time style="margin: 0 0 -1.8em; padding: 0; color: #555; font-size: 0.9em; display: block;">
 						{new Date(date).toLocaleDateString('en-US', {
 							year: 'numeric',
-							month: 'long',
-							day: 'numeric'
+							month: 'short',
+							day: '2-digit'
 						})}
 					</time>
 				)}
+				<h1><a href="/notes/">{title}</a></h1>
 				<slot />
 			</article>
 		</main>
