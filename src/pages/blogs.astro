@@ -34,7 +34,7 @@ const blogs = collection.filter((note: any) => note.data.filetags?.includes('blo
 										{note.data.filetags?.filter((tag: any) => tag !== 'blog').map((tag: any) => `${tag}`).join(' ')}
 									</span>
 									<h2 class="title" style="font-size: 1.2em; margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
-										<a href={`/notes/${note.slug}/`}>
+										<a href={`/denote/${note.slug}/`}>
 											{note.data.title}
 										</a>
 									</h2>

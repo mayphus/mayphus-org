@@ -12,7 +12,7 @@ export async function GET(context) {
 			.filter(note => note.id.toLowerCase() !== 'readme.org')
 			.map((note) => ({
 				...note.data,
-				link: `/notes/${note.slug}/`,
+				link: `/denote/${note.slug}/`,
 				pubDate: note.data.date,
 			})),
 	});

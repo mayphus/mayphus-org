@@ -18,7 +18,6 @@ body {
     padding: 0 1rem;
     font-family: 'EB Garamond';
     line-height: 1.618;
-    font-size: larger;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'EB Garamond';
@@ -52,14 +51,15 @@ ul li p, ol li p {
 @media (min-width: 36em) {
     body {
         padding: 3rem 1rem;
+        font-size: large;
     }
 }
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     body {
         background-color: #1a1a1a;
         color: #e0e0e0;
     }
-} */
+}
 @media print {
     a {
         border-bottom: none;

@@ -1,6 +1,6 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
 const collection = (await getCollection('notes'))
@@ -36,7 +36,7 @@ const notes = collection.filter((note: any) => {
 										})}
 									</span>
 									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
-										<a href={`/notes/${note.slug}/`}>
+										<a href={`/denote/${note.slug}/`}>
 											{note.data.title}
 										</a>
 									</span>
