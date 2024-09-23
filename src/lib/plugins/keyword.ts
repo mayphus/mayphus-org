@@ -19,9 +19,14 @@ export const customKeywords = () => {
 		? keywords.filetags.split(':').filter(Boolean)
 		: [];
 
+		const fileName = file.history[0].split('/').pop() || '';
+		const slugWithoutTimestamp = fileName.replace(/^\d{8}T\d{6}--/, '');
+		const slug = slugWithoutTimestamp.split('__')[0].replace('.org', '').toLowerCase();
+
         file.data.astro.frontmatter = {
             ...file.data.astro.frontmatter,
 			...keywords,
+			slug: slug,
 		};
 	};
 }
