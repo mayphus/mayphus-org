@@ -40,6 +40,7 @@ a:hover {
 }
 code {
     color: #666;
+    font-size: small;
 }
 ul, ol {
     margin: auto;
