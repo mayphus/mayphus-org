@@ -36,7 +36,6 @@ export const replaceDenoteLinks = () => {
 						node.path = formattedSlug;
 						node.linkType = 'file';
 					}
-					console.log(node);
 				}
 			}
 		});
