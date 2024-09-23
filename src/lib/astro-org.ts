@@ -25,7 +25,7 @@ interface ExtendedOrgPluginOptions extends OrgPluginOptions {
   rehypePlugins?: any[];
 }
 
-export type Options = ExtendedOrgPluginOptions;
+// export type Options = ExtendedOrgPluginOptions;
 
 type SetupHookParams = HookParameters<'astro:config:setup'> & {
   // `addPageExtension` and `contentEntryType` are not a public APIs
