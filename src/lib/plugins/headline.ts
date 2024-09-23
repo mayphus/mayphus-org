@@ -6,7 +6,7 @@ interface Headline extends Node {
 }
 
 // fix headline level to meet seo standard
-export function customHeadline() {  
+export const customHeadline = () => {  
   return (tree: any) => {
     visit(tree, 'headline', (node: Headline) => { 
       if (node.level < 6) {

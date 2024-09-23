@@ -1,5 +1,5 @@
 // correct date, filetags and save to frontmatter
-export function customKeywords() {
+export const customKeywords = () => {
 	return (_tree: any, file: any) => {
 		const keywords = file.data.keywords || {};
 
