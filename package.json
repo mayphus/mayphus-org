@@ -15,6 +15,8 @@
     "@astrojs/sitemap": "^3.1.6",
     "astro": "^4.15.6",
     "orgast-util-visit-ids": "^1.0.1",
+    "rehype-autolink-headings": "^7.1.0",
+    "rehype-highlight": "^7.0.0",
     "rollup-plugin-orgx": "^1.0.3",
     "typescript": "^5.6.2",
     "uniorg-extract-keywords": "^1.0.1",

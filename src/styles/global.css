@@ -1,6 +1,5 @@
 @import './org-mode.css';
 @import './auto-number-headings.css';
-
 @font-face {
     font-family: 'EB Garamond';
     src: url('/fonts/EBGaramond-VariableFont_wght.ttf');
@@ -35,11 +34,13 @@ a {
     border-bottom: 1px solid;
     border-color: lightgray;
 }
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    border-bottom: none;
+}
 a:hover {
     text-decoration: none;
 }
 code {
-    color: #666;
     font-size: small;
 }
 ul, ol {
@@ -48,19 +49,18 @@ ul, ol {
 ul li p, ol li p {
     margin: auto;
 }
-
 @media (min-width: 36em) {
     body {
         padding: 3rem 1rem;
         font-size: large;
     }
 }
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     body {
         background-color: #1a1a1a;
         color: #e0e0e0;
     }
-}
+} */
 @media print {
     a {
         border-bottom: none;
