@@ -22,8 +22,5 @@
     "uniorg-extract-keywords": "^1.0.1",
     "uniorg-parse": "^3.0.1",
     "uniorg-slug": "^1.0.1"
-  },
-  "devDependencies": {
-    "@vite-pwa/astro": "^0.4.3"
   }
 }
