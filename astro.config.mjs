@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import AstroPWA from '@vite-pwa/astro';
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeHighlight from 'rehype-highlight';
@@ -24,5 +25,9 @@ export default defineConfig({
 			],
 		}),
 		sitemap(),
+		AstroPWA(),
 	],
+	prefetch: {
+		prefetchAll: true,
+	},
 });
