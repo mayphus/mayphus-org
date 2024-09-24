@@ -1,4 +1,7 @@
 .inline-verbatim {
+    color: rgb(200, 60, 60);
+}
+.inline-code {
     color: rgb(60,120,120);
 }
 .todo-keyword { 
