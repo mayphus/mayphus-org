@@ -1,15 +1,89 @@
-h2::before {
-    content: '* ';
+@media screen and (min-width: 47em) {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    position: relative;
+    padding-left: 2em;
+    margin-left: -2em;
+  }
+
+  h2::before,
+  h3::before,
+  h4::before,
+  h5::before,
+  h6::before {
+    position: absolute;
+    left: -0.5em;
+    width: 2em;
+    direction: rtl;
+    color: #555;
+  }
+
+  h2::before {
+    content: '*';
+  }
+
+  h3::before {
+    content: '**';
+  }
+
+  h4::before {
+    content: '***';
+  }
+
+  h5::before {
+    content: '****';
+  }
+
+  h6::before {
+    content: '*****';
+  }
 }
-h3::before {
-    content: '** ';
-}
-h4::before {
-    content: '*** ';
-}
-h5::before {
-    content: '**** ';
-}
-h6::before {
-    content: '***** ';
+
+@media screen and (max-width: 47em) {
+  body {
+    counter-reset: h2counter;
+  }
+  h2 {
+    counter-reset: h3counter;
+  }
+  h3 {
+    counter-reset: h4counter;
+  }
+  h4 {
+    counter-reset: h5counter;
+  }
+  h5 {
+    counter-reset: h6counter;
+  }
+  h2:before {
+    counter-increment: h2counter;
+    content: counter(h2counter) ". ";
+  }
+  h3:before {
+    counter-increment: h3counter;
+    content: counter(h2counter) "." counter(h3counter) ". ";
+  }
+  h4:before {
+    counter-increment: h4counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
+  }
+  h5:before {
+    counter-increment: h5counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ". ";
+  }
+  h6:before {
+    counter-increment: h6counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ". ";
+  }
+  h2.nocount:before,
+  h3.nocount:before,
+  h4.nocount:before,
+  h5.nocount:before,
+  h6.nocount:before {
+    content: "";
+    counter-increment: none;
+  }
 }
