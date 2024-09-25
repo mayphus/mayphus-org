@@ -1,70 +1,37 @@
 @import './org-mode.css';
-/* @import './auto-number-headings.css'; */
-@font-face {
-    font-family: 'EB Garamond';
-    src: url('/fonts/EBGaramond-VariableFont_wght.ttf');
-    font-weight: 400 800;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'EB Garamond';
-    src: url('/fonts/EBGaramond-Italic-VariableFont_wght.ttf');
-    font-weight: 400 800;
-    font-style: italic;
-    font-display: swap;
-}
+@import './headlines.css';
 body {
-    max-width: 36em;
+    max-width: 47em;
     margin: 0 auto;
-    padding: 0 1rem 1.2rem;
-    font-family: 'EB Garamond';
-    line-height: 1.618;
+    padding: 2rem 1rem;
+    font-family: monospace;
+    line-height: 1.4;
 }
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'EB Garamond';
+h2, h3, h4, h5, h6 {
+    color: #0000ff;
+    font-weight: normal;
+    font-size: 1em;
 }
-h1 { font-weight: 800; }
-h2 { font-weight: 700; }
-h3 { font-weight: 600; }
-h4 { font-weight: 500; }
-h5 { font-weight: 400; }
-h6 { font-weight: 400; }
+h1 {
+    font-weight: bold;
+    font-size: 1em;
+}
 a {
     color: inherit;
     text-decoration: none;
     border-bottom: 1px solid;
-    border-color: lightgray;
+    border-color: #e0e0e0;
 }
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     border-bottom: none;
 }
 a:hover {
-    text-decoration: none;
-}
-code {
-    font-size: small;
+    background-color: #e0e0e0;
+    border: none;
 }
 ul, ol {
     margin: auto;
 }
 ul li p, ol li p {
     margin: auto;
-}
-@media (min-width: 36em) {
-    body {
-        padding: 3rem 1rem;
-        font-size: large;
-    }
-}
-/* @media (prefers-color-scheme: dark) {
-    body {
-        background-color: #1a1a1a;
-        color: #e0e0e0;
-    }
-} */
-@media print {
-    a {
-        border-bottom: none;
-    }
 }
