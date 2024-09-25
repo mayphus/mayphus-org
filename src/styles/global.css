@@ -18,15 +18,12 @@ h1 {
 }
 a {
     color: inherit;
-    text-decoration: none;
-    border-bottom: 1px solid;
-    border-color: #e0e0e0;
 }
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-    border-bottom: none;
+    text-decoration: none;
 }
 a:hover {
-    border: none;
+    background-color: aquamarine;
 }
 ul, ol {
     margin: auto;
