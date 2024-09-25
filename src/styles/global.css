@@ -18,12 +18,13 @@ h1 {
 }
 a {
     color: inherit;
+    text-decoration-color: aqua;
 }
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     text-decoration: none;
 }
 a:hover {
-    background-color: aquamarine;
+    background-color: aqua;
 }
 ul, ol {
     margin: auto;
