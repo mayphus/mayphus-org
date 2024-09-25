@@ -64,19 +64,19 @@
   }
   h3:before {
     counter-increment: h3counter;
-    content: counter(h2counter) "." counter(h3counter) ". ";
+    content: counter(h2counter) "." counter(h3counter) " ";
   }
   h4:before {
     counter-increment: h4counter;
-    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) " ";
   }
   h5:before {
     counter-increment: h5counter;
-    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ". ";
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) " ";
   }
   h6:before {
     counter-increment: h6counter;
-    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ". ";
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) " ";
   }
   h2.nocount:before,
   h3.nocount:before,
