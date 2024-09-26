@@ -15,16 +15,18 @@
 body {
     max-width: 38em;
     margin: 0 auto;
-    padding: 1rem 1rem;
+    padding: 0.5rem 1rem;
     font-family: 'Roboto Mono', monospace;
     line-height: 1.5;
 }
 h1, h2, h3, h4, h5, h6 {
     font-size: 1em;
+    font-weight: normal;
     line-height: 1.2;
 }
 h1 {
-    font-size: 1.8em;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 h2 {
     color: #0066cc;
