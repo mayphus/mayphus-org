@@ -46,7 +46,6 @@ h6 {
 a {
     color: inherit;
     text-decoration-color: #00FFFF;
-    text-decoration-thickness: 2px;
 }
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     text-decoration: none;
