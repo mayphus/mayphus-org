@@ -1,25 +1,3 @@
-@media screen and (min-width: 47em) {
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    position: relative;
-    padding-left: 2em;
-    margin-left: -2em;
-  }
-  h2::before,
-  h3::before,
-  h4::before,
-  h5::before,
-  h6::before {
-    position: absolute;
-    left: -0.5em;
-    width: 2em;
-    direction: rtl;
-    color: #555;
-  }
-}
 body {
   counter-reset: h2counter;
 }
@@ -55,13 +33,6 @@ h6:before {
   counter-increment: h6counter;
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) " ";
 }
-h2::before,
-h3::before,
-h4::before,
-h5::before,
-h6::before {
-  color: #555;
-}
 h2.nocount:before,
 h3.nocount:before,
 h4.nocount:before,
@@ -69,4 +40,25 @@ h5.nocount:before,
 h6.nocount:before {
   content: "";
   counter-increment: none;
+}
+@media screen and (min-width: 820px) {
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    position: relative;
+    padding-left: 2em;
+    margin-left: -2em;
+  }
+  h2::before,
+  h3::before,
+  h4::before,
+  h5::before,
+  h6::before {
+    position: absolute;
+    left: -0.5em;
+    width: 2em;
+    direction: rtl;
+  }
 }
