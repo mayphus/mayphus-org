@@ -1,32 +1,31 @@
 @import './org-mode.css';
 @import './headlines.css';
 @font-face {
-    font-family: 'Roboto Mono';
-    src: url('/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
-    font-style: normal;
+    font-family: 'Noto Sans Mono';
+    src: url('/fonts/NotoSansMono-Regular.ttf') format('truetype');
+    font-weight: normal;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Roboto Mono';
-    src: url('/fonts/RobotoMono-Italic-VariableFont_wght.ttf') format('truetype');
-    font-style: italic;
+    font-family: 'Noto Sans Mono';
+    src: url('/fonts/NotoSansMono-Bold.ttf') format('truetype');
+    font-weight: bold;
     font-display: swap;
 }
 body {
     max-width: 48em;
     margin: 0 auto;
     padding: 0.5rem 1rem;
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'Noto Sans Mono', monospace;
     line-height: 1.5;
     font-size: smaller;
 }
 h1, h2, h3, h4, h5, h6 {
     font-size: 1em;
-    font-weight: 500;
     line-height: 1.2;
 }
 h2 {
-    color: #0066cc;
+    color: #0000cc;
 }
 h3 {
     color: #d85050;
