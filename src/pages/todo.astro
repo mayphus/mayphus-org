@@ -1,0 +1,25 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const notes = await getCollection('notes');
+const readmeNote = notes.find(note => note.id.toLowerCase() === "20240926T063213--todo__meta_todo.org");
+const { Content } = await readmeNote?.render() ?? { Content: () => null };
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<main>
+			<article>
+				<h1><a href="/">{SITE_TITLE}'s Digital Garden</a></h1>
+				<span style="font-size: 0.8rem;">all of my learning, exploring, and thinking, out in the open</span>
+				<Content />
+			</article>
+		</main>
+	</body>
+</html>
