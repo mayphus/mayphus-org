@@ -54,3 +54,31 @@ ul, ol {
 ul li p, ol li p {
     margin: auto;
 }
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    h2 {
+        color: #4d4dff;
+    }
+    h3 {
+        color: #ff4d4d;
+    }
+    h4 {
+        color: #ffa64d;
+    }
+    h5 {
+        color: #e6b800;
+    }
+    h6 {
+        color: #a39480;
+    }
+    a {
+        text-decoration-color: #00cccc;
+    }
+    a:hover {
+        background-color: #00cccc;
+        color: #121212;
+    }
+}
