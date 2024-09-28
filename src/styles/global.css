@@ -17,7 +17,7 @@ body {
     margin: 0 auto;
     padding: 0.5rem 1rem;
     font-family: 'Noto Sans Mono', monospace;
-    line-height: 1.618;
+    line-height: 1.5;
     font-size: smaller;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -25,10 +25,10 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
 }
 h2 {
-    color: #000099;
+    color: #0000cc;
 }
 h3 {
-    color: #b30000;
+    color: #d85050;
 }
 h4 {
     color: #e67700;
