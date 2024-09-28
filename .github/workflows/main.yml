@@ -10,9 +10,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
+    # permissions:
+    #   contents: read
+    #   deployments: write
     steps:
       - name: Checkout www repository
         uses: actions/checkout@v3
@@ -41,4 +41,4 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: felixmurraytang
           directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          # gitHubToken: ${{ secrets.GITHUB_TOKEN }}
