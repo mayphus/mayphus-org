@@ -4,7 +4,9 @@
 .inline-code {
     color: rgb(60,120,120);
 }
-.todo-keyword { 
+.TODO { 
+    color: red;
+}
+.DONE {
     color: green;
-    font-weight: lighter;
 }
