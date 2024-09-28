@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: deploy to cloudflare pages
 
 on:
   push:
@@ -35,4 +35,4 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: pages deploy dist --project-name felixmurraytang
+          command: pages deploy dist
