@@ -5,8 +5,8 @@
     color: rgb(60,120,120);
 }
 .TODO { 
-    color: red;
+    color: #FF0000;
 }
 .DONE {
-    color: green;
+    color: #008000;
 }
