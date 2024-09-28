@@ -17,7 +17,6 @@ export default defineConfig({
 				customKeywords,
 				customHeadline,
 			],
-			remarkPlugins: [],
 			rehypePlugins: [
 				[rehypeAutolinkHeadings, { behavior: 'wrap' }],
 				rehypeHighlight,
