@@ -9,7 +9,7 @@ const collection = (await getCollection('notes'))
 
 const notes = collection.filter((note: any) => {
     const tags = note.data.filetags || [];
-    return !tags.includes('article') && !tags.includes('project');
+    return !tags.includes('article') && !tags.includes('project') && !tags.includes('meta');
 });
 ---
 
