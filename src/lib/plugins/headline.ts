@@ -10,7 +10,8 @@ export const customHeadline = () => {
   return (tree: any) => {
     visit(tree, 'headline', (node: Headline) => { 
       if (node.level < 6) {
-        node.level += 1
+        // Increment headline level, but cap at 6 (max HTML heading level)
+        node.level = Math.min(node.level + 1, 6);
       }
     })
   }
