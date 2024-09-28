@@ -41,16 +41,3 @@ h6.nocount:before {
   content: "";
   counter-increment: none;
 }
-@media screen and (min-width: 768px) {
-  h2 {
-    position: relative;
-    padding-left: 2em;
-    margin-left: -2em;
-  }
-  h2::before {
-    position: absolute;
-    left: -0.5em;
-    width: 2em;
-    direction: rtl;
-  }
-}
