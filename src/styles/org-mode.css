@@ -10,3 +10,11 @@
 .DONE {
     color: #008000;
 }
+@media (prefers-color-scheme: dark) {
+    .inline-verbatim {
+        color: #FF9494;
+    }
+    .inline-code {
+        color: #80E5E5;
+    }
+}
