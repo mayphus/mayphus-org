@@ -5,12 +5,11 @@ interface Headline extends Node {
     level: number
 }
 
-// fix headline level to meet seo standard
+// fix headline level to meet html, seo standards
 export const customHeadline = () => {  
   return (tree: any) => {
     visit(tree, 'headline', (node: Headline) => { 
       if (node.level < 6) {
-        // Increment headline level, but cap at 6 (max HTML heading level)
         node.level = Math.min(node.level + 1, 6);
       }
     })
