@@ -13,7 +13,7 @@
     font-display: swap;
 }
 body {
-    max-width: 48em;
+    /* max-width: 48em; */
     margin: 0 auto;
     padding: 0.5rem 1rem;
     font-family: 'Noto Sans Mono', monospace;
