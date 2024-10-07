@@ -18,7 +18,17 @@ export default defineConfig({
 				customHeadline,
 			],
 			rehypePlugins: [
-				[rehypeAutolinkHeadings, { behavior: 'wrap' }],
+				[rehypeAutolinkHeadings, { 
+					behavior: 'append',
+					content: {
+						type: 'element',
+						tagName: 'span',
+						properties: {
+							style: 'color: gray',
+						},
+						children: [{ type: 'text', value: ' #' }]
+					}
+				}],
 				rehypeHighlight,
 			],
 		}),
