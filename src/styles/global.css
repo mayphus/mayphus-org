@@ -48,9 +48,6 @@ a {
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     text-decoration: none;
 }
-a:hover {
-    background-color: #00FFFF;
-}
 ul, ol {
     margin: auto;
 }
@@ -79,8 +76,5 @@ ul li p, ol li p {
     }
     h6 {
         color: #a39480;
-    }
-    a:hover {
-        background-color: #00cccc;
     }
 }
