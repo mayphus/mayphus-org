@@ -13,6 +13,10 @@ for org-mode specific elements
 .DONE {
     color: #008000;
 }
+
+/**
+ * dark mode
+ */
 @media (prefers-color-scheme: dark) {
     .inline-verbatim {
         color: #FF9494;
