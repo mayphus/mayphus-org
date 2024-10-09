@@ -67,6 +67,14 @@ h6.nocount:before {
 TODO: fix issue with later content indent wrong
 */
 @media (min-width: 768px) {
+  h2:before,
+  h3:before,
+  h4:before,
+  h5:before,
+  h6:before {
+    content: "* ";
+  }
+
   h2 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
     margin-left: 1.2em;
   }
