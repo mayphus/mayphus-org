@@ -8,6 +8,8 @@ general styles for all headings
 h1, h2, h3, h4, h5, h6 {
   font-size: 1em;
   line-height: 1.2;
+  margin-block-start: 1em;
+  margin-block-end: 1.2em;
 }
 h1 {
   color: #000000;
@@ -99,16 +101,31 @@ org mode styles for large screens
   indent all content based on the closest heading,
   except for headings themselves
   */
-  h3, h3 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-    margin-left: 1em;
+  h2 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 1.2em;
   }
-  h4, h4 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-    margin-left: 2em;
+  h3 {
+    margin-left: 1.2em;
   }
-  h5, h5 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-    margin-left: 3em;
+  h3 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 2.4em;
   }
-  h6, h6 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
-    margin-left: 4em;
+  h4 {
+    margin-left: 2.4em;
+  }
+  h4 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 3.6em;
+  }
+  h5 {
+    margin-left: 3.6em;
+  }
+  h5 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 4.8em;
+  }
+  h6 {
+    margin-left: 4.8em;
+  }
+  h6 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 6em;
   }
 }
