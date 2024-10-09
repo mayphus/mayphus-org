@@ -19,15 +19,15 @@ export default defineConfig({
 			],
 			rehypePlugins: [
 				[rehypeAutolinkHeadings, { 
-					behavior: 'append',
-					content: {
-						type: 'element',
-						tagName: 'span',
-						properties: {
-							style: 'color: gray',
-						},
-						children: [{ type: 'text', value: ' #' }]
-					}
+					behavior: 'wrap',
+					// content: {
+					// 	type: 'element',
+					// 	tagName: 'span',
+					// 	properties: {
+					// 		style: 'color: gray',
+					// 	},
+					// 	children: [{ type: 'text', value: ' #' }]
+					// }
 				}],
 				rehypeHighlight,
 			],
