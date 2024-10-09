@@ -73,6 +73,7 @@ TODO: fix issue with later content indent wrong
   h5:before,
   h6:before {
     content: "* ";
+    vertical-align: sub;
   }
 
   h2 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
