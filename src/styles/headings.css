@@ -1,46 +1,114 @@
 /*
-add counter to headings
+headings styles
 */
-body {
-  counter-reset: h2counter;
+
+/*
+general styles for all headings
+*/
+h1, h2, h3, h4, h5, h6 {
+  font-size: 1em;
+  line-height: 1.2;
+}
+h1 {
+  color: #000000;
 }
 h2 {
-  counter-reset: h3counter;
+  color: #0000cc;
 }
 h3 {
-  counter-reset: h4counter;
+  color: #b30000;
 }
 h4 {
-  counter-reset: h5counter;
+  color: #b35900;
 }
 h5 {
-  counter-reset: h6counter;
+  color: #806000;
 }
-h2:before {
-  counter-increment: h2counter;
-  content: counter(h2counter) ". ";
+h6 {
+  color: #5c5242;
 }
-h3:before {
-  counter-increment: h3counter;
-  content: counter(h2counter) "." counter(h3counter) ". ";
+
+/*
+add counter to headings for mobile
+*/
+@media (max-width: 768px) {
+  /*
+  add counter to headings
+  */
+  body {
+    counter-reset: h2counter;
+  }
+  h2 {
+    counter-reset: h3counter;
+  }
+  h3 {
+    counter-reset: h4counter;
+  }
+  h4 {
+    counter-reset: h5counter;
+  }
+  h5 {
+    counter-reset: h6counter;
+  }
+  h2:before {
+    counter-increment: h2counter;
+    content: counter(h2counter) ". ";
+  }
+  h3:before {
+    counter-increment: h3counter;
+    content: counter(h2counter) "." counter(h3counter) ". ";
+  }
+  h4:before {
+    counter-increment: h4counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
+  }
+  h5:before {
+    counter-increment: h5counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ". ";
+  }
+  h6:before {
+    counter-increment: h6counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ". ";
+  }
+  h2.nocount:before,
+  h3.nocount:before,
+  h4.nocount:before,
+  h5.nocount:before,
+  h6.nocount:before {
+    content: "";
+    counter-increment: none;
+  }
 }
-h4:before {
-  counter-increment: h4counter;
-  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
-}
-h5:before {
-  counter-increment: h5counter;
-  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ". ";
-}
-h6:before {
-  counter-increment: h6counter;
-  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ". ";
-}
-h2.nocount:before,
-h3.nocount:before,
-h4.nocount:before,
-h5.nocount:before,
-h6.nocount:before {
-  content: "";
-  counter-increment: none;
+
+/*
+org mode styles for large screens
+*/
+@media (min-width: 768px) {
+  /*
+  add * to headings just like org-mode does
+  */
+  h2:before,
+  h3:before,
+  h4:before,
+  h5:before,
+  h6:before {
+    content: "* ";
+  }
+
+  /*
+  indent all content based on the closest heading,
+  except for headings themselves
+  */
+  h3, h3 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 1em;
+  }
+  h4, h4 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 2em;
+  }
+  h5, h5 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 3em;
+  }
+  h6, h6 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
+    margin-left: 4em;
+  }
 }

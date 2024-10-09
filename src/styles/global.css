@@ -1,6 +1,7 @@
-@import './normalize.css';
-@import './headings.css';
-@import './org-mode.css';
+@import './normalize.css';  /* normalize.css from https://necolas.github.io/normalize.css/ */
+@import './headings.css';   /* styles for headings */
+@import './org-mode.css';   /* styles for org-mode */
+
 @font-face {
     font-family: 'Noto Sans Mono';
     src: url('/fonts/NotoSansMono-Regular.ttf') format('truetype');
@@ -13,34 +14,13 @@
     font-weight: bold;
     font-display: swap;
 }
+
 body {
     /* max-width: 48em; */
     margin: 0 auto;
     padding: 0.5rem 1rem;
     font-family: 'Noto Sans Mono', monospace;
     line-height: 1.6;
-}
-h1, h2, h3, h4, h5, h6 {
-    font-size: 1em;
-    line-height: 1.2;
-}
-h1 {
-    color: #000000;
-}
-h2 {
-    color: #0000cc;
-}
-h3 {
-    color: #b30000;
-}
-h4 {
-    color: #b35900;
-}
-h5 {
-    color: #806000;
-}
-h6 {
-    color: #5c5242;
 }
 a {
     color: inherit;
@@ -54,6 +34,10 @@ ul, ol {
 ul li p, ol li p {
     margin: auto;
 }
+
+/*
+dark mode
+*/
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #121212;
