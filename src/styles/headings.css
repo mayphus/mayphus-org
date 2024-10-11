@@ -1,8 +1,8 @@
 h1, h2, h3, h4, h5, h6 {
-  /* font-size: 1em; */
+  font-size: 1em;
   line-height: 1.2;
   margin-block-start: 1em;
-  margin-block-end: 1.2em;
+  margin-block-end: 1em;
 }
 
 /* h1 {
@@ -74,6 +74,7 @@ h6.nocount:before {
   h6:before {
     content: "* ";
     vertical-align: sub;
+    color: #07A;
   }
 
   h2 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {

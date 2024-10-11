@@ -1,4 +1,4 @@
-/* @import './normalize.css'; */
+@import './normalize.css';
 @import './headings.css';
 @import './org-mode.css';
 
@@ -20,7 +20,7 @@
  */
 body {
     /* max-width: 48em; */
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding: 0.5rem 1rem;
     font-family: 'Noto Sans Mono', Arial;
     line-height: 1.6;
