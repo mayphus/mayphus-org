@@ -35,22 +35,27 @@ h5 { counter-reset: h6counter; }
 h2:before {
   counter-increment: h2counter;
   content: counter(h2counter) ". ";
+  color: #07A;
 }
 h3:before {
   counter-increment: h3counter;
   content: counter(h2counter) "." counter(h3counter) ". ";
+  color: #07A;
 }
 h4:before {
   counter-increment: h4counter;
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
+  color: #07A;
 }
 h5:before {
   counter-increment: h5counter;
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ". ";
+  color: #07A;
 }
 h6:before {
   counter-increment: h6counter;
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ". ";
+  color: #07A;
 }
 h2.nocount:before,
 h3.nocount:before,
