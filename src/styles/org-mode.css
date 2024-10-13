@@ -1,11 +1,12 @@
-/*
-for org-mode specific elements
-*/
 .inline-verbatim {
     color: rgb(200, 60, 60);
 }
 .inline-code {
     color: rgb(60,120,120);
+}
+
+.todo-keyword {
+    font-family: monospace;
 }
 .TODO { 
     color: #D80000;
@@ -14,9 +15,6 @@ for org-mode specific elements
     color: #008000;
 }
 
-/**
- * dark mode
- */
 @media (prefers-color-scheme: dark) {
     .inline-verbatim {
         color: #FF9494;

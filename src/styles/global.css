@@ -1,58 +1,198 @@
-@import './normalize.css';
-@import './headings.css';
 @import './org-mode.css';
 
-@font-face {
-    font-family: 'Ubuntu Mono';
-    src: url('/fonts/UbuntuMono-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Ubuntu Mono';
-    src: url('/fonts/UbuntuMono-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Ubuntu Mono';
-    src: url('/fonts/UbuntuMono-Italic.ttf') format('truetype');
-    font-style: italic;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Ubuntu Mono';
-    src: url('/fonts/UbuntuMono-BoldItalic.ttf') format('truetype');
-    font-weight: bold;
-    font-style: italic;
-    font-display: swap;
+html {
+    /* line-height: 1.15; */
+    -webkit-text-size-adjust: 100%;
 }
 
-/**
- * global styles
- */
 body {
     max-width: 45em;
     margin: 0 auto;
     padding: 0 1rem;
-    font-family: 'Ubuntu Mono';
-    line-height: 1.5;
 }
 
-/**
- * links
- */
-a {
-    color: #07A;
+main {
+    display: block;
 }
+
+h1 {
+    font-size: 2em;
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+}
+
+pre {
+    font-family: monospace;
+}
+
+a {
+    background-color: transparent;
+    color: inherit;
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: underline;
+    text-decoration: underline dotted;
+}
+
+b,
+strong {
+    font-weight: bolder;
+}
+
+code,
+kbd,
+samp {
+    font-family: monospace;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+sup {
+    top: -0.5em;
+}
+
+img {
+    border-style: none;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+button,
+input {
+    overflow: visible;
+}
+
+button,
+select {
+    text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button;
+    appearance: button;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+    border-style: none;
+    padding: 0;
+}
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+    outline: 1px dotted ButtonText;
+}
+
+fieldset {
+    padding: 0.35em 0.75em 0.625em;
+}
+
+legend {
+    box-sizing: border-box;
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    padding: 0;
+    white-space: normal;
+}
+
+progress {
+    vertical-align: baseline;
+}
+
+textarea {
+    overflow: auto;
+}
+
+[type="checkbox"],
+[type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+[type="search"] {
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    outline-offset: -2px;
+}
+
+[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit;
+}
+
+details {
+    display: block;
+}
+
+summary {
+    display: list-item;
+}
+
+template {
+    display: none;
+}
+
+[hidden] {
+    display: none;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    margin-block-start: 1rem;
+    margin-block-end: 1rem;
+}
+
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     text-decoration: none;
     color: inherit;
 }
 
-/**
- * lists
- */
 ul, ol {
     margin: auto;
 }
@@ -60,16 +200,10 @@ ul li p, ol li p {
     margin: auto;
 }
 
-/**
- * dark mode
- */
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #121212;
         color: #e0e0e0;
-    }
-    a {
-        color: #a0a0ff;
     }
     /* h1 {
         color: #ffffff;
