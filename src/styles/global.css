@@ -68,6 +68,9 @@ ul li p, ol li p {
         background-color: #121212;
         color: #e0e0e0;
     }
+    a {
+        color: #a0a0ff;
+    }
     /* h1 {
         color: #ffffff;
     }
