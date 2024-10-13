@@ -71,7 +71,7 @@ h6.nocount:before {
  * except for headings themselves
  * TODO: fix issue with later content indent wrong
  */
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   h2:before,
   h3:before,
   h4:before,
@@ -109,4 +109,4 @@ h6.nocount:before {
   h6 ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6) {
     margin-left: 6em;
   }
-}
+} */
