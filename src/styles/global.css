@@ -200,11 +200,11 @@ ul li p, ol li p {
     margin: auto;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
     body {
         background-color: #121212;
         color: #e0e0e0;
-    }
+    } */
     /* h1 {
         color: #ffffff;
     }
@@ -223,4 +223,4 @@ ul li p, ol li p {
     h6 {
         color: #a39480;
     } */
-}
+/* } */
