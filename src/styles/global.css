@@ -3,15 +3,28 @@
 @import './org-mode.css';
 
 @font-face {
-    font-family: 'Noto Sans Mono';
-    src: url('/fonts/NotoSansMono-Regular.ttf') format('truetype');
+    font-family: 'Ubuntu Mono';
+    src: url('/fonts/UbuntuMono-Regular.ttf') format('truetype');
     font-weight: normal;
     font-display: swap;
 }
 @font-face {
-    font-family: 'Noto Sans Mono';
-    src: url('/fonts/NotoSansMono-Bold.ttf') format('truetype');
+    font-family: 'Ubuntu Mono';
+    src: url('/fonts/UbuntuMono-Bold.ttf') format('truetype');
     font-weight: bold;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Ubuntu Mono';
+    src: url('/fonts/UbuntuMono-Italic.ttf') format('truetype');
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Ubuntu Mono';
+    src: url('/fonts/UbuntuMono-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
     font-display: swap;
 }
 
@@ -22,8 +35,8 @@ body {
     /* max-width: 48em; */
     /* margin: 0 auto; */
     padding: 0.5rem 1rem;
-    font-family: 'Noto Sans Mono', Arial;
-    line-height: 1.6;
+    font-family: 'Ubuntu Mono', Arial;
+    line-height: 1.5;
 }
 
 /**
