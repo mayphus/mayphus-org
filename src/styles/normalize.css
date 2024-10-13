@@ -102,12 +102,16 @@ strong {
  * 2. Correct the odd `em` font sizing in all browsers.
  */
 
+/* 
+ * never needed for me
+ */
+/*
 code,
 kbd,
 samp {
-  font-family: monospace, monospace; /* 1 */
-  /* font-size: 1em; 2 */
-}
+  font-family: monospace, monospace;
+  font-size: 1em;
+}*/
 
 /**
  * Add the correct font size in all browsers.
