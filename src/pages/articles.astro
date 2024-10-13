@@ -24,7 +24,7 @@ const blogs = collection.filter((note: any) => note.data.filetags?.includes('art
 						blogs.map((note: any) => (
 							<li>
 								<p>
-									<span class="date" style="color: #767676; font-size: 0.8em;">
+									<span class="date" style="font-size: 0.8em;">
 										{note.data.date.toLocaleDateString('en-US', {
 											month: 'short',
 											year: 'numeric',
