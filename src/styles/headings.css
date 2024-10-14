@@ -1,21 +1,32 @@
-/* h1 {
-  color: #000000;
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1.2em;
+    margin-block-start: 1rem;
+    margin-block-end: 1rem;
+    line-height: 1.2;
+    font-weight: bold;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    text-decoration: none;
+    color: inherit;
+}
+h1 {
+    color: #000000;
 }
 h2 {
-  color: #0000cc;
+    color: #0000cc;
 }
 h3 {
-  color: #b30000;
+    color: #b30000;
 }
 h4 {
-  color: #b35900;
+    color: #b35900;
 }
 h5 {
-  color: #806000;
+    color: #806000;
 }
 h6 {
-  color: #5c5242;
-} */
+    color: #5c5242;
+}
 
 body { counter-reset: h2counter; }
 h2 { counter-reset: h3counter; }
@@ -23,37 +34,32 @@ h3 { counter-reset: h4counter; }
 h4 { counter-reset: h5counter; }
 h5 { counter-reset: h6counter; }
 h2:before {
-  counter-increment: h2counter;
-  content: counter(h2counter) ". ";
-  color: #07A;
+    counter-increment: h2counter;
+    content: counter(h2counter) ". ";
 }
 h3:before {
-  counter-increment: h3counter;
-  content: counter(h2counter) "." counter(h3counter) ". ";
-  color: #07A;
+    counter-increment: h3counter;
+    content: counter(h2counter) "." counter(h3counter) ". ";
 }
 h4:before {
-  counter-increment: h4counter;
-  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
-  color: #07A;
+    counter-increment: h4counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
 }
 h5:before {
-  counter-increment: h5counter;
-  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ". ";
-  color: #07A;
+    counter-increment: h5counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ". ";
 }
 h6:before {
-  counter-increment: h6counter;
-  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ". ";
-  color: #07A;
+    counter-increment: h6counter;
+    content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ". ";
 }
 h2.nocount:before,
 h3.nocount:before,
 h4.nocount:before,
 h5.nocount:before,
 h6.nocount:before {
-  content: "";
-  counter-increment: none;
+    content: "";
+    counter-increment: none;
 }
 
 /* @media (min-width: 768px) {
