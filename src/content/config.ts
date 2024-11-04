@@ -21,7 +21,15 @@ const articles = defineCollection({
 	}),
 });
 
+const projects = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+	}),
+});
+
 export const collections = { 
   'notes': notes,
-  'articles': articles
+  'articles': articles,
+  'projects': projects
 };
