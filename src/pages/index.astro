@@ -47,7 +47,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 			</article>
 		</main>
 		<footer>
-      <p>by Mayphus</p>
+      <p>by Mayphus,
+        last updated on
+        {new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
 		</footer>
 	</body>
 </html>
