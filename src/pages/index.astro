@@ -10,6 +10,16 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	</head>
 	<body>
 		<main>
+			<nav>
+				<ul>
+					<li><a href="/notes/">Notes</a></li>
+					<li><a href="/articles/">Articles</a></li>
+					<li><a href="/audios/">Audios</a></li>
+					<li><a href="/videos/">Videos</a></li>
+					<li><a href="/projects/">Projects</a></li>
+				</ul>
+			</nav>
+
 			<article>
 				<h1><a href="/">{SITE_TITLE}'s Digital Space</a></h1>
 
@@ -35,15 +45,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				<p>This website is a digital space where I cultivate my thoughts, ideas, and projects.
 					It's a place for me to share my journey, learnings, and creations with the world.
 					Here, you'll find a mix of contents.</p>
-				<ul>
-					<li><a href="/notes/">Notes</a> are all my short notes</li>
-					<li><a href="/articles/">Articles</a> are notes tagged as article with deep research and thoughts</li>
-
-					<li><a href="/projects/">Projects</a> are all my projects</li>
-
-					<li><a href="/podcasts/">Podcasts</a> are my daily podcasts with thoughts</li>
-					<li><a href="/videos/">Videos</a> are my videos on YouTube</li>
-				</ul>
 			</article>
 		</main>
 		<footer>
@@ -53,3 +54,22 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		</footer>
 	</body>
 </html>
+
+<style>
+  nav {
+    padding-top: 1rem;
+  }
+  nav ul {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  nav a {
+    text-decoration: none;
+  }
+  nav a:hover {
+    color: white;
+  }
+</style>
