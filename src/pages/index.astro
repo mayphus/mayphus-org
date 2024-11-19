@@ -12,59 +12,57 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		<main>
 			<nav>
 				<ul>
-					<li><a href="/notes/">Notes</a></li>
-					<li><a href="/articles/">Articles</a></li>
 					<li><a href="/projects/">Projects</a></li>
+					<li><a href="/articles/">Articles</a></li>
+					<li><a href="/learn/">Learn</a></li>
+					<span>|</span>
+					<li><a href="/diet/">Diet</a></li>
+					<li><a href="/fitness/">Health</a></li>
 				</ul>
 			</nav>
 
 			<article>
-				<h1><a href="/">{SITE_TITLE}'s Digital Space</a></h1>
+				<h1><a href="/">{SITE_TITLE}'s Space</a></h1>
+				
+				<p>I'm Mayphus Tang, a maker and perpetual learner whose passion lies at the vibrant intersection of technology and creative craftsmanship. My workshop is a testament to this diverse approach – you'll find 3D printers humming alongside soldering stations, microcontrollers sharing space with fabric swatches, and engineering notebooks filled with sketches ranging from circuit designs to sewing patterns.</p>
 
-				<p>Welcome to my digital sanctuary! I'm Mayphus Tang, an innovator, creator, 
-          and lifelong learner whose journey weaves through a tapestry of diverse disciplines and interests. 
-          
-          My path is illuminated by an insatiable curiosity and a profound desire to comprehend the intricacies of the world around me.
-          I strive to cultivate a unique perspective that harmonizes technology, nature, and human knowledge.</p>
+				<p>My journey spans multiple disciplines, each enriching the others:</p>
 
-				<p>As a passionate technologist, I revel in the exploration of the vast possibilities that innovation offers.
-          My journey frequently leads me to engage with a myriad of technologies, 
-          from the realms of artificial intelligence to the complexities of distributed systems, 
-          
-          all while focusing on crafting solutions that foster connection and understanding.
-          My curiosity knows no bounds, extending into the rich landscapes beyond the digital frontier.</p>
+				<ul>
+					<li>Mechanical Engineering: From precision mechanisms to robust machine designs</li>
+					<li>Electronics: Creating custom circuits and interactive systems</li>
+					<li>Software Development: Building tools that bridge the digital and physical worlds</li>
+					<li>3D Printing: Transforming ideas into tangible prototypes</li>
+					<li>Textile Arts: Exploring the fusion of traditional crafts with modern technology</li>
+				</ul>
 
-				<p>Nature, in all its splendor, has been one of my most profound teachers.
-          Whether I'm traversing mountain trails or marveling at the intricate patterns etched in a leaf, 
-          I find boundless inspiration in the natural world. 
-          
-          This deep connection to nature profoundly influences my approach to problem-solving and innovation, 
-          reminding me that the most elegant solutions often reflect the harmonious patterns found in the environment.</p>
+				<p>What drives me is more than just making things – it's understanding the deeper patterns that connect different fields. I find profound inspiration in nature's designs, whether it's studying the structural efficiency of a honeycomb or the distributed intelligence of mycelial networks. These observations often inform my approach to problem-solving, reminding me that the most elegant solutions usually mirror patterns found in the natural world.</p>
 
-				<p>Knowledge, in its myriad forms, propels me forward. 
-          I firmly believe in the transformative power of continuous learning and the vital importance of sharing our insights with others. 
+				<p>My projects reflect this interdisciplinary mindset. You might find me developing a smart garden system one day, designing a custom 3D-printed enclosure the next, and then integrating both with hand-sewn sensors. Each project is an opportunity to learn something new and combine techniques in unexpected ways.</p>
 
-          This space embodies my commitment to both personal growth and collective wisdom,
-          serving as a vibrant platform where ideas can flourish and inspire.</p>
+				<p>Through this website, I share:</p>
 
-				<p>This website is more than just a collection of thoughts; it is a digital canvas where I nurture my ideas, projects, and reflections.
-          It is a space for me to share my journey, insights, and creations with the world. 
-          
-          Here, you will discover a rich tapestry of content that reflects my passions and pursuits.</p>
+				<ul>
+					<li>Detailed Project Documentation: Following the journey from concept to completion</li>
+					<li>Technical Tutorials: Making complex topics accessible while preserving their depth</li>
+					<li>Design Insights: Exploring the thinking behind successful (and failed) projects</li>
+					<li>Resource Collections: Curated tools and references for fellow makers</li>
+					<li>Philosophical Musings: Examining how technology and craftsmanship shape our world</li>
+				</ul>
 
-        <h2>Current Projects</h2>
-        <ul>
-          <li><a href="/projects/">.emacs.d</a> - My Emacs configuration and custom lisp codes</li>
-          <li><a href="/projects/">mayphus.org</a> - This website you are looking at now</li>
-          <li><a href="/projects/">api.mayphus.org</a> - My API playground</li>
-          <li><a href="/projects/">console.mayphus.org</a> - My console playground</li>
-        </ul>
+				<p>I believe strongly in the power of open knowledge and community learning. Every article, tutorial, and project log here is crafted not just to showcase the end result, but to illuminate the learning process itself. I share both successes and failures, believing that understanding why something didn't work is often as valuable as knowing what did.</p>
+
+				<p>This space is more than just a portfolio or blog – it's a living workshop of ideas. Whether you're a seasoned maker, a curious beginner, or someone who simply enjoys seeing how things come together, I hope you'll find something here that sparks your own creative journey.</p>
+
+				<p>I'm always excited to connect with fellow enthusiasts and learners. Feel free to explore the projects, dive into the tutorials, or reach out to share your own making adventures. After all, the best innovations often emerge from unexpected collaborations and shared insights.</p>
+
+				<p>Let's build, learn, and discover together.</p>
 			</article>
 		</main>
 		<footer>
-      <p>by Mayphus,
-        last updated on
-        {new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+			<p>by Mayphus,
+			last updated on
+			{new Date().toLocaleDateString('en-US', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
 		</footer>
 	</body>
 </html>
