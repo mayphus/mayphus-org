@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: mayphus/org
-          token: ${{ secrets.BLOG }}
+          token: ${{ secrets.TOKEN }}
           path: org
 
       - name: Prepare content
