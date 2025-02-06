@@ -23,7 +23,7 @@ const articles = defineCollection({
 const projects = defineCollection({
 	type: 'content',
 	schema: z.object({
-		title: z.string(),
+		title: z.string().optional(),
 	}),
 });
 
