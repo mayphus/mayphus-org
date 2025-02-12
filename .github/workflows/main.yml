@@ -23,9 +23,9 @@ jobs:
 
       - name: Prepare content
         run: |
-          mv org/* src/content/
+          mv org/*.org src/content/notes/
           rm -fr org
-          rm -fr src/content/*.org
+          rm -fr src/content/notes/README.org
           
       - name: Setup
         uses: actions/setup-node@v4
