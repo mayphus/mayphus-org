@@ -2,14 +2,14 @@
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 
-type Props = CollectionEntry<'notes' | 'articles' | 'projects'>['data'];
+type Props = CollectionEntry<'notes'>['data'];
 
 const { title = 'Untitled' } = Astro.props;
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description="felix murray tang's notes, articles, projects, and more" />
+		<BaseHead title={title} description="felix murray tang's notes" />
 	</head>
 
 	<body>
