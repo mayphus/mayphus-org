@@ -23,6 +23,7 @@ jobs:
 
       - name: Prepare content
         run: |
+          mkdir -p src/content/notes
           mv org/*.org src/content/notes/
           rm -fr org
           rm -fr src/content/notes/README.org
