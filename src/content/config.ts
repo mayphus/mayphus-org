@@ -10,6 +10,4 @@ const notes = defineCollection({
 	}),
 });
 
-export const collections = { 
-  'notes': notes,
-};
+export const collections = { notes };
