@@ -1,5 +1,7 @@
 body {
     padding: 0 1rem;
+    max-width: 666px;
+    margin: 0 auto;
 }
 
 a {
