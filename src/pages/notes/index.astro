@@ -7,7 +7,7 @@ let collection;
 collection = await getCollection('notes');
 
 const nodes = collection
-    .filter((node: any) => node.data)
+    .filter((node: any) => node.data && !node.data.filetags?.includes('article') && !node.data.filetags?.includes('project'))
     .sort((a: any, b: any) => {
         const dateA = a.data.date?.valueOf() || 0;
         const dateB = b.data.date?.valueOf() || 0;
@@ -41,7 +41,7 @@ const nodes = collection
 												year: 'numeric',
 											});
 											if (currentDate !== prevDate) {
-												return currentDate || 'Lost in time';
+												return currentDate;
 											} else {
 												return '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0';
 											}
@@ -49,7 +49,7 @@ const nodes = collection
 									</span>
 									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
 										<a href={`/notes/${node.slug}/`}>
-											{node.data.title || 'Untitled'}
+											{node.data.title}
 										</a>
 									</span>
 								</p>
