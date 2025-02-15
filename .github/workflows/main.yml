@@ -30,12 +30,15 @@ jobs:
           
       - name: Setup
         uses: actions/setup-node@v4
-        with:
-          cache: 'npm'
+        # with:
+        #   cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install
 
       - name: Build
         run: |
-          npm install
           npm run build
 
       - name: Deploy
