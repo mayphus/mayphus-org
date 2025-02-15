@@ -1,6 +1,16 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const collection = await getCollection('notes');
+const nodes = collection
+    .filter((node: any) => node.data)
+    .sort((a: any, b: any) => {
+        const dateA = a.data.date?.valueOf() || 0;
+        const dateB = b.data.date?.valueOf() || 0;
+        return dateB - dateA;
+    });
 ---
 
 <!doctype html>
@@ -25,49 +35,37 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
           soldering stations, microcontrollers sharing space with fabric swatches,
           and engineering notebooks filled with sketches ranging from circuit designs to sewing patterns.</p>
 
-				<p>My journey spans multiple disciplines, each enriching the others:</p>
-
+				<p>Here are my projects which may include both hardware and software or other things.</p>
 				<ul>
-					<li>Mechanical Engineering: From precision mechanisms to robust machine designs</li>
-					<li>Electronics: Creating custom circuits and interactive systems</li>
-					<li>Computer Science: Writing code that give machines life</li>
-					<li>3D Printing: Transforming ideas into tangible prototypes</li>
+					{
+						nodes.map((node: any) => (
+							node.data.filetags?.includes('project') && (
+								<li><a href={`/notes/${node.slug}/`}>{node.data.title}</a></li>
+							)
+						))
+					}
 				</ul>
 
-				<p>What drives me is more than just making things – it's understanding the deeper patterns that connect different fields.
-          I find profound inspiration in nature's designs, whether it's studying the structural efficiency of a honeycomb
-          or the distributed intelligence of mycelial networks.
-          These observations often inform my approach to problem-solving,
-          reminding me that the most elegant solutions usually mirror patterns found in the natural world.</p>
-
-				<p>My projects reflect this interdisciplinary mindset. You might find me developing a smart garden system one day,
-          designing a custom 3D-printed enclosure the next, and then integrating both with hand-sewn sensors.
-          Each project is an opportunity to learn something new and combine techniques in unexpected ways.</p>
-
-				<p>Through this website, I share:</p>
-
+				<p>Here are my articles which means not simple notes.</p>
 				<ul>
-					<li>Detailed Project Documentation: Following the journey from concept to completion</li>
-					<li>Technical Tutorials: Making complex topics accessible while preserving their depth</li>
-					<li>Design Insights: Exploring the thinking behind successful (and failed) projects</li>
-					<li>Resource Collections: Curated tools and references for fellow makers</li>
-					<li>Philosophical Musings: Examining how technology and craftsmanship shape our world</li>
+					{
+						nodes.map((node: any) => (
+							node.data.filetags?.includes('article') && (
+								<li><a href={`/notes/${node.slug}/`}>{node.data.title}</a></li>
+							)
+						))
+					}
 				</ul>
-
-				<p>I believe strongly in the power of open knowledge and community learning.
-          Every article, tutorial, and project log here is crafted not just to showcase the end result,
-          but to illuminate the learning process itself. I share both successes and failures,
-          believing that understanding why something didn't work is often as valuable as knowing what did.</p>
-
-				<p>This space is more than just a portfolio or blog – it's a living workshop of ideas.
-          Whether you're a seasoned maker, a curious beginner, or someone who simply enjoys seeing how things come together,
-          I hope you'll find something here that sparks your own creative journey.</p>
 
 				<p>I'm always excited to connect with fellow enthusiasts and learners.
-          Feel free to explore the projects, dive into the tutorials, or reach out to share your own making adventures.
-          After all, the best innovations often emerge from unexpected collaborations and shared insights.</p>
-
-				<p>Let's build, learn, and discover together.</p>
+					Contact me via,</p>
+				<ul>
+					<li><a href="mailto:tangmeifa@gmail.com">Email</a></li>
+					<li><a href="https://github.com/mayphus">GitHub</a></li>
+					<li><a href="https://youtube.com/@mayphustang">YouTube</a></li>
+					<li><a href="https://x.com/mayphustang">X</a></li>
+				</ul>
+				<p>if you want to know more about me.</p>
 			</article>
 		</main>
 	</body>
