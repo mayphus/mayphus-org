@@ -29,12 +29,23 @@ const nodes = collection
 						nodes.map((node: any) => (
 							<li>
 								<p>
-									<span class="date" style="font-size: 0.9em; margin-right: .6em; font-family: monospace;">
-										{node.data.date ? node.data.date.toLocaleDateString('en-US', {
-											day: '2-digit',
-											month: 'short',
-											year: 'numeric',
-										}) : 'Lost in time'}
+									<span class="date" style="color: #666; font-size: 0.9em; margin-right: .6em; font-family: monospace;">
+										{(() => {
+											const currentDate = node.data.date?.toLocaleDateString('en-US', {
+												month: 'short',
+												year: 'numeric',
+											});
+											const prevNode = nodes[nodes.indexOf(node) - 1];
+											const prevDate = prevNode?.data.date?.toLocaleDateString('en-US', {
+												month: 'short',
+												year: 'numeric',
+											});
+											if (currentDate !== prevDate) {
+												return currentDate || 'Lost in time';
+											} else {
+												return '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0';
+											}
+										})()}
 									</span>
 									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
 										<a href={`/notes/${node.slug}/`}>
