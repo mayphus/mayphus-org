@@ -8,25 +8,24 @@ import org from './src/lib/astro-org';
 import { customKeywords } from './src/lib/plugins/keyword';
 import { customHeadline } from './src/lib/plugins/headline';
 
+import partytown from '@astrojs/partytown';
+
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://mayphus.org',
-	integrations: [
-		org({
-			uniorgPlugins: [
-				customKeywords,
-				customHeadline,
-			],
-			rehypePlugins: [
-				[rehypeAutolinkHeadings, { 
-					behavior: 'wrap',
-				}],
-				rehypeHighlight,
-			],
-		}),
-		sitemap(),
-	],
-	prefetch: {
-		prefetchAll: true,
-	},
+    site: 'https://mayphus.org',
+    integrations: [org({
+        uniorgPlugins: [
+            customKeywords,
+            customHeadline,
+        ],
+        rehypePlugins: [
+            [rehypeAutolinkHeadings, { 
+                behavior: 'wrap',
+            }],
+            rehypeHighlight,
+        ],
+		}), sitemap(), partytown()],
+    prefetch: {
+        prefetchAll: true,
+    },
 });
