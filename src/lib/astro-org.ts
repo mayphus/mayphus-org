@@ -1,9 +1,6 @@
 import fs from 'node:fs/promises';
 
-import type { AstroIntegration, ContentEntryType, HookParameters } from 'astro';
-// This rendered seems to be private and is not explicitly exported.
-// @ts-ignore
-import astroJSXRenderer from 'astro/jsx/renderer.js';
+import type { AstroIntegration, ContainerRenderer, ContentEntryType, HookParameters } from 'astro';
 
 import { unified, type PluggableList } from 'unified';
 import { VFile } from 'vfile';
@@ -11,11 +8,15 @@ import uniorg from 'uniorg-parse';
 import orgPlugin, { type OrgPluginOptions } from 'rollup-plugin-orgx';
 import { extractKeywords } from 'uniorg-extract-keywords';
 import { uniorgSlug } from 'uniorg-slug';
+import { fileURLToPath } from 'node:url';
 
 declare module 'vfile' {
   interface DataMap {
     astro: {
-      frontmatter: Record<string, unknown>;
+      frontmatter?: Record<string, any> | undefined;
+      headings?: import('astro').MarkdownHeading[] | undefined;
+      localImagePaths?: string[] | undefined;
+      remoteImagePaths?: string[] | undefined;
     };
   }
 }
@@ -33,6 +34,13 @@ type SetupHookParams = HookParameters<'astro:config:setup'> & {
   addPageExtension: (extension: string) => void;
   addContentEntryType: (contentEntryType: ContentEntryType) => void;
 };
+
+export function getContainerRenderer(): ContainerRenderer {
+  return {
+    name: 'astro:jsx',
+    serverEntrypoint: 'astro-org/server.js',
+  };
+}
 
 export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegration {
   const uniorgPlugins: PluggableList = [
@@ -54,17 +62,20 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
           addPageExtension,
         } = params as SetupHookParams;
 
-        addRenderer(astroJSXRenderer);
+        addRenderer({
+          name: 'astro:jsx',
+          serverEntrypoint: new URL('./server.js', import.meta.url),
+        });
         addPageExtension('.org');
         addContentEntryType({
           extensions: ['.org'],
           async getEntryInfo({ fileUrl, contents }) {
             const processor = unified().use(uniorg).use(uniorgPlugins);
 
-            const f = new VFile({ path: fileUrl, value: contents });
+            const f = new VFile({ path: fileURLToPath(fileUrl), value: contents });
             await processor.run(processor.parse(f), f);
 
-            const frontmatter = f.data.astro!.frontmatter;
+            const frontmatter = f.data.astro?.frontmatter || {};
             return {
               data: frontmatter,
               body: contents,
@@ -125,6 +136,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
                   const fileId = id.split('?')[0];
 
                   code += `\nexport { Content };`;
+                  code += `\nContent[Symbol.for('org-component')] = true;`;
                   code += `\nexport const file = ${JSON.stringify(fileId)};`;
 
                   return code;
