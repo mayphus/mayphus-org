@@ -1,8 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import NodeLayout from '../../layouts/NodeLayout.astro';
-
-import { collections } from '../../content/config';
+import { collections } from '../../content.config';
+import { render } from 'astro:content';
 
 export async function getStaticPaths() {
 	const entries = await Promise.all(
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 			return collection.map(node => ({
 				params: {
 					type: name,
-					slug: node.slug,
+					slug: node.data.slug,
 				},
 				props: { node },
 			}));
@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 const { node } = Astro.props;
-const { Content } = await node.render();
+const { Content } = await render(node);
 ---
 
 <NodeLayout {...node.data}>
