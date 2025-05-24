@@ -1,14 +1,12 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
-let collection;
-collection = await getCollection('notes');
-
+const collection = await getCollection('notes');
 const nodes = collection
-	.filter((node: any) => node.data && !node.data.filetags?.includes('article') && !node.data.filetags?.includes('project'))
-    .sort((a: any, b: any) => {
+	.filter((node) => node.data && node.data.filetags?.includes('article'))
+    .sort((a, b) => {
         const dateA = a.data.date?.valueOf() || 0;
         const dateB = b.data.date?.valueOf() || 0;
         return dateB - dateA;
@@ -23,7 +21,7 @@ const nodes = collection
 	<body>
 		<main>
 			<article>
-				<h1><a href="/">Notes</a></h1>
+				<h1><a href="/">Articles</a></h1>
 				<ul>
 					{
 						nodes.map((node) => (
