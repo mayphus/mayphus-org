@@ -7,7 +7,6 @@ let collection;
 collection = await getCollection('notes');
 
 const nodes = collection
-    .filter((node: any) => node.data && !node.data.filetags?.includes('article') && !node.data.filetags?.includes('project'))
     .sort((a: any, b: any) => {
         const dateA = a.data.date?.valueOf() || 0;
         const dateB = b.data.date?.valueOf() || 0;
