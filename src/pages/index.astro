@@ -41,7 +41,7 @@ const nodes = collection
 					{
 						nodes.map((node: any) => (
 							node.data.filetags?.includes('project') && (
-								<li><a href={`/notes/${node.slug}/`}>{node.data.title}</a></li>
+								<li><a href={`/notes/${node.data.slug}/`}>{node.data.title}</a></li>
 							)
 						))
 					}
@@ -52,7 +52,7 @@ const nodes = collection
 					{
 						nodes.map((node: any) => (
 							node.data.filetags?.includes('article') && (
-								<li><a href={`/notes/${node.slug}/`}>{node.data.title}</a></li>
+								<li><a href={`/notes/${node.data.slug}/`}>{node.data.title}</a></li>
 							)
 						))
 					}
