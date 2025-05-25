@@ -1,10 +1,9 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
-let collection;
-collection = await getCollection('notes');
+const collection = await getCollection('content');
 
 const nodes = collection
 	.filter((node: any) => node.data && !node.data.filetags?.includes('article') && !node.data.filetags?.includes('project'))
@@ -48,7 +47,7 @@ const nodes = collection
 										})()}
 									</span>
 									<span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
-										<a href={`/notes/${node.data.slug}/`}>
+										<a href={`/content/${node.data.slug}/`}>
 											{node.data.title}
 										</a>
 									</span>

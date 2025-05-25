@@ -3,7 +3,7 @@ import BaseHead from '../components/BaseHead.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
-const collection = await getCollection('notes');
+const collection = await getCollection('content');
 const nodes = collection
 	.filter((node) => node.data && node.data.filetags?.includes('project'))
     .sort((a, b) => {
