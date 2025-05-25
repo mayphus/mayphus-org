@@ -23,10 +23,10 @@ jobs:
 
       - name: Prepare content
         run: |
-          mkdir -p notes
-          mv org/*.org notes/
+          mkdir -p content
+          mv org/*.org content/
           rm -fr org
-          rm -fr notes/README.org
+          rm -fr content/README.org
           
       - name: Setup
         uses: actions/setup-node@v4
