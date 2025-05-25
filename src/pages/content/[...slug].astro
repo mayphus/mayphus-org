@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import NodeLayout from '../../layouts/NodeLayout.astro';
+import { collections } from '../../content.config';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const entries = await Promise.all(
+		Object.entries(collections).map(async ([name, _value]) => {
+			const collection = await getCollection(name as keyof typeof collections);
+			return collection.map(node => ({
+				params: {
+					type: name,
+					slug: node.data.slug,
+				},
+				props: { node },
+			}));
+		})
+	);
+	return entries.flat();
+}
+
+const { node } = Astro.props;
+const { Content } = await render(node);
+---
+
+<NodeLayout {...node.data}>
+	<Content />
+</NodeLayout>

@@ -2,7 +2,9 @@
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 
-type Props = CollectionEntry<'notes'>['data'];
+type Props = CollectionEntry<'content'>['data'] & {
+	children?: any;
+};
 
 const { title = 'Untitled' } = Astro.props;
 ---
