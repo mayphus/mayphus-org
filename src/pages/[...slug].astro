@@ -1,0 +1,117 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+// Types
+type PageType = 'notes' | 'projects' | 'articles';
+interface Props {
+    slug: string;
+}
+
+// Route generation
+export async function getStaticPaths() {
+    const pageTypes: PageType[] = ['notes', 'projects', 'articles'];
+    return pageTypes.map(pageType => ({
+        params: { slug: pageType }
+    }));
+}
+
+// Helper functions
+const formatDate = (date: Date): string => {
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        year: 'numeric',
+    });
+};
+
+const filterContentByType = (content: CollectionEntry<'content'>[], pageType: PageType) => {
+    return content.filter((node) => {
+        if (!node.data) return false;
+        
+        switch (pageType) {
+            case 'notes':
+                return !node.data.filetags?.includes('article') && !node.data.filetags?.includes('project');
+            case 'projects':
+                return node.data.filetags?.includes('project');
+            case 'articles':
+                return node.data.filetags?.includes('article');
+            default:
+                return false;
+        }
+    });
+};
+
+const sortContentByDate = (content: CollectionEntry<'content'>[]) => {
+    return content.sort((a, b) => {
+        const dateA = a.data.date?.valueOf() || 0;
+        const dateB = b.data.date?.valueOf() || 0;
+        return dateB - dateA;
+    });
+};
+
+// Page setup
+const { slug } = Astro.params as Props;
+const pageType = slug as PageType;
+const collection = await getCollection('content');
+
+// Process content
+const filteredContent = filterContentByType(collection, pageType);
+const sortedContent = sortContentByDate(filteredContent);
+const pageTitle = pageType.charAt(0).toUpperCase() + pageType.slice(1);
+
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <main>
+            <article>
+                <h1><a href="/">{pageTitle}</a></h1>
+                <ul>
+                    {
+                        sortedContent.map((node, index) => {
+                            const currentDate = node.data.date ? formatDate(node.data.date) : '';
+                            const prevNode = sortedContent[index - 1];
+                            const prevDate = prevNode?.data.date ? formatDate(prevNode.data.date) : '';
+                            const showDate = currentDate !== prevDate;
+                            
+                            return (
+                                <li>
+                                    <p>
+                                        <span class="date" style="color: #666; font-size: 0.9em; margin-right: .6em; font-family: monospace;">
+                                            {showDate ? currentDate : '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'}
+                                        </span>
+                                        <span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
+                                            <a href={`/content/${node.data.slug}/`}>
+                                                {node.data.title}
+                                            </a>
+                                        </span>
+                                    </p>
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </article>
+        </main>
+    </body>
+</html>
+
+<style>
+    ul {
+        list-style: none;
+        padding-left: 0;
+    }
+    p a {
+        text-decoration: none;
+        color: inherit;
+    }
+    article {
+        margin-bottom: 1em;
+    }
+</style>
