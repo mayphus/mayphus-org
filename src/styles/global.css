@@ -31,6 +31,12 @@ nav a[target="_blank"]:hover {
   opacity: 1;
 }
 
+/* Fix Lighthouse warning for H1 in article on individual content pages */
+article h1 {
+  font-size: 2rem;
+  margin: 0.67em 0;
+}
+
 .date {
   color: #666;
   font-size: 0.9em;
