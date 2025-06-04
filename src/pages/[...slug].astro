@@ -70,8 +70,8 @@ const pageTitle = pageType.charAt(0).toUpperCase() + pageType.slice(1);
     </head>
     <body>
         <main>
+            <h1><a href="/">{pageTitle}</a></h1>
             <article>
-                <h1><a href="/">{pageTitle}</a></h1>
                 {
                     (() => {
                         type GroupedContent = { date: string; items: typeof sortedContent };
