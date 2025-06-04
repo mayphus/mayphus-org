@@ -24,11 +24,11 @@ nav {
 
 nav a[target="_blank"] {
   font-style: italic;
-  opacity: 0.7;
+  color: #666;
 }
 
 nav a[target="_blank"]:hover {
-  opacity: 1;
+  color: inherit;
 }
 
 /* Fix Lighthouse warning for H1 in article on individual content pages */
@@ -38,7 +38,7 @@ article h1 {
 }
 
 .date {
-  color: #666;
+  color: #555;
   font-size: 0.9em;
   font-family: monospace;
   margin: 1.5rem 0 0.5rem 0;
@@ -48,6 +48,18 @@ article h1 {
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #1a1a1a;
+    color: #e0e0e0;
+  }
+  
+  .date {
+    color: #bbb;
+  }
+  
+  nav a[target="_blank"] {
+    color: #bbb;
+  }
+  
+  nav a[target="_blank"]:hover {
     color: #e0e0e0;
   }
 }
