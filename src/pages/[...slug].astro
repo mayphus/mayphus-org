@@ -72,34 +72,45 @@ const pageTitle = pageType.charAt(0).toUpperCase() + pageType.slice(1);
         <main>
             <article>
                 <h1><a href="/">{pageTitle}</a></h1>
-                <ul>
-                    {
-                        sortedContent.map((node, index) => {
-                            const currentDate = node.data.date ? formatDate(node.data.date) : '';
-                            const prevNode = sortedContent[index - 1];
-                            const prevDate = prevNode?.data.date ? formatDate(prevNode.data.date) : '';
-                            const showDate = currentDate !== prevDate;
-                            
-                            return (
-                                <li>
-                                    <p>
-                                        <span class="date">
-                                            {showDate ? currentDate : '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'}
-                                        </span>
-                                        <span class="title">
+                {
+                    (() => {
+                        type GroupedContent = { date: string; items: typeof sortedContent };
+                        const grouped: GroupedContent[] = [];
+                        let currentGroup: GroupedContent = { date: '', items: [] };
+                        
+                        sortedContent.forEach((node) => {
+                            const dateStr = node.data.date ? formatDate(node.data.date) : '';
+                            if (dateStr !== currentGroup.date) {
+                                if (currentGroup.items.length > 0) {
+                                    grouped.push(currentGroup);
+                                }
+                                currentGroup = { date: dateStr, items: [node] };
+                            } else {
+                                currentGroup.items.push(node);
+                            }
+                        });
+                        
+                        if (currentGroup.items.length > 0) {
+                            grouped.push(currentGroup);
+                        }
+                        
+                        return grouped.map((group) => (
+                            <div>
+                                {group.date && <div class="date">{group.date}</div>}
+                                <ul>
+                                    {group.items.map((node) => (
+                                        <li>
                                             <a href={`/content/${node.data.slug}/`}>
                                                 {node.data.title}
                                             </a>
-                                        </span>
-                                    </p>
-                                </li>
-                            );
-                        })
-                    }
-                </ul>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ));
+                    })()
+                }
             </article>
         </main>
     </body>
 </html>
-
-
