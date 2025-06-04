@@ -83,10 +83,10 @@ const pageTitle = pageType.charAt(0).toUpperCase() + pageType.slice(1);
                             return (
                                 <li>
                                     <p>
-                                        <span class="date" style="color: #666; font-size: 0.9em; margin-right: .6em; font-family: monospace;">
+                                        <span class="date">
                                             {showDate ? currentDate : '\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'}
                                         </span>
-                                        <span class="title" style="margin: 0 0 0.5em 0; padding: 0; line-height: 1.2;">
+                                        <span class="title">
                                             <a href={`/content/${node.data.slug}/`}>
                                                 {node.data.title}
                                             </a>
@@ -113,5 +113,16 @@ const pageTitle = pageType.charAt(0).toUpperCase() + pageType.slice(1);
     }
     article {
         margin-bottom: 1em;
+    }
+    .date {
+        color: #666;
+        font-size: 0.9em;
+        margin-right: .6em;
+        font-family: monospace;
+    }
+    .title {
+        margin: 0 0 0.5em 0;
+        padding: 0;
+        line-height: 1.2;
     }
 </style>
