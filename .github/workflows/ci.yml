@@ -36,10 +36,11 @@ jobs:
       - name: Build
         run: |
           npm install
+          npm run astro check
           npm run build
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: pages deploy dist --project-name mayphus
+          wranglerVersion: 4.19.1
