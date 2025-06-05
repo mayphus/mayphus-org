@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "mayphus-org",
+  "name": "mayphus",
   "compatibility_date": "2025-06-05",
   "assets": {
     "directory": "./dist",
