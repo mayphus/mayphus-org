@@ -38,8 +38,8 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
 <!-- Google tag (gtag.js) -->
-<script type="text/partytown" is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC"></script>
-<script type="text/partytown" is:inline>
+<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC"></script>
+<script is:inline>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());

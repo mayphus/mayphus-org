@@ -8,8 +8,6 @@ import org from './src/lib/astro-org';
 import { customKeywords } from './src/lib/plugins/keyword';
 import { customHeadline } from './src/lib/plugins/headline';
 
-import partytown from '@astrojs/partytown';
-
 // https://astro.build/config
 export default defineConfig({
     site: 'https://mayphus.org',
@@ -24,7 +22,7 @@ export default defineConfig({
             }],
             rehypeHighlight,
         ],
-		}), sitemap(), partytown()],
+		}), sitemap()],
     prefetch: {
         prefetchAll: true,
     },
