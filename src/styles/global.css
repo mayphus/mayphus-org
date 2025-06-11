@@ -1,49 +1,138 @@
+/* Import self-hosted fonts */
+@import '@fontsource/source-serif-pro/400.css';
+@import '@fontsource/source-serif-pro/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/source-sans-pro/400.css';
+@import '@fontsource/source-sans-pro/600.css';
+
 /* Import highlight.js theme for code syntax highlighting */
 @import 'highlight.js/styles/github.css' (prefers-color-scheme: light);
 @import 'highlight.js/styles/github-dark.css' (prefers-color-scheme: dark);
 
 body {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Source Serif Pro", Georgia, serif;
   font-size: 18px;
-  line-height: 1.4;
-  max-width: 60ch;
+  line-height: 1.6;
+  max-width: 65ch;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 2rem 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 a:hover {
   text-decoration: underline;
+  color: #333;
+}
+a:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+  text-decoration: underline;
 }
 
-nav {
-  display: flex;
-  gap: 0.5rem;
+
+/* Footer with navigation */
+footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.footer-nav {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.9em;
+  margin-bottom: 1.5rem;
 }
 
-nav a[target="_blank"] {
+.footer-nav a {
+  margin: 0 0.75rem;
+  font-weight: 600;
+}
+
+footer p {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.9em;
+  margin-bottom: 0.5rem;
+  color: #777;
+}
+
+.contact-links {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.85em;
+}
+
+.contact-links a {
+  margin: 0 0.5rem;
   font-style: italic;
-  color: #666;
+  color: #777;
 }
 
-nav a[target="_blank"]:hover {
-  color: inherit;
+/* Improved heading styles */
+h1 {
+  font-family: "Source Serif Pro", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 1rem 0 1rem 0;
+  line-height: 1.3;
+}
+
+h2 {
+  font-family: "Source Serif Pro", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem 0;
+  line-height: 1.3;
+}
+
+h3 {
+  font-family: "Source Serif Pro", Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem 0;
+  line-height: 1.3;
 }
 
 /* Fix Lighthouse warning for H1 in article on individual content pages */
 article h1 {
   font-size: 2rem;
-  margin: 0.67em 0;
+  margin: 0 0 1rem 0;
+}
+
+/* Better paragraph spacing */
+p {
+  margin: 1rem 0;
+}
+
+/* Improved list styling */
+ul, ol {
+  margin: 1.5rem 0;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin: 0.75rem 0;
+  line-height: 1.5;
+}
+
+/* Special styling for content lists (projects, articles) */
+ul li a {
+  display: inline-block;
+  padding: 0.1rem 0;
+}
+
+ul li a:hover {
+  color: #000;
 }
 
 .date {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
   color: #555;
   font-size: 0.9em;
-  font-family: monospace;
   margin: 1.5rem 0 0.5rem 0;
   font-weight: 500;
 }
@@ -57,7 +146,7 @@ pre.hljs,
   border-radius: 6px;
   padding: 1rem;
   overflow-x: auto;
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: "JetBrains Mono", 'SF Mono', Monaco, 'Cascadia Code', monospace;
   font-size: 0.85em;
   line-height: 1.45;
   
@@ -83,7 +172,7 @@ pre.hljs code,
 }
 
 code {
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-family: "JetBrains Mono", 'SF Mono', Monaco, 'Cascadia Code', monospace;
   font-size: 0.85em;
 }
 
@@ -95,9 +184,35 @@ code {
   font-size: 0.85em;
 }
 
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    padding: 1.5rem 1rem;
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  h2 {
+    font-size: 1.35rem;
+  }
+  
+  h3 {
+    font-size: 1.15rem;
+  }
+  
+  .footer-nav a {
+    margin: 0 0.5rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #1a1a1a;
+    background-color: #1e1e1e;
     color: #e0e0e0;
   }
   
@@ -113,6 +228,15 @@ code {
     color: #e0e0e0;
   }
   
+  /* Better contrast for footer in dark mode */
+  footer p {
+    color: #bbb;
+  }
+  
+  .contact-links a {
+    color: #bbb;
+  }
+  
   /* Dark mode code styling */
   pre,
   pre.hljs,
@@ -123,5 +247,47 @@ code {
   :not(pre) > code {
     background: #262c36;
     color: #e6edf3;
+  }
+  
+  
+  /* Dark mode link improvements */
+  a:hover {
+    color: #f0f0f0;
+  }
+  
+  ul li a:hover {
+    color: #fff;
+  }
+  
+  /* Dark mode focus states */
+  a:focus {
+    outline-color: #66b3ff;
+  }
+}
+
+/* Print styles for academic papers */
+@media print {
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+  
+  pre, code {
+    page-break-inside: avoid;
+  }
+  
+  footer {
+    display: none;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
   }
 }
