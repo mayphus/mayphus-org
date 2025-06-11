@@ -17,9 +17,72 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Preload critical fonts to avoid layout shift -->
-<link rel="preload" href="/_astro/source-serif-pro-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/_astro/source-sans-pro-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<!-- CSS loaded via Astro's import system -->
+
+<!-- Resource hints for external services -->
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+
+<!-- Load non-critical CSS asynchronously - Astro handles this automatically -->
+<!-- Non-critical styles will be loaded by Astro's built-in optimization -->
+
+<!-- Lazy-loaded syntax highlighting with Intersection Observer -->
+<script>
+  let highlightLoaded = false;
+
+  async function loadHighlight() {
+    if (highlightLoaded) return;
+    highlightLoaded = true;
+
+    // Dynamically import highlight.js and languages
+    const [{ default: hljs }, javascript, python, bash, css, lisp] = await Promise.all([
+      import('highlight.js/lib/core'),
+      import('highlight.js/lib/languages/javascript'),
+      import('highlight.js/lib/languages/python'), 
+      import('highlight.js/lib/languages/bash'),
+      import('highlight.js/lib/languages/css'),
+      import('highlight.js/lib/languages/lisp')
+    ]);
+
+    // Register languages
+    hljs.registerLanguage('javascript', javascript.default);
+    hljs.registerLanguage('python', python.default);
+    hljs.registerLanguage('bash', bash.default);
+    hljs.registerLanguage('shell', bash.default); // alias
+    hljs.registerLanguage('css', css.default);
+    hljs.registerLanguage('lisp', lisp.default);
+    hljs.registerLanguage('emacs-lisp', lisp.default); // use lisp for emacs-lisp
+
+    // Highlight all code blocks
+    document.querySelectorAll('pre code').forEach(block => {
+      hljs.highlightElement(block as HTMLElement);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const codeBlocks = document.querySelectorAll('pre code');
+    if (codeBlocks.length === 0) return;
+
+    // Use Intersection Observer for lazy loading
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadHighlight();
+            observer.disconnect(); // Load once and stop observing
+          }
+        });
+      }, { 
+        rootMargin: '50px' // Start loading 50px before code comes into view
+      });
+
+      // Observe all code blocks
+      codeBlocks.forEach(block => observer.observe(block));
+    } else {
+      // Fallback: load immediately if no Intersection Observer
+      loadHighlight();
+    }
+  });
+</script>
 
 <link rel="canonical" href={canonicalURL} />
 
@@ -39,18 +102,45 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-<!-- Google tag (gtag.js) - deferred for performance -->
+<!-- Structured data for better SEO -->
+<script type="application/ld+json" is:inline>
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mayphus Tang",
+  "description": "A dad, a maker, a perpetual learner",
+  "url": "https://mayphus.org",
+  "sameAs": [
+    "https://github.com/mayphus"
+  ]
+}
+</script>
+
+<!-- Optimized Google Analytics - loads after critical resources -->
 <script is:inline>
-  // Defer analytics loading to not block render
-  window.addEventListener('load', function() {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC';
-    document.head.appendChild(script);
-    
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XLGB1ZDPYC');
-  });
+  // Initialize dataLayer immediately
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  
+  // Load analytics after page is interactive
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC';
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', 'G-XLGB1ZDPYC');
+    });
+  } else {
+    // Fallback for browsers without requestIdleCallback
+    setTimeout(() => {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC';
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', 'G-XLGB1ZDPYC');
+    }, 1000);
+  }
 </script>

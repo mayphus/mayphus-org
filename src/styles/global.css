@@ -5,9 +5,9 @@
 @import '@fontsource/source-sans-pro/latin-400.css' layer(fonts);
 @import '@fontsource/source-sans-pro/latin-600.css' layer(fonts);
 
-/* Import highlight.js theme for code syntax highlighting */
-@import 'highlight.js/styles/github.css' (prefers-color-scheme: light);
-@import 'highlight.js/styles/github-dark.css' (prefers-color-scheme: dark);
+/* Highlight.js styles - loaded non-blocking */
+@import 'highlight.js/styles/github.css' layer(highlighting) (prefers-color-scheme: light);
+@import 'highlight.js/styles/github-dark.css' layer(highlighting) (prefers-color-scheme: dark);
 
 body {
   font-family: "Source Serif Pro", Georgia, serif;
@@ -24,14 +24,36 @@ a {
   text-decoration: none;
   transition: color 0.2s ease;
 }
+
 a:hover {
   text-decoration: underline;
   color: #333;
 }
+
 a:focus {
   outline: 2px solid #0066cc;
   outline-offset: 2px;
   text-decoration: underline;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #0066cc;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 100;
+  transform: translateY(-100%);
+  transition: transform 0.3s;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline-color: white;
 }
 
 
@@ -57,7 +79,7 @@ footer p {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.95em;
   margin-bottom: 0.5rem;
-  color: #666;
+  color: #555; /* Improved contrast for accessibility */
 }
 
 .contact-links {
@@ -68,7 +90,7 @@ footer p {
 .contact-links a {
   margin: 0 0.5rem;
   font-style: italic;
-  color: #666;
+  color: #555; /* Improved contrast for accessibility */
 }
 
 /* Improved heading styles */
@@ -76,7 +98,7 @@ h1 {
   font-family: "Source Serif Pro", Georgia, serif;
   font-size: 2rem;
   font-weight: 700;
-  margin: 1rem 0 1rem 0;
+  margin: 1rem 0;
   line-height: 1.3;
 }
 
@@ -84,7 +106,7 @@ h2 {
   font-family: "Source Serif Pro", Georgia, serif;
   font-size: 1.5rem;
   font-weight: 700;
-  margin: 2rem 0 1rem 0;
+  margin: 2rem 0 1rem;
   line-height: 1.3;
 }
 
@@ -92,7 +114,7 @@ h3 {
   font-family: "Source Serif Pro", Georgia, serif;
   font-size: 1.25rem;
   font-weight: 700;
-  margin: 1.5rem 0 0.75rem 0;
+  margin: 1.5rem 0 0.75rem;
   line-height: 1.3;
 }
 
@@ -105,7 +127,6 @@ section h1 {
   margin: 0 0 1rem 0;
 }
 
-/* Better paragraph spacing */
 p {
   margin: 1rem 0;
 }

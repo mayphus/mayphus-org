@@ -69,7 +69,8 @@ const pageTitle = pageType.charAt(0).toUpperCase() + pageType.slice(1);
         <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     </head>
     <body>
-        <main>
+        <a href="#main" class="skip-link">Skip to main content</a>
+        <main id="main">
             <h1><a href="/">{pageTitle}</a></h1>
             <article>
                 {
