@@ -1,3 +1,7 @@
+/* Import highlight.js theme for code syntax highlighting */
+@import 'highlight.js/styles/github.css' (prefers-color-scheme: light);
+@import 'highlight.js/styles/github-dark.css' (prefers-color-scheme: dark);
+
 body {
   font-family: "Times New Roman", Times, serif;
   font-size: 18px;
@@ -44,6 +48,53 @@ article h1 {
   font-weight: 500;
 }
 
+/* Code block styling */
+pre,
+pre.hljs,
+.hljs {
+  background: transparent !important;
+  border: 1px solid #e1e5e9;
+  border-radius: 6px;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.85em;
+  line-height: 1.45;
+  
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for WebKit browsers */
+pre::-webkit-scrollbar,
+pre.hljs::-webkit-scrollbar,
+.hljs::-webkit-scrollbar {
+  display: none;
+}
+
+/* Remove borders from nested code elements */
+pre code,
+pre.hljs code,
+.hljs code {
+  border: none !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+code {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.85em;
+}
+
+/* Inline code */
+:not(pre) > code {
+  background: #f6f8fa;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #1a1a1a;
@@ -60,5 +111,17 @@ article h1 {
   
   nav a[target="_blank"]:hover {
     color: #e0e0e0;
+  }
+  
+  /* Dark mode code styling */
+  pre,
+  pre.hljs,
+  .hljs {
+    border-color: #30363d;
+  }
+  
+  :not(pre) > code {
+    background: #262c36;
+    color: #e6edf3;
   }
 }
