@@ -9,7 +9,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "npm run build && wrangler deploy",
-    "dev:wrangler": "wrangler dev"
+    "dev:wrangler": "wrangler dev",
+    "test": "tsx --test tests/*.test.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -26,6 +27,7 @@
     "uniorg-slug": "^1.1.0"
   },
   "devDependencies": {
+    "tsx": "^4.19.4",
     "wrangler": "^4.19.1"
   }
 }
