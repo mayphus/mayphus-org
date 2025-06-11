@@ -17,7 +17,9 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- Self-hosted fonts via npm packages -->
+<!-- DNS prefetch for better font loading performance -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
 
 <link rel="canonical" href={canonicalURL} />
 
@@ -37,12 +39,18 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
 
-<!-- Google tag (gtag.js) -->
-<script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC"></script>
+<!-- Google tag (gtag.js) - deferred for performance -->
 <script is:inline>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-XLGB1ZDPYC');
+  // Defer analytics loading to not block render
+  window.addEventListener('load', function() {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC';
+    document.head.appendChild(script);
+    
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XLGB1ZDPYC');
+  });
 </script>
