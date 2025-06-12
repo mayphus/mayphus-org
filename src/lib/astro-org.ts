@@ -9,6 +9,7 @@ import orgPlugin, { type OrgPluginOptions } from 'rollup-plugin-orgx';
 import { extractKeywords } from 'uniorg-extract-keywords';
 import { uniorgSlug } from 'uniorg-slug';
 import { fileURLToPath } from 'node:url';
+import { resolveIdLinks } from './plugins/id-link.js';
 
 declare module 'vfile' {
   interface DataMap {
@@ -47,6 +48,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
     initFrontmatter,
     [extractKeywords, { name: 'keywords' }],
     keywordsToFrontmatter,
+    resolveIdLinks,
     uniorgSlug,
 	...(options.uniorgPlugins ?? []),
   ];
