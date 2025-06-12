@@ -7,6 +7,7 @@ import rehypeHighlight from 'rehype-highlight';
 import org from './src/lib/astro-org';
 import { customKeywords } from './src/lib/plugins/keyword';
 import { customHeadline } from './src/lib/plugins/headline';
+import { denoteLink } from './src/lib/plugins/denote-link';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,6 +16,7 @@ export default defineConfig({
         uniorgPlugins: [
             customKeywords,
             customHeadline,
+            denoteLink,
         ],
         rehypePlugins: [
             [rehypeAutolinkHeadings, { 

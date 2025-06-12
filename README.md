@@ -52,6 +52,17 @@ This is the source code for [mayphus.org](https://mayphus.org/), the digital wor
 
 Visit [http://localhost:4321](http://localhost:4321) to view the site locally.
 
+## 🔗 Denote ID Links
+
+Links like `[[id:20240101T000000]]` created with the Emacs Denote package are automatically converted to regular file links when building the site. The `denoteLink` plugin scans filenames in the `content/` directory and maps IDs to their slugs.
+
+To check that ID links resolve correctly:
+
+1. Add an Org file named `20240101T000000--example.org` under `content/`.
+2. Create a link `[[id:20240101T000000][Example]]` in another note.
+3. Run `npm run build` and open the generated HTML for that note in `dist/`.
+4. The link should point to `/content/example/`.
+
 ## 🤝 Contributing
 
 Contributions, suggestions, and ideas are welcome! Feel free to open issues or pull requests. For content, submit Org-mode files or improvements to the publishing pipeline.
