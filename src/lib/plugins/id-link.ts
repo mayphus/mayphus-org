@@ -2,28 +2,29 @@ import { visit } from 'unist-util-visit';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-// Resolve Denote ID links to actual file paths
+// Resolve Denote ID links to actual file paths (rehype plugin)
 export const resolveIdLinks = () => {
   return async (tree: any, _file: any) => {
     const idLinks: any[] = [];
     
-    // Find org-mode ID links - they appear as link nodes with path property containing the identifier
+    // Find HTML anchor elements with href starting with "id:"
     visit(tree, (node: any) => {
-      if (node.type === 'link' && node.path && node.path.match(/^\d{8}T\d{6}$/)) {
-        // This looks like a Denote identifier
+      if (node.type === 'element' && 
+          node.tagName === 'a' && 
+          node.properties?.href && 
+          node.properties.href.startsWith('id:')) {
         idLinks.push(node);
       }
     });
 
     // Resolve each ID link
     for (const linkNode of idLinks) {
-      const identifier = linkNode.path;
+      const identifier = linkNode.properties.href.replace('id:', '');
       const resolvedSlug = await resolveIdentifierToSlug(identifier);
       
       if (resolvedSlug) {
-        // Convert to content route format - replace path with url
-        linkNode.url = `/content/${resolvedSlug}/`;
-        delete linkNode.path; // Remove the path property
+        // Convert to content route format
+        linkNode.properties.href = `/content/${resolvedSlug}/`;
       }
     }
   };

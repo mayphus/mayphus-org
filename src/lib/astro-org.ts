@@ -48,7 +48,6 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
     initFrontmatter,
     [extractKeywords, { name: 'keywords' }],
     keywordsToFrontmatter,
-    resolveIdLinks,
     uniorgSlug,
 	...(options.uniorgPlugins ?? []),
   ];
@@ -122,6 +121,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
                   uniorgPlugins,
                   rehypePlugins: [
                     ...(options.rehypePlugins ?? []),
+                    resolveIdLinks,
                     // rehypeExportFrontmatter,
                   ],
                   development: false,
