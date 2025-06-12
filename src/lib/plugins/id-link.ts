@@ -2,24 +2,24 @@ import { visit } from 'unist-util-visit';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-// Resolve Denote ID links to actual file paths (rehype plugin)
+// Resolve Denote links to actual file paths (rehype plugin)
 export const resolveIdLinks = () => {
   return async (tree: any, _file: any) => {
     const idLinks: any[] = [];
     
-    // Find HTML anchor elements with href starting with "id:"
+    // Find HTML anchor elements with href starting with "denote:"
     visit(tree, (node: any) => {
       if (node.type === 'element' && 
           node.tagName === 'a' && 
           node.properties?.href && 
-          node.properties.href.startsWith('id:')) {
+          node.properties.href.startsWith('denote:')) {
         idLinks.push(node);
       }
     });
 
     // Resolve each ID link
     for (const linkNode of idLinks) {
-      const identifier = linkNode.properties.href.replace('id:', '');
+      const identifier = linkNode.properties.href.replace('denote:', '');
       const resolvedSlug = await resolveIdentifierToSlug(identifier);
       
       if (resolvedSlug) {
