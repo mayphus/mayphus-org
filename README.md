@@ -16,19 +16,76 @@ This is the source code for [mayphus.org](https://mayphus.org/), the digital wor
 
 ## 🚀 Features
 
-- **Content-First**: Prioritizes meaningful content over flashy design
-- **Minimalist & Readable**: Clean, distraction-free interface
-- **Org-mode Powered**: Write in Emacs Org-mode, publish with Astro + uniorg
-- **Notes, Articles, Projects**: All organized and easily browsable
-- **Modern Stack**: Astro, TypeScript, custom Org-mode pipeline
-- **Responsive & Accessible**: Works on all devices, dark mode ready
+### **Core Content System**
+- **Custom Org-mode Integration**: Native `.org` file processing with custom Astro integration
+- **Denote Convention Support**: Structured filenames (`YYYYMMDDTHHMMSS--title__tags.org`)
+- **Cross-linking System**: Denote-style ID linking between content pieces
+- **Content Collections**: Type-safe content with Zod schema validation
+- **Dynamic Classification**: Automatic categorization into articles, projects, and notes
+
+### **Content Management**
+- **Emacs Workflow**: Seamless integration with Emacs org-mode for writing
+- **Frontmatter Extraction**: Automatic processing of Org-mode keywords
+- **Tag-based Organization**: Flexible content classification and filtering
+- **Date-based Navigation**: Chronological browsing with month/year grouping
+- **Personal Knowledge Base**: Bridges private notes and public content
+
+### **Performance & Optimization**
+- **Lazy-loaded Syntax Highlighting**: Intersection Observer for code blocks
+- **Optimized Font Loading**: Non-blocking fonts with CSS layers
+- **Async Analytics**: Deferred Google Analytics with requestIdleCallback
+- **Prefetch All Links**: Built-in Astro prefetching for instant navigation
+- **Edge Deployment**: Cloudflare Workers for global performance
+
+### **Developer Experience**
+- **TypeScript**: Full type safety with strict null checks
+- **Hot Reload**: Instant development feedback with Astro dev server
+- **Plugin Architecture**: Extensible content processing system
+- **Build Integration**: TypeScript checking integrated with build process
+- **Custom Plugins**: Keyword processing, headline adjustment, link resolution
+
+### **Design & Accessibility**
+- **Responsive Design**: Mobile-first approach with semantic breakpoints
+- **Dark Mode**: Automatic theme switching via CSS media queries
+- **Typography System**: Source Serif Pro, Source Sans Pro, JetBrains Mono
+- **Accessibility**: Skip links, focus management, WCAG-compliant contrast
+- **Print Optimization**: Academic paper formatting for print media
+
+### **Code Highlighting**
+- **Highlight.js Integration**: Syntax highlighting with GitHub themes
+- **Multi-language Support**: JavaScript, Python, Bash, CSS, Lisp, Emacs Lisp
+- **Dynamic Loading**: Languages loaded on-demand for performance
+- **Custom Styling**: Light/dark theme support with custom overrides
+
+### **SEO & Social**
+- **RSS Feed**: Full-content RSS feed generation
+- **Sitemap**: Automatic sitemap generation
+- **Open Graph**: Social media preview support
+- **Twitter Cards**: Twitter-specific metadata
+- **Structured Data**: JSON-LD Person schema
+- **Canonical URLs**: Proper URL canonicalization
 
 ## 🛠️ Tech Stack
 
-- [Astro](https://astro.build) — Content-driven web framework
-- [uniorg](https://github.com/rasendubi/uniorg) — Org-mode parser for JS/TS
-- [TypeScript](https://www.typescriptlang.org/)
-- [Cloudflare Pages](https://pages.cloudflare.com/) — Hosting & CI/CD
+**Core Framework**
+- [Astro 5.9.2](https://astro.build) — Modern static site generator with SSR
+- [TypeScript](https://www.typescriptlang.org/) — Full type safety with strict null checks
+- [Vite](https://vitejs.dev/) — Build tooling and development server
+
+**Content Processing**
+- [uniorg](https://github.com/rasendubi/uniorg) — Org-mode parser for JavaScript/TypeScript
+- [rollup-plugin-orgx](https://www.npmjs.com/package/rollup-plugin-orgx) — Org-mode to JSX compilation
+- [Zod](https://zod.dev/) — Schema validation for content collections
+
+**Deployment & Performance**
+- [Cloudflare Workers](https://workers.cloudflare.com/) — Edge deployment and hosting
+- [Wrangler](https://developers.cloudflare.com/workers/wrangler/) — Cloudflare CLI and deployment
+- [Highlight.js](https://highlightjs.org/) — Syntax highlighting for code blocks
+
+**Development Tools**
+- [Astro Integrations](https://docs.astro.build/en/guides/integrations-guide/) — RSS, Sitemap, Prefetch
+- Custom Org-mode integration with rehype plugins
+- Google Analytics with performance optimizations
 
 ## 📚 Content
 
