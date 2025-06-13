@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import pagefind from 'astro-pagefind';
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeHighlight from 'rehype-highlight';
@@ -26,7 +27,7 @@ export default defineConfig({
             rehypeHighlight,
             addBackLinks,
         ],
-		}), sitemap()],
+		}), sitemap(), pagefind()],
     prefetch: {
         prefetchAll: true,
     },

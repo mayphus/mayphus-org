@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import Search from '../components/Search.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
 
@@ -61,5 +62,6 @@ const nodes = collection
 			
 			<Footer />
 		</main>
+		<Search />
 	</body>
 </html>
