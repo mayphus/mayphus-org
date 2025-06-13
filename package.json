@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "npm run build && wrangler deploy",
-    "dev:wrangler": "wrangler dev"
+    "dev:wrangler": "wrangler dev",
+    "sync": "./scripts/sync-content.sh",
+    "dev:sync": "npm run sync && npm run dev"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

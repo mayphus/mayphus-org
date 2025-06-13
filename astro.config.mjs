@@ -7,6 +7,8 @@ import rehypeHighlight from 'rehype-highlight';
 import org from './src/lib/astro-org';
 import { customKeywords } from './src/lib/plugins/keyword';
 import { customHeadline } from './src/lib/plugins/headline';
+import { resolveIdLinks } from './src/lib/plugins/id-link';
+import { addBackLinks } from './src/lib/plugins/backlinks';
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,10 +19,12 @@ export default defineConfig({
             customHeadline,
         ],
         rehypePlugins: [
+            resolveIdLinks,
             [rehypeAutolinkHeadings, { 
                 behavior: 'wrap',
             }],
             rehypeHighlight,
+            addBackLinks,
         ],
 		}), sitemap()],
     prefetch: {

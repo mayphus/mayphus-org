@@ -36,6 +36,26 @@ a:focus {
   text-decoration: underline;
 }
 
+/* Style for links within paragraphs (content links) */
+p a {
+  color: #0066cc;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color 0.2s ease;
+}
+
+p a:hover {
+  color: #0052a3;
+  border-bottom-color: #0066cc;
+  text-decoration: none;
+}
+
+p a:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+  border-bottom-color: #0066cc;
+}
+
 /* Skip link for accessibility */
 .skip-link {
   position: absolute;
@@ -287,6 +307,20 @@ code {
     color: #e6edf3;
   }
   
+  /* Dark mode paragraph links */
+  p a {
+    color: #66b3ff;
+  }
+  
+  p a:hover {
+    color: #4da6ff;
+    border-bottom-color: #66b3ff;
+  }
+  
+  p a:focus {
+    outline-color: #66b3ff;
+    border-bottom-color: #66b3ff;
+  }
   
   /* Dark mode link improvements */
   a:hover {
@@ -300,6 +334,62 @@ code {
   /* Dark mode focus states */
   a:focus {
     outline-color: #66b3ff;
+  }
+}
+
+/* Backlinks section styling */
+.backlinks {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e1e5e9;
+}
+
+.backlinks h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #666;
+  margin: 0 0 1rem 0;
+}
+
+.backlinks ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.backlinks li {
+  margin: 0.5rem 0;
+}
+
+.backlinks a {
+  font-size: 0.95em;
+  color: #555;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  display: block;
+}
+
+.backlinks a:hover {
+  color: #000;
+  text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+  .backlinks {
+    border-top-color: #30363d;
+  }
+  
+  .backlinks h2 {
+    color: #8b949e;
+  }
+  
+  .backlinks a {
+    color: #adbac7;
+  }
+  
+  .backlinks a:hover {
+    color: #f0f6fc;
   }
 }
 

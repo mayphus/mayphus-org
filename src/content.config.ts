@@ -9,6 +9,7 @@ const content = defineCollection({
 		filetags: z.array(z.string()).optional(),
 		description: z.string().optional(),
 		slug: z.string(),
+		identifier: z.string().optional(),
 	}),
 });
 
