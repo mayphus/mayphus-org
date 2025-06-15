@@ -273,13 +273,12 @@ pre.hljs,
   background: transparent !important;
   border: 1px solid #e1e5e9;
   border-radius: 8px;
-  padding: 1.5rem;
-  margin: 2rem 0;
+  padding: 1rem;
+  margin: 0.5rem 0;
   overflow-x: auto;
   font-family: "JetBrains Mono", 'SF Mono', Monaco, 'Cascadia Code', monospace;
   font-size: 0.875em;
-  line-height: 1.5;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  line-height: 1.4;
   
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
@@ -302,6 +301,20 @@ pre.hljs code,
   background: transparent !important;
 }
 
+/* Ensure all highlight.js elements have transparent background */
+.hljs,
+pre.hljs,
+pre[class*="language-"],
+code[class*="language-"],
+.hljs-built_in,
+.hljs-keyword,
+.hljs-string,
+.hljs-comment,
+.hljs-number {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
 code {
   font-family: "JetBrains Mono", 'SF Mono', Monaco, 'Cascadia Code', monospace;
   font-size: 0.85em;
@@ -309,17 +322,11 @@ code {
 
 /* Inline code */
 :not(pre) > code {
-  background: #f6f8fa;
-  padding: 0.2em 0.4em;
+  background: transparent;
+  border: 1px solid #e1e5e9;
+  padding: 0.1em 0.3em;
   border-radius: 3px;
   font-size: 0.85em;
-}
-
-/* Text rendering improvements */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 /* Blockquote styling */
@@ -415,11 +422,27 @@ tr:hover {
   pre.hljs,
   .hljs {
     border-color: #30363d;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  
+  /* Ensure all highlight.js elements have transparent background in dark mode */
+  .hljs,
+  pre.hljs,
+  pre[class*="language-"],
+  code[class*="language-"],
+  .hljs-built_in,
+  .hljs-keyword,
+  .hljs-string,
+  .hljs-comment,
+  .hljs-number {
+    background: transparent !important;
+    background-color: transparent !important;
   }
   
   :not(pre) > code {
-    background: #262c36;
+    background: transparent;
+    border: 1px solid #30363d;
     color: #e6edf3;
   }
   
@@ -716,8 +739,8 @@ tr:hover {
   pre.hljs,
   .hljs {
     font-size: 13px;
-    padding: 1rem;
-    margin: 1.5rem 0;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
   }
   
   code {
