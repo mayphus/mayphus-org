@@ -11,12 +11,16 @@
 
 body {
   font-family: "Source Serif Pro", Georgia, serif;
-  font-size: 18px;
-  line-height: 1.6;
-  max-width: 65ch;
+  font-size: 19px;
+  line-height: 1.65;
+  max-width: 68ch;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 3rem 2rem;
   transition: background-color 0.3s ease, color 0.3s ease;
+  color: #2d3748;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -40,20 +44,23 @@ a:focus {
 p a {
   color: #0066cc;
   text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-bottom-color 0.2s ease;
+  border-bottom: 1px solid rgba(0, 102, 204, 0.3);
+  transition: all 0.2s ease;
+  padding-bottom: 1px;
 }
 
 p a:hover {
   color: #0052a3;
   border-bottom-color: #0066cc;
   text-decoration: none;
+  background-color: rgba(0, 102, 204, 0.05);
 }
 
 p a:focus {
   outline: 2px solid #0066cc;
   outline-offset: 2px;
   border-bottom-color: #0066cc;
+  background-color: rgba(0, 102, 204, 0.1);
 }
 
 /* Skip link for accessibility */
@@ -79,67 +86,122 @@ p a:focus {
 
 /* Footer with navigation */
 footer {
-  margin-top: 2rem;
-  padding-top: 1rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
   text-align: center;
+  border-top: 1px solid #e1e5e9;
 }
 
 .footer-nav {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.95em;
-  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 .footer-nav a {
-  margin: 0 0.75rem;
   font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.footer-nav a:hover {
+  background-color: rgba(0, 102, 204, 0.1);
+  text-decoration: none;
 }
 
 footer p {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 0.95em;
-  margin-bottom: 0.5rem;
-  color: #555; /* Improved contrast for accessibility */
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #555;
+  font-weight: 500;
 }
 
 .contact-links {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.95em;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
 .contact-links a {
-  margin: 0 0.5rem;
   font-style: italic;
-  color: #555; /* Improved contrast for accessibility */
+  color: #555;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
-/* Improved heading styles */
+.contact-links a:hover {
+  background-color: rgba(0, 102, 204, 0.1);
+  text-decoration: none;
+}
+
+/* Improved heading styles - Enhanced hierarchy and spacing */
 h1 {
   font-family: "Source Serif Pro", Georgia, serif;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  margin: 1rem 0;
-  line-height: 1.3;
+  margin: 1.5rem 0 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 h2 {
   font-family: "Source Serif Pro", Georgia, serif;
-  font-size: 1.5rem;
+  font-size: 1.875rem;
   font-weight: 700;
-  margin: 2rem 0 1rem;
-  line-height: 1.3;
+  margin: 3rem 0 1.5rem;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
 }
 
 h3 {
   font-family: "Source Serif Pro", Georgia, serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 1.5rem 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 2.5rem 0 1rem;
   line-height: 1.3;
+  letter-spacing: -0.01em;
 }
 
-/* Fix Lighthouse warning for H1 in semantic elements */
-article h1,
+h4 {
+  font-family: "Source Serif Pro", Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 2rem 0 0.75rem;
+  line-height: 1.35;
+}
+
+h5 {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.5rem;
+  line-height: 1.4;
+  color: #555;
+}
+
+h6 {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  line-height: 1.4;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Fix Lighthouse warning for H1 in semantic elements - but keep consistent with main H1 */
+article h1:not(:first-child),
 aside h1,
 nav h1,
 section h1 {
@@ -147,19 +209,40 @@ section h1 {
   margin: 0 0 1rem 0;
 }
 
+/* First H1 in article should match main H1 styling */
+article h1:first-child {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 1.5rem 0 1.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
 p {
-  margin: 1rem 0;
+  margin: 1.5rem 0;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
 }
 
 /* Improved list styling */
 ul, ol {
-  margin: 1.5rem 0;
-  padding-left: 1.5rem;
+  margin: 2rem 0;
+  padding-left: 1.75rem;
 }
 
 li {
+  margin: 1rem 0;
+  line-height: 1.6;
+}
+
+/* Nested lists */
+li ul, li ol {
   margin: 0.75rem 0;
-  line-height: 1.5;
+}
+
+li li {
+  margin: 0.5rem 0;
 }
 
 /* Special styling for content lists (projects, articles) */
@@ -174,10 +257,13 @@ ul li a:hover {
 
 .date {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
-  color: #444;
+  color: #666;
   font-size: 0.95em;
-  margin: 1.5rem 0 0.5rem 0;
+  margin: 2rem 0 1rem 0;
   font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
 }
 
 /* Code block styling */
@@ -186,12 +272,14 @@ pre.hljs,
 .hljs {
   background: transparent !important;
   border: 1px solid #e1e5e9;
-  border-radius: 6px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
   overflow-x: auto;
   font-family: "JetBrains Mono", 'SF Mono', Monaco, 'Cascadia Code', monospace;
   font-size: 0.875em;
-  line-height: 1.45;
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   
   /* Hide scrollbar */
   scrollbar-width: none; /* Firefox */
@@ -227,55 +315,73 @@ code {
   font-size: 0.85em;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-  body {
-    font-size: 16px;
-    padding: 1.5rem 1rem;
-  }
-  
-  h1 {
-    font-size: 1.75rem;
-  }
-  
-  h2 {
-    font-size: 1.35rem;
-  }
-  
-  h3 {
-    font-size: 1.15rem;
-  }
-  
-  .footer-nav a {
-    margin: 0 0.5rem;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-  }
-  
-  /* Ensure code blocks are readable on mobile */
-  pre,
-  pre.hljs,
-  .hljs {
-    font-size: 12px;
-  }
-  
-  code {
-    font-size: 12px;
-  }
-  
-  :not(pre) > code {
-    font-size: 12px;
-  }
+/* Text rendering improvements */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+/* Blockquote styling */
+blockquote {
+  margin: 2rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid #0066cc;
+  background-color: rgba(0, 102, 204, 0.05);
+  font-style: italic;
+  color: #555;
+}
+
+blockquote p {
+  margin: 0.75rem 0;
+}
+
+blockquote p:first-child {
+  margin-top: 0;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.95em;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+th {
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  background-color: #f8f9fa;
+  color: #555;
+}
+
+tr:hover {
+  background-color: rgba(0, 102, 204, 0.02);
+}
+
+/* Dark mode styles for new elements */
 @media (prefers-color-scheme: dark) {
   body {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
+    background-color: #0d1117;
+    color: #e6edf3;
+  }
+  
+  h5, h6 {
+    color: #8b949e;
   }
   
   .date {
-    color: #ccc;
+    color: #7d8590;
   }
   
   nav a[target="_blank"] {
@@ -287,12 +393,21 @@ code {
   }
   
   /* Better contrast for footer in dark mode */
+  footer {
+    border-top-color: #21262d;
+  }
+  
   footer p {
-    color: #ccc;
+    color: #8b949e;
   }
   
   .contact-links a {
-    color: #ccc;
+    color: #8b949e;
+  }
+  
+  .footer-nav a:hover,
+  .contact-links a:hover {
+    background-color: rgba(102, 179, 255, 0.1);
   }
   
   /* Dark mode code styling */
@@ -300,6 +415,7 @@ code {
   pre.hljs,
   .hljs {
     border-color: #30363d;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
   
   :not(pre) > code {
@@ -310,21 +426,24 @@ code {
   /* Dark mode paragraph links */
   p a {
     color: #66b3ff;
+    border-bottom-color: rgba(102, 179, 255, 0.3);
   }
   
   p a:hover {
     color: #4da6ff;
     border-bottom-color: #66b3ff;
+    background-color: rgba(102, 179, 255, 0.1);
   }
   
   p a:focus {
     outline-color: #66b3ff;
     border-bottom-color: #66b3ff;
+    background-color: rgba(102, 179, 255, 0.15);
   }
   
   /* Dark mode link improvements */
   a:hover {
-    color: #f0f0f0;
+    color: #f0f6fc;
   }
   
   ul li a:hover {
@@ -334,6 +453,25 @@ code {
   /* Dark mode focus states */
   a:focus {
     outline-color: #66b3ff;
+  }
+  
+  blockquote {
+    border-left-color: #66b3ff;
+    background-color: rgba(102, 179, 255, 0.05);
+    color: #adbac7;
+  }
+  
+  th {
+    background-color: #161b22;
+    color: #8b949e;
+  }
+  
+  th, td {
+    border-bottom-color: #30363d;
+  }
+  
+  tr:hover {
+    background-color: rgba(102, 179, 255, 0.05);
   }
 }
 
@@ -511,4 +649,99 @@ code {
     content: " (" attr(href) ")";
     font-size: 0.8em;
   }
+}
+
+/* Responsive design - Compact mobile footer */
+@media (max-width: 768px) {
+  body {
+    font-size: 17px;
+    padding: 2rem 1.5rem;
+    max-width: 90vw;
+  }
+  
+  h1 {
+    font-size: 2.25rem;
+    margin: 1rem 0 1rem;
+  }
+  
+  h2 {
+    font-size: 1.65rem;
+    margin: 2.5rem 0 1.25rem;
+  }
+  
+  h3 {
+    font-size: 1.35rem;
+    margin: 2rem 0 0.75rem;
+  }
+  
+  h4 {
+    font-size: 1.15rem;
+    margin: 1.5rem 0 0.5rem;
+  }
+  
+  /* Compact footer for mobile */
+  footer {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+  }
+  
+  .footer-nav {
+    font-size: 0.9rem;
+    margin-bottom: 1.25rem;
+    gap: 1.25rem;
+  }
+  
+  .footer-nav a {
+    font-size: 0.9rem;
+    padding: 0.35rem 0.75rem;
+  }
+  
+  footer p {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .contact-links {
+    font-size: 0.85rem;
+    gap: 1rem;
+  }
+  
+  .contact-links a {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  /* Ensure code blocks are readable on mobile */
+  pre,
+  pre.hljs,
+  .hljs {
+    font-size: 13px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  code {
+    font-size: 13px;
+  }
+  
+  :not(pre) > code {
+    font-size: 13px;
+  }
+}
+
+/* Consistent title spacing for home and article pages */
+main {
+  padding-top: 0;
+}
+
+/* Ensure first H1 has consistent top spacing regardless of parent */
+main > h1:first-child,
+main > article > h1:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+article {
+  margin: 0;
+  padding: 0;
 }
