@@ -1,0 +1,67 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Search from '../components/Search.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import { renderGraph, type NodeData, type LinkData } from '../lib/graph';
+
+const collection = await getCollection('content');
+
+const nodes: NodeData[] = collection.map(entry => ({
+  id: entry.data.identifier ?? entry.data.slug,
+  slug: entry.data.slug,
+  title: entry.data.title,
+}));
+
+const idMap = new Map<string, string>();
+for (const n of nodes) {
+  idMap.set(n.id, n.slug);
+}
+
+const links: LinkData[] = [];
+for (const entry of collection) {
+  const src = entry.data.identifier ?? entry.data.slug;
+  const matches = entry.body?.match(/denote:(\d{8}T\d{6})/g) ?? [];
+  for (const m of matches) {
+    const id = m.slice('denote:'.length);
+    const targetSlug = idMap.get(id);
+    if (targetSlug) {
+      links.push({ source: src, target: targetSlug });
+    }
+  }
+}
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Graph - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+    <style>
+      #graph {
+        width: 100%;
+        height: 80vh;
+      }
+      .label {
+        font-size: 0.75rem;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <main id="main">
+      <h1><a href="/">Knowledge Graph</a></h1>
+      <div id="graph"></div>
+      <Footer />
+    </main>
+    <Search />
+    <script type="module" define:vars={{ nodes, links }}>
+      import { renderGraph } from '../lib/graph';
+
+      const container = document.getElementById('graph');
+      if (container) {
+        renderGraph(container, nodes, links);
+      }
+    </script>
+  </body>
+</html>
