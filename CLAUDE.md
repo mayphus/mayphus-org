@@ -56,7 +56,7 @@ This is an Astro-based personal website that uses a custom Org-mode integration 
 **Design & Accessibility Features**
 - Responsive design with mobile-first approach
 - Dark mode support via CSS media queries
-- Typography system: Source Serif Pro, Source Sans Pro, JetBrains Mono
+- Typography system: Inter for body text, Lora for headings with balanced weights, JetBrains Mono
 - Accessibility: skip links, focus management, WCAG compliance
 - Print optimization with academic paper formatting
 

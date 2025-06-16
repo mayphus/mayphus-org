@@ -47,7 +47,7 @@ This is the source code for [mayphus.org](https://mayphus.org/), the digital wor
 ### **Design & Accessibility**
 - **Responsive Design**: Mobile-first approach with semantic breakpoints
 - **Dark Mode**: Automatic theme switching via CSS media queries
-- **Typography System**: Source Serif Pro, Source Sans Pro, JetBrains Mono
+ - **Typography System**: Inter for body text, Lora for headings with balanced weights, JetBrains Mono for code
 - **Accessibility**: Skip links, focus management, WCAG-compliant contrast
 - **Print Optimization**: Academic paper formatting for print media
 
