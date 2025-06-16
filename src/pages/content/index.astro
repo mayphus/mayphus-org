@@ -1,7 +1,6 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
 import Footer from '../../components/Footer.astro';
-import Search from '../../components/Search.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 
@@ -24,15 +23,13 @@ const tags = Array.from(tagSet).sort();
     <a href="#main" class="skip-link">Skip to main content</a>
     <main id="main">
       <h1><a href="/">Content</a></h1>
-      <input id="search-box" type="text" placeholder="Search posts" aria-label="Search posts" />
       <article>
-        <fieldset id="tag-filter">
+        <div class="tag-filter">
           {tags.map(tag => (
-            <label>
-              <input type="checkbox" value={tag} /> {tag}
-            </label>
+            <button class="tag-button" data-tag={tag}>{tag}</button>
           ))}
-        </fieldset>
+          <button class="clear-button" data-action="clear">Clear</button>
+        </div>
 
         <ul id="items">
           {nodes.map(node => (
@@ -44,36 +41,155 @@ const tags = Array.from(tagSet).sort();
       </article>
       <Footer />
     </main>
-    <Search />
-    <script>
-      const filter = document.getElementById('tag-filter') as HTMLFieldSetElement | null;
-      const items = Array.from(document.querySelectorAll<HTMLLIElement>('#items li'));
-      const searchInput = document.getElementById('search-box') as HTMLInputElement | null;
+    <style>
+      /* Override global max-width for this page */
+      body {
+        max-width: none;
+        padding: var(--space-lg) var(--space-xl);
+      }
 
-      function apply() {
-        const active = Array.from(filter?.querySelectorAll<HTMLInputElement>('input:checked') ?? []).map(i => i.value);
-        items.forEach(li => {
-          const tags = li.dataset.tags ? li.dataset.tags.split(' ') : [];
-          const text = li.textContent?.toLowerCase() ?? '';
-          const matchesTags = active.length === 0 || active.every(t => tags.includes(t));
-          const matchesSearch = !searchInput?.value || text.includes(searchInput.value.toLowerCase());
-          li.hidden = !(matchesTags && matchesSearch);
+      main {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .tag-filter {
+        margin-bottom: var(--space-lg);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tag-button, .clear-button {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: var(--font-sans);
+        font-size: 0.875rem;
+        text-decoration: none;
+      }
+
+      .tag-button:hover, .clear-button:hover {
+        border-color: var(--text);
+      }
+
+      .tag-button.active {
+        background: var(--text);
+        color: var(--bg);
+        border-color: var(--text);
+      }
+
+      .clear-button {
+        color: var(--text-light);
+        border-color: var(--text-light);
+      }
+
+      .clear-button:hover {
+        color: var(--text);
+      }
+
+      #items {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 0.25rem;
+        margin-top: var(--space-lg);
+      }
+
+      #items li {
+        margin-bottom: 0;
+      }
+
+      #items li a {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.4;
+        padding: 0.25rem 0;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        body {
+          padding: var(--space-md);
+        }
+        
+        #items {
+          grid-template-columns: 1fr;
+          gap: 0;
+        }
+        
+        #items li a {
+          padding: 0.25rem 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .tag-filter {
+          gap: 0.25rem;
+        }
+        
+        .tag-button, .clear-button {
+          padding: 0.2rem 0.5rem;
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+    <script>
+      const tagButtons = document.querySelectorAll<HTMLButtonElement>('.tag-button');
+      const clearButton = document.querySelector<HTMLButtonElement>('.clear-button');
+      const items = Array.from(document.querySelectorAll<HTMLLIElement>('#items li'));
+      let selectedTags = new Set<string>();
+
+      function updateDisplay() {
+        // Update button states
+        tagButtons.forEach(btn => {
+          const tag = btn.dataset.tag!;
+          btn.classList.toggle('active', selectedTags.has(tag));
         });
-        const query = active.length ? `?tags=${active.join(',')}` : '';
+
+        // Filter items
+        items.forEach(li => {
+          const itemTags = li.dataset.tags ? li.dataset.tags.split(' ') : [];
+          const matches = selectedTags.size === 0 || 
+            Array.from(selectedTags).every(tag => itemTags.includes(tag));
+          li.hidden = !matches;
+        });
+
+        // Update URL
+        const query = selectedTags.size > 0 ? 
+          `?tags=${Array.from(selectedTags).join(',')}` : '';
         history.replaceState(null, '', query);
       }
 
-      filter?.addEventListener('change', apply);
-      searchInput?.addEventListener("input", apply);
-
-      const params = new URLSearchParams(location.search);
-      const initial = params.get('tags');
-      if (initial) {
-        initial.split(',').forEach(tag => {
-          const input = filter?.querySelector<HTMLInputElement>(`input[value="${tag}"]`);
-          if (input) input.checked = true;
+      // Add click handlers for tag buttons
+      tagButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tag = btn.dataset.tag!;
+          if (selectedTags.has(tag)) {
+            selectedTags.delete(tag);
+          } else {
+            selectedTags.add(tag);
+          }
+          updateDisplay();
         });
-        apply();
+      });
+
+      // Add clear button handler
+      clearButton?.addEventListener('click', () => {
+        selectedTags.clear();
+        updateDisplay();
+      });
+
+      // Handle initial URL parameters
+      const params = new URLSearchParams(location.search);
+      const initialTags = params.get('tags');
+      if (initialTags) {
+        selectedTags = new Set(initialTags.split(','));
+        updateDisplay();
       }
     </script>
   </body>
