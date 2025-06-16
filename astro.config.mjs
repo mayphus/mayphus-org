@@ -27,7 +27,7 @@ export default defineConfig({
             rehypeHighlight,
             addBackLinks,
         ],
-		}), sitemap(), pagefind()],
+    }), sitemap(), pagefind()],
     prefetch: {
         prefetchAll: true,
     },

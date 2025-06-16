@@ -7,8 +7,8 @@ import { getCollection } from 'astro:content';
 
 const collection = await getCollection('content');
 const nodes = collection
-    .filter((node: any) => node.data)
-    .sort((a: any, b: any) => {
+    .filter((node) => node.data)
+    .sort((a, b) => {
         const dateA = a.data.date?.valueOf() || 0;
         const dateB = b.data.date?.valueOf() || 0;
         return dateB - dateA;
@@ -36,7 +36,7 @@ const nodes = collection
 				<p>Here are my projects may include both mechanical, hardware and software or any others.</p>
 				<ul>
 					{
-						nodes.map((node: any) => (
+						nodes.map((node) => (
 							node.data.filetags?.includes('project') && (
 								<li><a href={`/content/${node.data.slug}/`}>{node.data.title}</a></li>
 							)
@@ -47,7 +47,7 @@ const nodes = collection
 				<p>Here are my articles </p>
 				<ul>
 					{
-						nodes.map((node: any) => (
+						nodes.map((node) => (
 							node.data.filetags?.includes('article') && (
 								<li><a href={`/content/${node.data.slug}/`}>{node.data.title}</a></li>
 							)

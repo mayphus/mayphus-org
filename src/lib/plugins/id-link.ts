@@ -1,30 +1,36 @@
 import { visit } from 'unist-util-visit';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import type { Element } from 'hast';
+import type { VFile } from 'vfile';
 
 // Resolve Denote links to actual file paths (rehype plugin)
 export const resolveIdLinks = () => {
-  return async (tree: any, _file: any) => {
-    const idLinks: any[] = [];
+  return async (tree: Element, _file: VFile) => {
+    const idLinks: Element[] = [];
     
     // Find HTML anchor elements with href starting with "denote:"
-    visit(tree, (node: any) => {
+    visit(tree, (node) => {
       if (node.type === 'element' && 
           node.tagName === 'a' && 
           node.properties?.href && 
+          typeof node.properties.href === 'string' &&
           node.properties.href.startsWith('denote:')) {
-        idLinks.push(node);
+        idLinks.push(node as Element);
       }
     });
 
     // Resolve each ID link
     for (const linkNode of idLinks) {
-      const identifier = linkNode.properties.href.replace('denote:', '');
-      const resolvedSlug = await resolveIdentifierToSlug(identifier);
-      
-      if (resolvedSlug) {
-        // Convert to content route format
-        linkNode.properties.href = `/content/${resolvedSlug}/`;
+      const href = linkNode.properties?.href;
+      if (typeof href === 'string') {
+        const identifier = href.replace('denote:', '');
+        const resolvedSlug = await resolveIdentifierToSlug(identifier);
+        
+        if (resolvedSlug && linkNode.properties) {
+          // Convert to content route format
+          linkNode.properties.href = `/content/${resolvedSlug}/`;
+        }
       }
     }
   };

@@ -1,7 +1,9 @@
+import type { VFile } from 'vfile';
+
 // correct date, filetags and save to frontmatter
 export const customKeywords = () => {
-	return (_tree: any, file: any) => {
-		const keywords = file.data.keywords || {};
+	return (_tree: unknown, file: VFile) => {
+		const keywords = (file.data.keywords as Record<string, any>) || {};
 
 		if (keywords.date) {
 			const dateMatch = keywords.date
@@ -19,12 +21,16 @@ export const customKeywords = () => {
 		? keywords.filetags.split(':').filter(Boolean)
 		: [];
 
-		const fileName = file.history[0].split('/').pop() || '';
+		const fileName = file.history[0]?.split('/').pop() || '';
 		const slugWithoutTimestamp = fileName.replace(/^\d{8}T\d{6}--/, '');
 		const slug = slugWithoutTimestamp.split('__')[0].replace('.org', '').toLowerCase();
 
-        file.data.astro.frontmatter = {
-            ...file.data.astro.frontmatter,
+		if (!file.data.astro) {
+			file.data.astro = { frontmatter: {} };
+		}
+
+		file.data.astro.frontmatter = {
+			...file.data.astro.frontmatter,
 			...keywords,
 			slug: slug,
 		};

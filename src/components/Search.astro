@@ -182,8 +182,9 @@
 				(e.key === 's' && (e.ctrlKey || e.metaKey))) {
 				
 				// Don't trigger if user is typing in an input/textarea
-				if (e.target && (e.target as HTMLElement).tagName === 'INPUT' || 
-					e.target && (e.target as HTMLElement).tagName === 'TEXTAREA') {
+				if (e.target && 
+					((e.target as HTMLElement).tagName === 'INPUT' || 
+					 (e.target as HTMLElement).tagName === 'TEXTAREA')) {
 					return;
 				}
 				

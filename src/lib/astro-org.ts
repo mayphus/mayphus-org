@@ -155,7 +155,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
 function initFrontmatter() {
   return transformer;
 
-  function transformer(_tree: any, file: VFile) {
+  function transformer(_tree: unknown, file: VFile) {
     if (!file.data.astro) {
       file.data.astro = { frontmatter: {} };
     }
@@ -165,10 +165,13 @@ function initFrontmatter() {
 function keywordsToFrontmatter() {
   return transformer;
 
-  function transformer(_tree: any, file: any) {
+  function transformer(_tree: unknown, file: VFile) {
+    if (!file.data.astro) {
+      file.data.astro = { frontmatter: {} };
+    }
     file.data.astro.frontmatter = {
       ...file.data.astro.frontmatter,
-      ...file.data.keywords,
+      ...(file.data.keywords as Record<string, any> || {}),
     };
   }
 }
