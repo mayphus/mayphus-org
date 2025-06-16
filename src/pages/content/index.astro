@@ -1,0 +1,80 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Search from '../../components/Search.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+
+const collection = await getCollection('content');
+const nodes = collection
+  .filter(node => node.data)
+  .sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
+
+const tagSet = new Set<string>();
+nodes.forEach(node => node.data.filetags?.forEach(tag => tagSet.add(tag)));
+const tags = Array.from(tagSet).sort();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Content - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <main id="main">
+      <h1><a href="/">Content</a></h1>
+      <input id="search-box" type="text" placeholder="Search posts" aria-label="Search posts" />
+      <article>
+        <fieldset id="tag-filter">
+          {tags.map(tag => (
+            <label>
+              <input type="checkbox" value={tag} /> {tag}
+            </label>
+          ))}
+        </fieldset>
+
+        <ul id="items">
+          {nodes.map(node => (
+            <li data-tags={(node.data.filetags ?? []).join(' ')}>
+              <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </article>
+      <Footer />
+    </main>
+    <Search />
+    <script>
+      const filter = document.getElementById('tag-filter') as HTMLFieldSetElement | null;
+      const items = Array.from(document.querySelectorAll<HTMLLIElement>('#items li'));
+      const searchInput = document.getElementById('search-box') as HTMLInputElement | null;
+
+      function apply() {
+        const active = Array.from(filter?.querySelectorAll<HTMLInputElement>('input:checked') ?? []).map(i => i.value);
+        items.forEach(li => {
+          const tags = li.dataset.tags ? li.dataset.tags.split(' ') : [];
+          const text = li.textContent?.toLowerCase() ?? '';
+          const matchesTags = active.length === 0 || active.every(t => tags.includes(t));
+          const matchesSearch = !searchInput?.value || text.includes(searchInput.value.toLowerCase());
+          li.hidden = !(matchesTags && matchesSearch);
+        });
+        const query = active.length ? `?tags=${active.join(',')}` : '';
+        history.replaceState(null, '', query);
+      }
+
+      filter?.addEventListener('change', apply);
+      searchInput?.addEventListener("input", apply);
+
+      const params = new URLSearchParams(location.search);
+      const initial = params.get('tags');
+      if (initial) {
+        initial.split(',').forEach(tag => {
+          const input = filter?.querySelector<HTMLInputElement>(`input[value="${tag}"]`);
+          if (input) input.checked = true;
+        });
+        apply();
+      }
+    </script>
+  </body>
+</html>
