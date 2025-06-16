@@ -1,16 +1,16 @@
 /* Optimized font loading - avoid render blocking */
-@import '@fontsource/source-serif-pro/latin-400.css' layer(fonts);
-@import '@fontsource/source-serif-pro/latin-700.css' layer(fonts);
+@import '@fontsource/inter/latin-400.css' layer(fonts);
+@import '@fontsource/inter/latin-600.css' layer(fonts);
+@import '@fontsource/lora/latin-400.css' layer(fonts);
+@import '@fontsource/lora/latin-700.css' layer(fonts);
 @import '@fontsource/jetbrains-mono/latin-400.css' layer(fonts);
-@import '@fontsource/source-sans-pro/latin-400.css' layer(fonts);
-@import '@fontsource/source-sans-pro/latin-600.css' layer(fonts);
 
 /* Highlight.js styles - loaded non-blocking */
 @import 'highlight.js/styles/github.css' layer(highlighting) (prefers-color-scheme: light);
 @import 'highlight.js/styles/github-dark.css' layer(highlighting) (prefers-color-scheme: dark);
 
 body {
-  font-family: "Source Serif Pro", Georgia, serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   font-size: 19px;
   line-height: 1.65;
   max-width: 68ch;
@@ -93,7 +93,7 @@ footer {
 }
 
 .footer-nav {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1rem;
   margin-bottom: 2rem;
   display: flex;
@@ -115,7 +115,7 @@ footer {
 }
 
 footer p {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1rem;
   margin-bottom: 1rem;
   color: #555;
@@ -123,7 +123,7 @@ footer p {
 }
 
 .contact-links {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.95em;
   display: flex;
   justify-content: center;
@@ -146,7 +146,7 @@ footer p {
 
 /* Improved heading styles - Enhanced hierarchy and spacing */
 h1 {
-  font-family: "Source Serif Pro", Georgia, serif;
+  font-family: "Lora", Georgia, serif;
   font-size: 2.5rem;
   font-weight: 700;
   margin: 1.5rem 0 1.25rem;
@@ -155,7 +155,7 @@ h1 {
 }
 
 h2 {
-  font-family: "Source Serif Pro", Georgia, serif;
+  font-family: "Lora", Georgia, serif;
   font-size: 1.875rem;
   font-weight: 700;
   margin: 3rem 0 1.5rem;
@@ -164,7 +164,7 @@ h2 {
 }
 
 h3 {
-  font-family: "Source Serif Pro", Georgia, serif;
+  font-family: "Lora", Georgia, serif;
   font-size: 1.5rem;
   font-weight: 600;
   margin: 2.5rem 0 1rem;
@@ -173,7 +173,7 @@ h3 {
 }
 
 h4 {
-  font-family: "Source Serif Pro", Georgia, serif;
+  font-family: "Lora", Georgia, serif;
   font-size: 1.25rem;
   font-weight: 600;
   margin: 2rem 0 0.75rem;
@@ -181,7 +181,7 @@ h4 {
 }
 
 h5 {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.125rem;
   font-weight: 600;
   margin: 1.5rem 0 0.5rem;
@@ -190,7 +190,7 @@ h5 {
 }
 
 h6 {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1rem;
   font-weight: 600;
   margin: 1.25rem 0 0.5rem;
@@ -256,7 +256,7 @@ ul li a:hover {
 }
 
 .date {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   color: #666;
   font-size: 0.95em;
   margin: 2rem 0 1rem 0;
@@ -335,6 +335,7 @@ blockquote {
   padding: 1rem 1.5rem;
   border-left: 4px solid #0066cc;
   background-color: rgba(0, 102, 204, 0.05);
+  font-family: "Lora", Georgia, serif;
   font-style: italic;
   color: #555;
 }
@@ -366,7 +367,7 @@ th, td {
 }
 
 th {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 600;
   background-color: #f8f9fa;
   color: #555;
@@ -500,7 +501,7 @@ tr:hover {
 
 /* Org-mode TODO keyword styling - minimal and elegant */
 .todo-keyword {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 0.7em;
   font-weight: 600;
   padding: 0.15em 0.4em;
@@ -601,7 +602,7 @@ tr:hover {
 .backlinks h2 {
   font-size: 1.1rem;
   font-weight: 600;
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
   color: #666;
   margin: 0 0 1rem 0;
 }
