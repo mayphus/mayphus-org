@@ -28,7 +28,6 @@ const tags = Array.from(tagSet).sort();
           {tags.map(tag => (
             <button class="tag-button" data-tag={tag}>{tag}</button>
           ))}
-          <button class="clear-button" data-action="clear">Clear</button>
         </div>
 
         <ul id="items">
@@ -42,105 +41,26 @@ const tags = Array.from(tagSet).sort();
       <Footer />
     </main>
     <style>
-      /* Override global max-width for this page */
-      body {
-        max-width: none;
-        padding: var(--space-lg) var(--space-xl);
-      }
-
-      main {
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
       .tag-filter {
-        margin-bottom: var(--space-lg);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        margin-bottom: 1.5rem;
       }
 
-      .tag-button, .clear-button {
-        background: transparent;
-        border: 1px solid var(--border);
-        color: var(--text);
-        padding: 0.25rem 0.75rem;
-        border-radius: 4px;
-        cursor: pointer;
-        font-family: var(--font-sans);
-        font-size: 0.875rem;
-        text-decoration: none;
-      }
-
-      .tag-button:hover, .clear-button:hover {
-        border-color: var(--text);
-      }
 
       .tag-button.active {
-        background: var(--text);
-        color: var(--bg);
-        border-color: var(--text);
+        background: #0969da;
+        color: white;
+        border-color: #0969da;
       }
 
-      .clear-button {
-        color: var(--text-light);
-        border-color: var(--text-light);
-      }
-
-      .clear-button:hover {
-        color: var(--text);
-      }
-
-      #items {
-        list-style: none;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 0.25rem;
-        margin-top: var(--space-lg);
-      }
-
-      #items li {
-        margin-bottom: 0;
-      }
-
-      #items li a {
-        display: block;
-        font-size: 1rem;
-        line-height: 1.4;
-        padding: 0.25rem 0;
-      }
-
-      /* Responsive adjustments */
-      @media (max-width: 768px) {
-        body {
-          padding: var(--space-md);
-        }
-        
-        #items {
-          grid-template-columns: 1fr;
-          gap: 0;
-        }
-        
-        #items li a {
-          padding: 0.25rem 0;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .tag-filter {
-          gap: 0.25rem;
-        }
-        
-        .tag-button, .clear-button {
-          padding: 0.2rem 0.5rem;
-          font-size: 0.8rem;
+      @media (prefers-color-scheme: dark) {
+        .tag-button.active {
+          background: #58a6ff;
+          border-color: #58a6ff;
         }
       }
     </style>
     <script>
       const tagButtons = document.querySelectorAll<HTMLButtonElement>('.tag-button');
-      const clearButton = document.querySelector<HTMLButtonElement>('.clear-button');
       const items = Array.from(document.querySelectorAll<HTMLLIElement>('#items li'));
       let selectedTags = new Set<string>();
 
@@ -176,12 +96,6 @@ const tags = Array.from(tagSet).sort();
           }
           updateDisplay();
         });
-      });
-
-      // Add clear button handler
-      clearButton?.addEventListener('click', () => {
-        selectedTags.clear();
-        updateDisplay();
       });
 
       // Handle initial URL parameters
