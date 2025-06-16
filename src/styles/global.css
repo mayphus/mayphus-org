@@ -769,3 +769,45 @@ article {
   margin: 0;
   padding: 0;
 }
+
+/* Table of contents - shown only on large screens */
+.toc {
+  display: none;
+  font-size: 0.9em;
+  line-height: 1.4;
+}
+
+body.with-toc {
+  padding-left: 14rem;
+}
+
+@media (min-width: 1024px) {
+  .toc {
+    display: block;
+    position: fixed;
+    left: 1.5rem;
+    top: 4rem;
+    width: 12rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+  }
+
+  .toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .toc li {
+    margin: 0.25rem 0;
+  }
+
+  .toc a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+
+  .toc a:hover {
+    text-decoration: underline;
+  }
+}
