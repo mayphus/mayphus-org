@@ -4,7 +4,7 @@ import Footer from '../components/Footer.astro';
 import Search from '../components/Search.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
-import { renderGraph, type NodeData, type LinkData } from '../lib/graph';
+import type { NodeData, LinkData } from '../lib/graph';
 
 const collection = await getCollection('content');
 
@@ -55,12 +55,76 @@ for (const entry of collection) {
       <Footer />
     </main>
     <Search />
-    <script type="module" define:vars={{ nodes, links }}>
-      import { renderGraph } from '../lib/graph';
+    <script src="https://cdn.jsdelivr.net/npm/d3@7" is:inline></script>
+    <script id="graph-data" type="application/json">
+      {JSON.stringify({ nodes, links })}
+    </script>
+    <script is:inline>
+      function renderGraph(container, nodes, links) {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
 
-      const container = document.getElementById('graph');
-      if (container) {
-        renderGraph(container, nodes, links);
+        const svg = d3.select(container).append('svg')
+          .attr('width', width)
+          .attr('height', height);
+
+        const simulation = d3.forceSimulation(nodes)
+          .force('link', d3.forceLink(links).id(d => d.id).distance(80))
+          .force('charge', d3.forceManyBody().strength(-200))
+          .force('center', d3.forceCenter(width / 2, height / 2));
+
+        const link = svg.append('g')
+          .attr('stroke', '#999')
+          .attr('stroke-opacity', 0.6)
+          .selectAll('line')
+          .data(links)
+          .enter().append('line');
+
+        const node = svg.append('g')
+          .attr('stroke', '#fff')
+          .attr('stroke-width', 1.5)
+          .selectAll('circle')
+          .data(nodes)
+          .enter().append('circle')
+          .attr('r', 6)
+          .attr('fill', '#3182bd')
+          .on('click', (_, d) => {
+            location.href = `/content/${d.slug}/`;
+          });
+
+        const label = svg.append('g')
+          .selectAll('text')
+          .data(nodes)
+          .enter().append('text')
+          .attr('class', 'label')
+          .attr('text-anchor', 'middle')
+          .attr('dy', '-0.8em')
+          .text(d => d.title);
+
+        simulation.on('tick', () => {
+          link
+            .attr('x1', d => d.source.x)
+            .attr('y1', d => d.source.y)
+            .attr('x2', d => d.target.x)
+            .attr('y2', d => d.target.y);
+
+          node
+            .attr('cx', d => d.x)
+            .attr('cy', d => d.y);
+
+          label
+            .attr('x', d => d.x)
+            .attr('y', d => d.y);
+        });
+      }
+
+      const data = document.getElementById('graph-data');
+      if (data) {
+        const { nodes, links } = JSON.parse(data.textContent || '{}');
+        const container = document.getElementById('graph');
+        if (container) {
+          renderGraph(container, nodes, links);
+        }
       }
     </script>
   </body>
