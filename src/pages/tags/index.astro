@@ -1,0 +1,33 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Search from '../../components/Search.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+
+const collection = await getCollection('content');
+const tagSet = new Set<string>();
+collection.forEach(node => node.data.filetags?.forEach(tag => tagSet.add(tag)));
+const tags = Array.from(tagSet).sort();
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Tags - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <main id="main">
+      <h1><a href="/">Tags</a></h1>
+      <article>
+        <ul>
+          {tags.map(tag => (
+            <li><a href={`/tags/${tag}/`}>{tag}</a></li>
+          ))}
+        </ul>
+      </article>
+      <Footer />
+    </main>
+    <Search />
+  </body>
+</html>

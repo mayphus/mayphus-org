@@ -21,7 +21,7 @@ This is the source code for [mayphus.org](https://mayphus.org/), the digital wor
 - **Denote Convention Support**: Structured filenames (`YYYYMMDDTHHMMSS--title__tags.org`)
 - **Cross-linking System**: Denote-style ID linking between content pieces
 - **Content Collections**: Type-safe content with Zod schema validation
-- **Dynamic Classification**: Automatic categorization into articles, projects, and notes
+- **Tag-based Browsing**: Dynamic pages for each tag
 
 ### **Content Management**
 - **Emacs Workflow**: Seamless integration with Emacs org-mode for writing
@@ -89,9 +89,7 @@ This is the source code for [mayphus.org](https://mayphus.org/), the digital wor
 
 ## 📚 Content
 
-- [Notes](https://mayphus.org/notes/) — Quick ideas, references, and learning logs
-- [Articles](https://mayphus.org/articles/) — In-depth explorations and tutorials
-- [Projects](https://mayphus.org/projects/) — Hardware, software, and creative builds
+- [Tags](https://mayphus.org/tags/) — Browse content by topic
 
 ## ⚡ Quick Start
 
