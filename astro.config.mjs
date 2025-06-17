@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import pagefind from 'astro-pagefind';
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeShiki from '@shikijs/rehype';
@@ -32,7 +31,7 @@ export default defineConfig({
             }],
             addBackLinks,
         ],
-    }), sitemap(), pagefind()],
+    }), sitemap()],
     markdown: {
         syntaxHighlight: 'shiki',
         shikiConfig: {

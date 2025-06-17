@@ -2,7 +2,6 @@
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
-import Search from '../components/Search.astro';
 
 type Props = CollectionEntry<'content'>['data'] & {
 	children?: any;
@@ -25,6 +24,5 @@ const { title = 'Untitled' } = Astro.props;
                         </article>
                         <Footer />
                 </main>
-                <Search />
         </body>
 </html>
