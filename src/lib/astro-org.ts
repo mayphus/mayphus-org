@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 
 import type { AstroIntegration, ContainerRenderer, ContentEntryType, HookParameters } from 'astro';
+import type { Plugin as VitePlugin, ResolvedConfig } from 'vite';
 
 import { unified, type PluggableList } from 'unified';
 import { VFile } from 'vfile';
@@ -10,6 +11,7 @@ import { extractKeywords } from 'uniorg-extract-keywords';
 import { uniorgSlug } from 'uniorg-slug';
 import { fileURLToPath } from 'node:url';
 import { resolveIdLinks } from './plugins/id-link.js';
+import { CONFIG } from '../config.js';
 
 declare module 'vfile' {
   interface DataMap {
@@ -23,11 +25,15 @@ declare module 'vfile' {
 }
 
 interface ExtendedOrgPluginOptions extends OrgPluginOptions {
-  uniorgPlugins?: any[];
-  rehypePlugins?: any[];
+  uniorgPlugins?: PluggableList;
+  rehypePlugins?: PluggableList;
 }
 
-// export type Options = ExtendedOrgPluginOptions;
+interface VitePluginWithName extends VitePlugin {
+  name: string;
+}
+
+export type Options = ExtendedOrgPluginOptions;
 
 type SetupHookParams = HookParameters<'astro:config:setup'> & {
   // `addPageExtension` and `contentEntryType` are not a public APIs
@@ -49,7 +55,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
     [extractKeywords, { name: 'keywords' }],
     keywordsToFrontmatter,
     uniorgSlug,
-	...(options.uniorgPlugins ?? []),
+    ...(options.uniorgPlugins ?? []),
   ];
 
   return {
@@ -67,9 +73,9 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
           name: 'astro:jsx',
           serverEntrypoint: new URL('./server.js', import.meta.url),
         });
-        addPageExtension('.org');
+        addPageExtension(CONFIG.ORG_FILE_EXTENSION);
         addContentEntryType({
-          extensions: ['.org'],
+          extensions: [...CONFIG.SUPPORTED_EXTENSIONS],
           async getEntryInfo({ fileUrl, contents }) {
             const processor = unified().use(uniorg).use(uniorgPlugins);
 
@@ -98,23 +104,9 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
             plugins: [
               {
                 enforce: 'pre',
-                configResolved(resolved: any) {
-                  // HACK: move ourselves before Astro's JSX plugin to transform things in the right order
-                  const jsxPluginIndex = resolved.plugins.findIndex(
-                    (p: any) => p.name === 'astro:jsx'
-                  );
-                  if (jsxPluginIndex !== -1) {
-                    const myPluginIndex = resolved.plugins.findIndex(
-                      (p: any) => p.name === 'rollup-plugin-orgx'
-                    );
-                    if (myPluginIndex !== -1) {
-                      const myPlugin = resolved.plugins[myPluginIndex];
-                      // @ts-ignore-error ignore readonly annotation
-                      resolved.plugins.splice(myPluginIndex, 1);
-                      // @ts-ignore-error ignore readonly annotation
-                      resolved.plugins.splice(jsxPluginIndex, 0, myPlugin);
-                    }
-                  }
+                configResolved(resolved: ResolvedConfig) {
+                  // Reorder plugins for proper transformation sequence
+                  reorderPlugins(resolved);
                 },
                 ...orgPlugin({
                   ...options,
@@ -131,7 +123,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
               {
                 name: 'astro-org/postprocess',
                 transform: (code: string, id: string) => {
-                  if (!id.endsWith('.org')) {
+                  if (!id.endsWith(CONFIG.ORG_FILE_EXTENSION)) {
                     return;
                   }
 
@@ -173,6 +165,26 @@ function keywordsToFrontmatter() {
       ...file.data.astro.frontmatter,
       ...(file.data.keywords as Record<string, any> || {}),
     };
+  }
+}
+
+// Helper function to reorder plugins safely
+function reorderPlugins(resolved: ResolvedConfig): void {
+  const plugins = resolved.plugins as VitePluginWithName[];
+  
+  const jsxPluginIndex = plugins.findIndex(
+    (p) => p.name === 'astro:jsx'
+  );
+  const orgPluginIndex = plugins.findIndex(
+    (p) => p.name === 'rollup-plugin-orgx'
+  );
+  
+  if (jsxPluginIndex !== -1 && orgPluginIndex !== -1 && orgPluginIndex > jsxPluginIndex) {
+    const orgPlugin = plugins[orgPluginIndex];
+    // Remove from current position
+    plugins.splice(orgPluginIndex, 1);
+    // Insert before JSX plugin
+    plugins.splice(jsxPluginIndex, 0, orgPlugin);
   }
 }
 

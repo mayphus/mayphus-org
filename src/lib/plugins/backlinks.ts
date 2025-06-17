@@ -1,5 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join, basename } from 'node:path';
+import { CONFIG } from '../../config.js';
 
 export interface BackLink {
   slug: string;
@@ -7,8 +8,13 @@ export interface BackLink {
   identifier: string;
 }
 
-// Cache for performance
-let backlinksIndex: Map<string, BackLink[]> | null = null;
+// Cache for performance with TTL
+interface CacheEntry {
+  data: Map<string, BackLink[]>;
+  timestamp: number;
+}
+
+let backlinksCache: CacheEntry | null = null;
 
 // Rehype plugin to add backlinks to content
 export const addBackLinks = () => {
@@ -60,37 +66,50 @@ export const addBackLinks = () => {
 };
 
 async function getBackLinksForIdentifier(targetIdentifier: string): Promise<BackLink[]> {
-  if (!backlinksIndex) {
-    backlinksIndex = await buildBackLinksIndex();
+  const now = Date.now();
+  
+  // Check if cache is expired or doesn't exist
+  if (!backlinksCache || (now - backlinksCache.timestamp) > CONFIG.BACKLINKS_CACHE_TTL) {
+    try {
+      const index = await buildBackLinksIndex();
+      backlinksCache = {
+        data: index,
+        timestamp: now,
+      };
+    } catch (error) {
+      console.warn('Failed to build backlinks index:', error);
+      return [];
+    }
   }
   
-  return backlinksIndex.get(targetIdentifier) || [];
+  return backlinksCache.data.get(targetIdentifier) || [];
 }
 
 async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
   const index = new Map<string, BackLink[]>();
   
   try {
-    const contentDir = join(process.cwd(), 'content');
+    const contentDir = join(process.cwd(), CONFIG.CONTENT_DIR);
     const files = await readdir(contentDir);
     
     // First pass: collect all files with their identifiers and metadata
     const fileMetadata = new Map<string, { slug: string; title: string; identifier: string }>();
     
     for (const file of files) {
-      if (file.endsWith('.org')) {
+      if (file.endsWith(CONFIG.ORG_FILE_EXTENSION)) {
         const filePath = join(contentDir, file);
         const content = await readFile(filePath, 'utf-8');
         
         // Extract identifier and title
-        const identifierMatch = content.match(/^\s*#\+identifier:\s*(.+)$/m);
+        const identifierMatch = content.match(CONFIG.IDENTIFIER_PATTERN);
         const titleMatch = content.match(/^\s*#\+title:\s*(.+)$/m);
         
         if (identifierMatch) {
           const identifier = identifierMatch[1].trim();
           const title = titleMatch ? titleMatch[1].trim() : '';
-          const fileName = basename(file, '.org');
-          const slug = fileName.replace(/^\d{8}T\d{6}--/, '').split('__')[0];
+          const fileName = basename(file, CONFIG.ORG_FILE_EXTENSION);
+          const match = fileName.match(CONFIG.DENOTE_FILENAME_PATTERN);
+          const slug = match ? match[2].replace(/-/g, ' ') : fileName;
           
           fileMetadata.set(identifier, { slug, title, identifier });
         }
@@ -99,12 +118,12 @@ async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
     
     // Second pass: find all denote: links and build reverse index
     for (const file of files) {
-      if (file.endsWith('.org')) {
+      if (file.endsWith(CONFIG.ORG_FILE_EXTENSION)) {
         const filePath = join(contentDir, file);
         const content = await readFile(filePath, 'utf-8');
         
         // Extract this file's metadata
-        const identifierMatch = content.match(/^\s*#\+identifier:\s*(.+)$/m);
+        const identifierMatch = content.match(CONFIG.IDENTIFIER_PATTERN);
         if (!identifierMatch) continue;
         
         const sourceIdentifier = identifierMatch[1].trim();
@@ -144,5 +163,21 @@ async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
 
 // Clear cache when needed (e.g., during development)
 export function clearBackLinksCache() {
-  backlinksIndex = null;
+  backlinksCache = null;
+}
+
+// Get cache status for debugging
+export function getBackLinksCacheInfo() {
+  if (!backlinksCache) return { exists: false };
+  
+  const now = Date.now();
+  const age = now - backlinksCache.timestamp;
+  const expired = age > CONFIG.BACKLINKS_CACHE_TTL;
+  
+  return {
+    exists: true,
+    age,
+    expired,
+    entries: backlinksCache.data.size,
+  };
 }
