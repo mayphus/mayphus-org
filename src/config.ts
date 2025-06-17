@@ -26,14 +26,6 @@ export const CONFIG = {
 } as const;
 
 // Type definitions for better type safety
-export interface DenoteFileInfo {
-  timestamp: string;
-  title: string;
-  tags?: string[];
-  slug: string;
-  identifier?: string;
-}
-
 export interface ProcessingError extends Error {
   code: string;
   file?: string;
@@ -52,20 +44,4 @@ export function createProcessingError(
   error.file = file;
   error.retryable = retryable;
   return error;
-}
-
-export function parseDenoteFilename(filename: string): DenoteFileInfo | null {
-  const match = filename.match(CONFIG.DENOTE_FILENAME_PATTERN);
-  if (!match) return null;
-  
-  const [, timestamp, title, tagsStr] = match;
-  const tags = tagsStr?.split('_').filter(Boolean);
-  const slug = title.replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase();
-  
-  return {
-    timestamp,
-    title: title.replace(/-/g, ' '),
-    tags,
-    slug,
-  };
 }

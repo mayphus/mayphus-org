@@ -10,7 +10,8 @@ import orgPlugin, { type OrgPluginOptions } from 'rollup-plugin-orgx';
 import { extractKeywords } from 'uniorg-extract-keywords';
 import { uniorgSlug } from 'uniorg-slug';
 import { fileURLToPath } from 'node:url';
-import { resolveIdLinks } from './plugins/id-link.js';
+import { resolveDenotLinks } from './plugins/denote-links.js';
+import { processFrontmatter } from './plugins/frontmatter.js';
 import { CONFIG } from '../config.js';
 
 declare module 'vfile' {
@@ -54,6 +55,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
     initFrontmatter,
     [extractKeywords, { name: 'keywords' }],
     keywordsToFrontmatter,
+    processFrontmatter,
     uniorgSlug,
     ...(options.uniorgPlugins ?? []),
   ];
@@ -113,7 +115,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
                   uniorgPlugins,
                   rehypePlugins: [
                     ...(options.rehypePlugins ?? []),
-                    resolveIdLinks,
+                    resolveDenotLinks,
                     // rehypeExportFrontmatter,
                   ],
                   development: false,
