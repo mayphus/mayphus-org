@@ -3,8 +3,6 @@
 @import '@fontsource/inter/latin-400.css' layer(fonts);
 @import '@fontsource/jetbrains-mono/latin-400.css' layer(fonts);
 
-@import 'highlight.js/styles/github.css' (prefers-color-scheme: light);
-@import 'highlight.js/styles/github-dark.css' (prefers-color-scheme: dark);
 
 * {
   box-sizing: border-box;
@@ -120,15 +118,18 @@ pre {
   overflow-x: hidden;
   word-wrap: break-word;
   white-space: pre-wrap;
+  background: transparent !important;
+}
+
+/* Override Shiki background */
+pre.shiki {
+  background: transparent !important;
 }
 
 pre code {
   padding: 0;
 }
 
-.hljs {
-  background: transparent !important;
-}
 
 blockquote {
   margin: 1.5rem 0;
@@ -268,9 +269,10 @@ footer {
     border-color: #334155;
   }
   
-  .hljs {
+  pre.shiki {
     background: transparent !important;
   }
+  
   
   blockquote {
     border-color: #334155;
