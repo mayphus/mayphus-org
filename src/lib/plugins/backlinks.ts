@@ -19,13 +19,14 @@ let backlinksCache: CacheEntry | null = null;
 // Rehype plugin to add backlinks to content
 export const addBackLinks = () => {
   return async (tree: any, file: any) => {
-    // Get current file's identifier from frontmatter
-    const currentIdentifier = file.data?.astro?.frontmatter?.identifier;
-    if (!currentIdentifier) return;
-    
-    // Get backlinks for this identifier
-    const backlinks = await getBackLinksForIdentifier(currentIdentifier);
-    if (backlinks.length === 0) return;
+    try {
+      // Get current file's identifier from frontmatter
+      const currentIdentifier = file.data?.astro?.frontmatter?.identifier;
+      if (!currentIdentifier) return;
+      
+      // Get backlinks for this identifier
+      const backlinks = await getBackLinksForIdentifier(currentIdentifier);
+      if (backlinks.length === 0) return;
     
     // Create backlinks section HTML
     const backlinksSection = {
@@ -58,9 +59,13 @@ export const addBackLinks = () => {
       ]
     };
     
-    // Add backlinks section to the end of the document
-    if (tree.type === 'root') {
-      tree.children.push(backlinksSection);
+      // Add backlinks section to the end of the document
+      if (tree.type === 'root') {
+        tree.children.push(backlinksSection);
+      }
+    } catch (error) {
+      console.warn('Failed to add backlinks:', error);
+      // Continue without backlinks rather than failing the build
     }
   };
 };
