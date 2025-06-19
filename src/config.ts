@@ -6,10 +6,10 @@ export const CONFIG = {
   // File patterns
   ORG_FILE_EXTENSION: '.org',
   DENOTE_FILENAME_PATTERN: /^(\d{8}T\d{6})--(.+?)(?:__(.+?))?\.org$/,
-  IDENTIFIER_PATTERN: /#+identifier:\s*(.+)/i,
+  IDENTIFIER_PATTERN: /#\+identifier:\s*(.+)/i,
   
   // Cache configuration
-  BACKLINKS_CACHE_TTL: 5 * 60 * 1000, // 5 minutes in milliseconds
+  BACKLINKS_CACHE_TTL: 30 * 60 * 1000, // 30 minutes in milliseconds
   
   // Build configuration
   SUPPORTED_EXTENSIONS: ['.org'] as const,

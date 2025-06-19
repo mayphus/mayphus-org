@@ -32,17 +32,6 @@ export default defineConfig({
             addBackLinks,
         ],
     }), sitemap()],
-    markdown: {
-        syntaxHighlight: 'shiki',
-        shikiConfig: {
-            theme: 'solarized-light',
-            themes: {
-                light: 'solarized-light',
-                dark: 'solarized-dark',
-            },
-            wrap: true,
-        },
-    },
     prefetch: {
         prefetchAll: true,
     },

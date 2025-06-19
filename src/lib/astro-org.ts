@@ -11,6 +11,7 @@ import { extractKeywords } from 'uniorg-extract-keywords';
 import { uniorgSlug } from 'uniorg-slug';
 import { fileURLToPath } from 'node:url';
 import { resolveDenotLinks } from './plugins/denote-links.js';
+import { addBackLinks } from './plugins/backlinks.js';
 import { processFrontmatter } from './plugins/frontmatter.js';
 import { CONFIG } from '../config.js';
 
@@ -116,6 +117,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
                   rehypePlugins: [
                     ...(options.rehypePlugins ?? []),
                     resolveDenotLinks,
+                    addBackLinks,
                     // rehypeExportFrontmatter,
                   ],
                   development: false,
