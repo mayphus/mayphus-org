@@ -1,6 +1,5 @@
 import { visit } from 'unist-util-visit';
 import type { Element } from 'hast';
-import type { VFile } from 'vfile';
 import { linkResolver } from '../utils/link-resolver.js';
 
 /**
@@ -10,7 +9,7 @@ import { linkResolver } from '../utils/link-resolver.js';
  * Into: <a href="/content/arduino/">Arduino</a>
  */
 export const resolveDenotLinks = () => {
-  return async (tree: Element, _file: VFile) => {
+  return async (tree: Element) => {
     try {
       const idLinks: Element[] = [];
       

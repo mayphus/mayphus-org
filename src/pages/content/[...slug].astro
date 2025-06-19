@@ -6,7 +6,7 @@ import { render } from 'astro:content';
 
 export async function getStaticPaths() {
 	const entries = await Promise.all(
-		Object.entries(collections).map(async ([name, _value]) => {
+		Object.entries(collections).map(async ([name]) => {
 			const collection = await getCollection(name as keyof typeof collections);
 			return collection.map(node => ({
 				params: {

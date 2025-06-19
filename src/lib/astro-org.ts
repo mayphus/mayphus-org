@@ -40,7 +40,9 @@ export type Options = ExtendedOrgPluginOptions;
 type SetupHookParams = HookParameters<'astro:config:setup'> & {
   // `addPageExtension` and `contentEntryType` are not a public APIs
   // Add type defs here
+  // eslint-disable-next-line no-unused-vars
   addPageExtension: (extension: string) => void;
+  // eslint-disable-next-line no-unused-vars
   addContentEntryType: (contentEntryType: ContentEntryType) => void;
 };
 

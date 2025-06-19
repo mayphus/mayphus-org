@@ -1,5 +1,5 @@
 import { readdir, readFile } from 'node:fs/promises';
-import { join, basename } from 'node:path';
+import { join } from 'node:path';
 import { CONFIG } from '../../config.js';
 import { extractSlugFromFilename } from '../utils/denote.js';
 

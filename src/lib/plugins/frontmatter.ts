@@ -10,11 +10,11 @@ export const processFrontmatter = () => {
 		const keywords = (file.data.keywords as Record<string, any>) || {};
 
 		// Parse org-mode date format [YYYY-MM-DD Day HH:MM]
-		if (keywords.date) {
+		if (keywords.date && typeof keywords.date === 'string') {
 			const dateMatch = keywords.date
 				.match(/\[(\d{4}-\d{2}-\d{2}) (\w{3}) (\d{2}:\d{2})\]/);
 			if (dateMatch) {
-				const [, datePart, _dayPart, timePart] = dateMatch;
+				const [, datePart, , timePart] = dateMatch;
 				const date = new Date(`${datePart}T${timePart}`);
 				keywords.date = date;
 			}
