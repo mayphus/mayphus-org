@@ -1,6 +1,7 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join, basename } from 'node:path';
 import { CONFIG } from '../../config.js';
+import { extractSlugFromFilename } from '../utils/denote.js';
 
 export interface BackLink {
   slug: string;
@@ -118,9 +119,7 @@ async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
       if (identifierMatch) {
         const identifier = identifierMatch[1].trim();
         const title = titleMatch ? titleMatch[1].trim() : '';
-        const fileName = basename(file, CONFIG.ORG_FILE_EXTENSION);
-        const match = fileName.match(CONFIG.DENOTE_FILENAME_PATTERN);
-        const slug = match ? match[2] : fileName;
+        const slug = extractSlugFromFilename(file);
         
         fileMetadata.set(identifier, { slug, title, identifier });
       }
