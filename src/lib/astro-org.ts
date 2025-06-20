@@ -120,7 +120,6 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
                     ...(options.rehypePlugins ?? []),
                     resolveDenotLinks,
                     addBackLinks,
-                    // rehypeExportFrontmatter,
                   ],
                   development: false,
                   jsxImportSource: 'astro',
