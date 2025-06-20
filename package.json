@@ -18,7 +18,19 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "validate": "npm run check && npm run type-check && npm run lint && npm run test:run"
+    "validate": "npm run check && npm run type-check && npm run lint && npm run test:run",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,js,astro}": [
+      "eslint --fix"
+    ],
+    "*.ts": [
+      "tsc --noEmit --skipLibCheck"
+    ],
+    "src/**/*.{ts,js}": [
+      "vitest related --run"
+    ]
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
@@ -48,6 +60,8 @@
     "astro-eslint-parser": "^1.2.2",
     "eslint": "^8.57.0",
     "eslint-plugin-astro": "^0.31.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "vite": "^6.0.0",
     "vitest": "^3.2.4",
     "wrangler": "^4.19.1"
