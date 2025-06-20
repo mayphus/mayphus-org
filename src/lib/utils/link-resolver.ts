@@ -1,5 +1,5 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import { readdir, readFile } from 'node:fs/promises';
+import * as path from 'node:path';
 import { CONFIG, createProcessingError } from '../../config.js';
 import { extractSlugFromFilename, extractIdentifierFromFilename } from './denote.js';
 
@@ -24,12 +24,12 @@ class LinkResolver {
 
     try {
       const contentDir = path.join(process.cwd(), CONFIG.CONTENT_DIR);
-      const files = await fs.readdir(contentDir);
+      const files = await readdir(contentDir);
 
       for (const file of files) {
         if (file.endsWith(CONFIG.ORG_FILE_EXTENSION)) {
           const filePath = path.join(contentDir, file);
-          const content = await fs.readFile(filePath, 'utf-8');
+          const content = await readFile(filePath, 'utf-8');
           
           // Extract identifier from content (#+identifier: line)
           const identifierMatch = content.match(CONFIG.IDENTIFIER_PATTERN);

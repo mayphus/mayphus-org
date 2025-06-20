@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 
 import type { AstroIntegration, ContainerRenderer, ContentEntryType, HookParameters } from 'astro';
 import type { Plugin as VitePlugin, ResolvedConfig } from 'vite';
@@ -98,7 +98,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
               rawData: contents,
             };
           },
-          contentModuleTypes: await fs.readFile(
+          contentModuleTypes: await readFile(
             new URL('./content-module-types.d.ts', import.meta.url),
             'utf-8'
           ),
