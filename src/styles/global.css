@@ -101,12 +101,15 @@ a {
 
 p a, td a, li a {
   color: #1a1a1a;
-  text-decoration: none;
-  transition: color 0.15s ease;
+  text-decoration: underline;
+  text-decoration-color: #ccc;
+  text-underline-offset: 2px;
+  transition: all 0.15s ease;
 }
 
 p a:hover, td a:hover, li a:hover {
   color: #666;
+  text-decoration-color: #666;
 }
 
 .tag-button {
@@ -242,14 +245,14 @@ footer {
 
 .contact-links a {
   font-size: 0.75rem;
-  color: #999;
+  color: #666;
   text-decoration: none;
   padding: 0;
   transition: color 0.15s ease;
 }
 
 .contact-links a:hover {
-  color: #666;
+  color: #1a1a1a;
 }
 
 /* Org-mode TODO keywords styling */
@@ -320,11 +323,14 @@ footer {
   
   p a, td a, li a {
     color: #cccccc;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: #666;
+    text-underline-offset: 2px;
   }
   
   p a:hover, td a:hover, li a:hover {
     color: #ffffff;
+    text-decoration-color: #ffffff;
   }
   
   .tag-button {
@@ -380,11 +386,11 @@ footer {
   }
   
   .contact-links a {
-    color: #666666;
+    color: #999999;
   }
   
   .contact-links a:hover {
-    color: #999999;
+    color: #cccccc;
   }
 
   /* Dark mode TODO keywords */
