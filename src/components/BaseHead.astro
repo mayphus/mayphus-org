@@ -17,15 +17,7 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <meta name="generator" content={Astro.generator} />
 
-<!-- CSS loaded via Astro's import system -->
-
-<!-- Resource hints for external services -->
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-
-<!-- Load non-critical CSS asynchronously - Astro handles this automatically -->
-<!-- Non-critical styles will be loaded by Astro's built-in optimization -->
-
-
 <link rel="canonical" href={canonicalURL} />
 
 <title>{title}</title>
