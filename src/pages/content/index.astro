@@ -60,11 +60,15 @@ const tags = Array.from(tagSet).sort();
       }
     </style>
     <script>
+      // Cache DOM references
       const tagButtons = document.querySelectorAll<HTMLButtonElement>('.tag-button');
-      const items = Array.from(document.querySelectorAll<HTMLLIElement>('#items li'));
+      const items = document.querySelectorAll<HTMLLIElement>('#items li');
       let selectedTags = new Set<string>();
 
       function updateDisplay() {
+        // Convert selectedTags to array once for efficiency
+        const selectedTagsArray = Array.from(selectedTags);
+        
         // Update button states
         tagButtons.forEach(btn => {
           const tag = btn.dataset.tag!;
@@ -73,29 +77,30 @@ const tags = Array.from(tagSet).sort();
 
         // Filter items
         items.forEach(li => {
-          const itemTags = li.dataset.tags ? li.dataset.tags.split(' ') : [];
+          const itemTags = li.dataset.tags?.split(' ') || [];
           const matches = selectedTags.size === 0 || 
-            Array.from(selectedTags).every(tag => itemTags.includes(tag));
+            selectedTagsArray.every(tag => itemTags.includes(tag));
           li.hidden = !matches;
         });
 
         // Update URL
         const query = selectedTags.size > 0 ? 
-          `?tags=${Array.from(selectedTags).join(',')}` : '';
+          `?tags=${selectedTagsArray.join(',')}` : '';
         history.replaceState(null, '', query);
       }
 
-      // Add click handlers for tag buttons
-      tagButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const tag = btn.dataset.tag!;
+      // Use event delegation for better performance
+      document.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.classList.contains('tag-button')) {
+          const tag = target.dataset.tag!;
           if (selectedTags.has(tag)) {
             selectedTags.delete(tag);
           } else {
             selectedTags.add(tag);
           }
           updateDisplay();
-        });
+        }
       });
 
       // Handle initial URL parameters
