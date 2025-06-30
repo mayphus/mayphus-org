@@ -229,7 +229,7 @@ img {
 }
 
 footer {
-  margin-top: 2.5rem;
+  margin-top: 3rem;
   padding-top: 0.75rem;
   border-top: none;
   text-align: left;
@@ -240,11 +240,11 @@ footer {
   justify-content: flex-start;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 .contact-links a {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: #666;
   text-decoration: none;
   padding: 0;
