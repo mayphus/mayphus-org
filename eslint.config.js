@@ -32,7 +32,9 @@ export default [
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'prefer-const': 'error',
-      'no-console': 'off'
+      'no-console': 'off',
+      'indent': ['error', 2, { SwitchCase: 1 }],
+      'no-tabs': 'error'
     }
   },
   {

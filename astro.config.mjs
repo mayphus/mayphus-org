@@ -12,27 +12,27 @@ import { addBackLinks } from './src/lib/plugins/backlinks';
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://mayphus.org',
-    integrations: [org({
-        uniorgPlugins: [
-            processFrontmatter,
-            customHeadline,
-        ],
-        rehypePlugins: [
-            resolveDenotLinks,
-            [rehypeAutolinkHeadings, { 
-                behavior: 'wrap',
-            }],
-            [rehypeShiki, {
-                themes: {
-                    light: 'solarized-light',
-                    dark: 'solarized-dark',
-                },
-            }],
-            addBackLinks,
-        ],
-    }), sitemap()],
-    prefetch: {
-        prefetchAll: true,
-    },
+  site: 'https://mayphus.org',
+  integrations: [org({
+    uniorgPlugins: [
+      processFrontmatter,
+      customHeadline,
+    ],
+    rehypePlugins: [
+      resolveDenotLinks,
+      [rehypeAutolinkHeadings, { 
+        behavior: 'wrap',
+      }],
+      [rehypeShiki, {
+        themes: {
+          light: 'solarized-light',
+          dark: 'solarized-dark',
+        },
+      }],
+      addBackLinks,
+    ],
+  }), sitemap()],
+  prefetch: {
+    prefetchAll: true,
+  },
 });

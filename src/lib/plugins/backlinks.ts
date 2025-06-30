@@ -23,42 +23,42 @@ export const addBackLinks = () => {
     try {
       // Get current file's identifier from frontmatter
       const currentIdentifier = file.data?.astro?.frontmatter?.identifier;
-          if (!currentIdentifier) return;
+      if (!currentIdentifier) return;
       
       // Get backlinks for this identifier
       const backlinks = await getBackLinksForIdentifier(currentIdentifier);
       if (backlinks.length === 0) return;
     
-    // Create backlinks section HTML
-    const backlinksSection = {
-      type: 'element',
-      tagName: 'section',
-      properties: { className: ['backlinks'] },
-      children: [
-        {
-          type: 'element',
-          tagName: 'h2',
-          properties: {},
-          children: [{ type: 'text', value: 'Linked References' }]
-        },
-        {
-          type: 'element',
-          tagName: 'ul',
-          properties: {},
-          children: backlinks.map(backlink => ({
+      // Create backlinks section HTML
+      const backlinksSection = {
+        type: 'element',
+        tagName: 'section',
+        properties: { className: ['backlinks'] },
+        children: [
+          {
             type: 'element',
-            tagName: 'li',
+            tagName: 'h2',
             properties: {},
-            children: [{
+            children: [{ type: 'text', value: 'Linked References' }]
+          },
+          {
+            type: 'element',
+            tagName: 'ul',
+            properties: {},
+            children: backlinks.map(backlink => ({
               type: 'element',
-              tagName: 'a',
-              properties: { href: `/content/${backlink.slug}/` },
-              children: [{ type: 'text', value: backlink.title || backlink.slug }]
-            }]
-          }))
-        }
-      ]
-    };
+              tagName: 'li',
+              properties: {},
+              children: [{
+                type: 'element',
+                tagName: 'a',
+                properties: { href: `/content/${backlink.slug}/` },
+                children: [{ type: 'text', value: backlink.title || backlink.slug }]
+              }]
+            }))
+          }
+        ]
+      };
     
       // Add backlinks section to the end of the document
       if (tree.type === 'root') {

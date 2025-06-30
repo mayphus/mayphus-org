@@ -12,6 +12,14 @@ const nodes = collection
         const dateB = b.data.date?.valueOf() || 0;
         return dateB - dateA;
     });
+
+const featuredProjects = nodes
+    .filter((node) => node.data.filetags?.includes('project'))
+    .slice(0, 5);
+
+const recentArticles = nodes
+    .filter((node) => node.data.filetags?.includes('article'))
+    .slice(0, 5);
 ---
 
 <!doctype html>
@@ -29,27 +37,19 @@ const nodes = collection
 
 			<h2>Projects</h2>
 			<ul>
-				{
-					nodes.map((node) => (
-						node.data.filetags?.includes('project') && (
-							<li><a href={`/content/${node.data.slug}/`}>{node.data.title}</a></li>
-						)
-					))
-				}
+				{featuredProjects.map((node) => (
+					<li><a href={`/content/${node.data.slug}/`}>{node.data.title}</a></li>
+				))}
 			</ul>
 
 			<h2>Articles</h2>
 			<ul>
-				{
-					nodes.map((node) => (
-						node.data.filetags?.includes('article') && (
-							<li><a href={`/content/${node.data.slug}/`}>{node.data.title}</a></li>
-						)
-					))
-				}
+				{recentArticles.map((node) => (
+					<li><a href={`/content/${node.data.slug}/`}>{node.data.title}</a></li>
+				))}
 			</ul>
 
-			<p>Browse all <a href="/content/">content</a> for more topics, or <a href="mailto:tangmeifa@gmail.com">email me</a> if you want to help me or I can help you.</p>
+			<p>Browse all <a href="/content/">content</a> or <a href="mailto:tangmeifa@gmail.com">email me</a>.</p>
 			
 			<Footer />
 		</main>
