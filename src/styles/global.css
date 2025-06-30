@@ -12,7 +12,7 @@ html {
 body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 1.125rem;
-  line-height: 1.5;
+  line-height: 1.6;
   color: #2a2a2a;
   background: #ffffff;
   max-width: 36rem;
@@ -35,15 +35,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 1.75rem;
-  font-weight: 500;
+  font-size: 2rem;
+  font-weight: 600;
   margin: 0 0 1.5rem 0;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
 h2 {
-  font-size: 1.25rem;
+  font-size: 1.6rem;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
   letter-spacing: -0.01em;
@@ -51,40 +51,42 @@ h2 {
 }
 
 h3 {
-  font-size: 1.125rem;
+  font-size: 1.28rem;
+  font-weight: 400;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
   letter-spacing: -0.005em;
 }
 
 h4 {
-  font-size: 1rem;
+  font-size: 1.024rem;
+  font-weight: 400;
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
-  font-weight: 500;
 }
 
 h5 {
-  font-size: 0.875rem;
+  font-size: 1rem;
+  font-weight: 400;
   margin-top: 1rem;
   margin-bottom: 0.25rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-transform: none;
+  letter-spacing: 0;
+  color: #666;
 }
 
 h6 {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 400;
   margin-top: 0.75rem;
   margin-bottom: 0.25rem;
-  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   color: #666;
 }
 
 p {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   max-width: 60ch;
 }
 
@@ -101,6 +103,7 @@ p a, td a, li a {
   color: #1a1a1a;
   text-decoration: none;
   border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1px;
   transition: border-color 0.15s ease;
 }
 
@@ -131,13 +134,13 @@ p a:hover, td a:hover, li a:hover {
 }
 
 ul, ol {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
   padding-left: 1.5rem;
 }
 
 li {
   margin-bottom: 0.25rem;
-  line-height: 1.5;
+  line-height: 1.6;
   max-width: 55ch;
 }
 
@@ -148,18 +151,19 @@ li:last-child {
 
 code {
   font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Consolas", monospace;
-  font-size: 0.875em;
+  font-size: 0.9em;
   padding: 0;
   border-radius: 0;
   background: none;
   border: none;
   font-feature-settings: "liga" 1, "calt" 1;
+  letter-spacing: -0.01em;
   color: #666;
 }
 
 pre {
   font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", "Consolas", monospace;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   border: none;
   border-radius: 0;
@@ -189,7 +193,7 @@ pre code {
 }
 
 blockquote {
-  margin: 1.25rem 0;
+  margin: 1.5rem 0;
   padding-left: 0.75rem;
   border-left: 2px solid #e0e0e0;
   font-style: normal;
@@ -201,7 +205,7 @@ blockquote {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.25rem 0;
+  margin: 1.5rem 0;
   border: 1px solid #e0e0e0;
 }
 
@@ -220,7 +224,7 @@ th {
 img {
   max-width: 100%;
   height: auto;
-  margin: 1.25rem 0;
+  margin: 1.5rem 0;
   border: 1px solid #e0e0e0;
 }
 
@@ -387,6 +391,11 @@ footer {
     color: #cccccc;
   }
 
+  /* Dark mode H5 styling */
+  h5 {
+    color: #999999;
+  }
+
   /* Dark mode TODO keywords */
   .todo-keyword.todo {
     background: #000000;
@@ -424,27 +433,43 @@ footer {
 @media (max-width: 600px) {
   body {
     padding: 1rem;
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
   }
   
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     margin-bottom: 1.25rem;
   }
   
   h2 {
-    font-size: 1.125rem;
+    font-size: 1.4rem;
     margin-top: 1.5rem;
   }
   
   h3 {
-    font-size: 1rem;
+    font-size: 1.125rem;
     margin-top: 1.25rem;
   }
   
-  pre {
+  h4 {
+    font-size: 1rem;
+  }
+  
+  h5 {
+    font-size: 0.9375rem;
+  }
+  
+  h6 {
     font-size: 0.8125rem;
+  }
+  
+  pre {
+    font-size: 0.85rem;
     margin: 1rem 0;
+  }
+  
+  code {
+    font-size: 0.85em;
   }
   
   .tag-button {
@@ -454,11 +479,12 @@ footer {
   }
   
   blockquote {
-    margin: 1rem 0;
+    margin: 1.25rem 0;
     padding-left: 0.5rem;
   }
   
   ul, ol {
     padding-left: 1.25rem;
+    margin-bottom: 1.25rem;
   }
 }
