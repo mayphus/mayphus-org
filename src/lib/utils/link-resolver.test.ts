@@ -33,12 +33,12 @@ vi.mock('../../config.js', () => ({
   }))
 }));
 
-import fs from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { extractSlugFromFilename, extractIdentifierFromFilename } from './denote.js';
 import { createProcessingError } from '../../config.js';
 
-const mockReaddir = vi.mocked(fs.readdir);
-const mockReadFile = vi.mocked(fs.readFile);
+const mockReaddir = vi.mocked(readdir);
+const mockReadFile = vi.mocked(readFile);
 const mockExtractSlug = vi.mocked(extractSlugFromFilename);
 const mockExtractIdentifier = vi.mocked(extractIdentifierFromFilename);
 const mockCreateProcessingError = vi.mocked(createProcessingError);
@@ -56,7 +56,7 @@ describe('LinkResolver', () => {
   describe('resolveIdentifierToSlug', () => {
     test('resolves identifier from filename', async () => {
       // Mock file system
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue('#+identifier: 20240326T195811\n#+title: LXD\n\nContent here');
       
       // Mock utilities
@@ -74,7 +74,7 @@ describe('LinkResolver', () => {
     });
 
     test('resolves identifier from content', async () => {
-      mockReaddir.mockResolvedValue(['20240327T093642--docker__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240327T093642--docker__containers.org']);
       mockReadFile.mockResolvedValue('#+identifier: 20240326T195811\n#+title: Docker\n\nContent here');
       
       mockExtractSlug.mockReturnValue('docker');
@@ -87,7 +87,7 @@ describe('LinkResolver', () => {
     });
 
     test('returns null for non-existent identifier', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue('#+identifier: 20240326T195811\n#+title: LXD');
       
       mockExtractSlug.mockReturnValue('lxd');
@@ -114,7 +114,7 @@ describe('LinkResolver', () => {
     });
 
     test('handles files without content identifier', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue('#+title: LXD\n\nNo identifier in content'); // No #+identifier line
       
       mockExtractSlug.mockReturnValue('lxd');
@@ -127,7 +127,7 @@ describe('LinkResolver', () => {
     });
 
     test('handles files without filename identifier', async () => {
-      mockReaddir.mockResolvedValue(['regular-file.org'] as any);
+      mockReaddir.mockResolvedValue(['regular-file.org']);
       mockReadFile.mockResolvedValue('#+identifier: 20240326T195811\n#+title: Regular File');
       
       mockExtractSlug.mockReturnValue('regular-file');
@@ -145,7 +145,7 @@ describe('LinkResolver', () => {
         'image.png',
         'README.md',
         'script.js'
-      ] as any);
+      ]);
       
       mockReadFile.mockResolvedValue('#+identifier: 20240326T195811\n#+title: LXD');
       mockExtractSlug.mockReturnValue('lxd');
@@ -162,7 +162,7 @@ describe('LinkResolver', () => {
     });
 
     test('caches results after initialization', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue('#+identifier: 20240326T195811\n#+title: LXD');
       
       mockExtractSlug.mockReturnValue('lxd');
@@ -186,7 +186,7 @@ describe('LinkResolver', () => {
       mockReaddir.mockResolvedValue([
         '20240326T195811--lxd__containers.org',
         '20240327T093642--docker__containers.org'
-      ] as any);
+      ]);
       
       mockReadFile
         .mockResolvedValueOnce('#+identifier: 20240326T195811\n#+title: LXD')
@@ -228,7 +228,7 @@ describe('LinkResolver', () => {
     });
 
     test('handles readFile errors gracefully', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockRejectedValue(new Error('File not found'));
       mockCreateProcessingError.mockReturnValue({
         message: 'RESOLVER_INIT_FAILED: Link resolver initialization failed',
@@ -242,7 +242,7 @@ describe('LinkResolver', () => {
     });
 
     test('handles malformed identifier patterns', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue('#+identifier: \n#+title: LXD'); // Empty identifier
       
       mockExtractSlug.mockReturnValue('lxd');
@@ -254,7 +254,7 @@ describe('LinkResolver', () => {
     });
 
     test('handles utility function errors', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue('#+identifier: 20240326T195811\n#+title: LXD');
       
       mockExtractSlug.mockImplementation(() => { throw new Error('Slug extraction failed'); });
@@ -272,7 +272,7 @@ describe('LinkResolver', () => {
 
   describe('cache management', () => {
     test('clearCache resets state correctly', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue('#+identifier: 20240326T195811\n#+title: LXD');
       
       mockExtractSlug.mockReturnValue('lxd');
@@ -291,7 +291,7 @@ describe('LinkResolver', () => {
     });
 
     test('multiple cache keys for same file', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue('#+identifier: different-id\n#+title: LXD'); // Content ID differs from filename
       
       mockExtractSlug.mockReturnValue('lxd');
@@ -311,7 +311,7 @@ describe('LinkResolver', () => {
 
   describe('edge cases', () => {
     test('handles empty content directory', async () => {
-      mockReaddir.mockResolvedValue([] as any);
+      mockReaddir.mockResolvedValue([]);
 
       const result = await linkResolver.resolveIdentifierToSlug('20240326T195811');
 
@@ -320,7 +320,7 @@ describe('LinkResolver', () => {
     });
 
     test('handles directory with only non-org files', async () => {
-      mockReaddir.mockResolvedValue(['image.png', 'README.md', 'style.css'] as any);
+      mockReaddir.mockResolvedValue(['image.png', 'README.md', 'style.css']);
 
       const result = await linkResolver.resolveIdentifierToSlug('20240326T195811');
 
@@ -329,7 +329,7 @@ describe('LinkResolver', () => {
     });
 
     test('handles files with complex identifier patterns', async () => {
-      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org'] as any);
+      mockReaddir.mockResolvedValue(['20240326T195811--lxd__containers.org']);
       mockReadFile.mockResolvedValue(`
 #+identifier: 20240326T195811
 #+IDENTIFIER: should-not-match-case-sensitive
