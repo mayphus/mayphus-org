@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Astro-based personal website with custom Org-mode integration, following Dieter Rams design philosophy.
+Astro-based personal website with pure Org-mode integration, following Dieter Rams design philosophy.
 
 ## Commands
 
@@ -10,10 +10,12 @@ Astro-based personal website with custom Org-mode integration, following Dieter 
 
 ## Architecture
 
-- Custom Org-mode integration (`src/lib/astro-org.ts`)
-- Content stored as `.org` files with Denote convention
+- Pure Org-mode integration (`src/lib/astro-org.ts`)
+- Content stored as `.org` files with simple naming convention
 - Dynamic routing via `src/pages/content/[...slug].astro`
 - Tag-based filtering at `/content/`
+- Org-mode link resolution with `[[filename]]` syntax
+- Backlink generation for cross-referenced content
 - Cloudflare Workers deployment
 
 ## Design Philosophy

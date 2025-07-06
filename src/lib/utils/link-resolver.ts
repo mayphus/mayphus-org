@@ -1,12 +1,11 @@
 import { readdir, readFile } from 'node:fs/promises';
 import * as path from 'node:path';
 import { CONFIG, createProcessingError } from '../../config.js';
-import { extractSlugFromFilename, extractIdentifierFromFilename } from './denote.js';
 
 interface FileMetadata {
   slug: string;
-  identifier: string | null;
-  contentIdentifier: string | null;
+  title: string;
+  filename: string;
 }
 
 /**
@@ -31,30 +30,23 @@ class LinkResolver {
           const filePath = path.join(contentDir, file);
           const content = await readFile(filePath, 'utf-8');
           
-          // Extract identifier from content (#+identifier: line)
-          const identifierMatch = content.match(CONFIG.IDENTIFIER_PATTERN);
-          const contentIdentifier = identifierMatch ? identifierMatch[1].trim() : null;
+          // Extract title from content
+          const titleMatch = content.match(/^\s*#\+title:\s*(.+)$/m);
+          const title = titleMatch ? titleMatch[1].trim() : '';
           
-          // Extract identifier from filename
-          const filenameIdentifier = extractIdentifierFromFilename(file);
-          
-          // Generate slug
-          const slug = extractSlugFromFilename(file);
+          // Generate slug and filename
+          const slug = file.replace('.org', '');
+          const filename = file.replace('.org', '');
 
           const metadata: FileMetadata = {
             slug,
-            identifier: filenameIdentifier,
-            contentIdentifier,
+            title,
+            filename,
           };
 
-          // Cache by both filename and identifiers for fast lookup
+          // Cache by filename for fast lookup
+          this.cache.set(filename, metadata);
           this.cache.set(file, metadata);
-          if (contentIdentifier) {
-            this.cache.set(contentIdentifier, metadata);
-          }
-          if (filenameIdentifier) {
-            this.cache.set(filenameIdentifier, metadata);
-          }
         }
       }
 
@@ -66,18 +58,18 @@ class LinkResolver {
   }
 
   /**
-   * Resolve a Denote identifier to its corresponding slug
-   * @param identifier The Denote identifier to resolve
+   * Resolve a filename to its corresponding slug
+   * @param filename The filename to resolve (without .org extension)
    * @returns The slug or null if not found
    */
-  async resolveIdentifierToSlug(identifier: string): Promise<string | null> {
-    if (!identifier || typeof identifier !== 'string') {
+  async resolveFilenameToSlug(filename: string): Promise<string | null> {
+    if (!filename || typeof filename !== 'string') {
       return null;
     }
 
     await this.initialize();
 
-    const metadata = this.cache.get(identifier);
+    const metadata = this.cache.get(filename);
     return metadata?.slug || null;
   }
 

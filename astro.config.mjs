@@ -7,7 +7,7 @@ import rehypeShiki from '@shikijs/rehype';
 import org from './src/lib/astro-org';
 import { processFrontmatter } from './src/lib/plugins/frontmatter';
 import { customHeadline } from './src/lib/plugins/headline';
-import { resolveDenotLinks } from './src/lib/plugins/denote-links';
+import { resolveOrgLinks } from './src/lib/plugins/org-links';
 import { addBackLinks } from './src/lib/plugins/backlinks';
 
 // https://astro.build/config
@@ -19,7 +19,7 @@ export default defineConfig({
       customHeadline,
     ],
     rehypePlugins: [
-      resolveDenotLinks,
+      resolveOrgLinks,
       [rehypeAutolinkHeadings, { 
         behavior: 'wrap',
       }],

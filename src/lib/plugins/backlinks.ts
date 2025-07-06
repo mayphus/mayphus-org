@@ -1,12 +1,11 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { CONFIG } from '../../config.js';
-import { extractSlugFromFilename } from '../utils/denote.js';
 
 export interface BackLink {
   slug: string;
   title: string;
-  identifier: string;
+  filename: string;
 }
 
 // Cache for performance with TTL
@@ -21,12 +20,15 @@ let backlinksCache: CacheEntry | null = null;
 export const addBackLinks = () => {
   return async (tree: any, file: any) => {
     try {
-      // Get current file's identifier from frontmatter
-      const currentIdentifier = file.data?.astro?.frontmatter?.identifier;
-      if (!currentIdentifier) return;
+      // Get current file's slug from file path
+      const filePath = file.path;
+      if (!filePath) return;
       
-      // Get backlinks for this identifier
-      const backlinks = await getBackLinksForIdentifier(currentIdentifier);
+      const filename = filePath.split('/').pop()?.replace('.org', '') || '';
+      if (!filename) return;
+      
+      // Get backlinks for this filename
+      const backlinks = await getBackLinksForFilename(filename);
       if (backlinks.length === 0) return;
     
       // Create backlinks section HTML
@@ -71,7 +73,7 @@ export const addBackLinks = () => {
   };
 };
 
-async function getBackLinksForIdentifier(targetIdentifier: string): Promise<BackLink[]> {
+async function getBackLinksForFilename(targetFilename: string): Promise<BackLink[]> {
   const now = Date.now();
   
   // Force rebuild cache during build (disable cache for now)  
@@ -88,7 +90,7 @@ async function getBackLinksForIdentifier(targetIdentifier: string): Promise<Back
     }
   }
   
-  return backlinksCache.data.get(targetIdentifier) || [];
+  return backlinksCache.data.get(targetFilename) || [];
 }
 
 async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
@@ -108,51 +110,59 @@ async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
       })
     );
     
-    // First pass: collect all files with their identifiers and metadata
-    const fileMetadata = new Map<string, { slug: string; title: string; identifier: string }>();
+    // First pass: collect all files with their metadata
+    const fileMetadata = new Map<string, { slug: string; title: string; filename: string }>();
     
     for (const { file, content } of fileContents) {
-      // Extract identifier and title
-      const identifierMatch = content.match(CONFIG.IDENTIFIER_PATTERN);
+      // Extract title
       const titleMatch = content.match(/^\s*#\+title:\s*(.+)$/m);
+      const title = titleMatch ? titleMatch[1].trim() : '';
+      const slug = file.replace('.org', '');
+      const filename = file.replace('.org', '');
       
-      if (identifierMatch) {
-        const identifier = identifierMatch[1].trim();
-        const title = titleMatch ? titleMatch[1].trim() : '';
-        const slug = extractSlugFromFilename(file);
-        
-        fileMetadata.set(identifier, { slug, title, identifier });
-      }
+      fileMetadata.set(filename, { slug, title, filename });
     }
     
-    // Second pass: find all denote: links and build reverse index
-    for (const { content } of fileContents) {
-      // Extract this file's metadata
-      const identifierMatch = content.match(CONFIG.IDENTIFIER_PATTERN);
-      if (!identifierMatch) continue;
-      
-      const sourceIdentifier = identifierMatch[1].trim();
-      const sourceMetadata = fileMetadata.get(sourceIdentifier);
+    // Second pass: find all org-mode links and build reverse index
+    for (const { file, content } of fileContents) {
+      const sourceFilename = file.replace('.org', '');
+      const sourceMetadata = fileMetadata.get(sourceFilename);
       if (!sourceMetadata) continue;
       
-      // Find all denote: links in this file (both bare and org-mode link formats)
-      const denoteLinks = content.match(/(?:\[\[)?denote:(\d{8}T\d{6})/g) || [];
+      // Find all org-mode links in this file
+      const orgLinks = Array.from(content.matchAll(CONFIG.ORG_LINK_PATTERN));
+      const fileLinks = Array.from(content.matchAll(CONFIG.FILE_LINK_PATTERN));
       
-      for (const link of denoteLinks) {
-        const targetIdentifier = link.replace(/(?:\[\[)?denote:/, '');
+      // Process both types of links
+      const allLinks = [...orgLinks, ...fileLinks];
+      
+      for (const match of allLinks) {
+        const linkTarget = match[1];
+        if (!linkTarget) continue;
         
-        // Add this file as a backlink to the target
-        if (!index.has(targetIdentifier)) {
-          index.set(targetIdentifier, []);
+        // Clean up the link target
+        const targetFilename = linkTarget
+          .replace(/^file:/, '')
+          .replace(/^\.\//, '')
+          .replace(/\.org$/, '');
+        
+        // Skip external links
+        if (targetFilename.includes('://') || targetFilename.startsWith('#')) {
+          continue;
         }
         
-        const backlinks = index.get(targetIdentifier)!;
+        // Add this file as a backlink to the target
+        if (!index.has(targetFilename)) {
+          index.set(targetFilename, []);
+        }
+        
+        const backlinks = index.get(targetFilename)!;
         // Avoid duplicates
-        if (!backlinks.some(bl => bl.identifier === sourceIdentifier)) {
+        if (!backlinks.some(bl => bl.filename === sourceFilename)) {
           backlinks.push({
             slug: sourceMetadata.slug,
             title: sourceMetadata.title,
-            identifier: sourceIdentifier,
+            filename: sourceFilename,
           });
         }
       }

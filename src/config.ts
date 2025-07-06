@@ -5,8 +5,10 @@ export const CONFIG = {
   
   // File patterns
   ORG_FILE_EXTENSION: '.org',
-  DENOTE_FILENAME_PATTERN: /^(\d{8}T\d{6})--(.+?)(?:__(.+?))?\.org$/,
-  IDENTIFIER_PATTERN: /#\+identifier:\s*(.+)/i,
+  
+  // Org-mode link patterns
+  ORG_LINK_PATTERN: /\[\[([^\]]+)\](?:\[([^\]]+)\])?\]/g,
+  FILE_LINK_PATTERN: /\[\[(?:file:)?\.?\/?([\w-]+(?:\.org)?)\](?:\[([^\]]+)\])?\]/g,
   
   // Cache configuration
   BACKLINKS_CACHE_TTL: 30 * 60 * 1000, // 30 minutes in milliseconds

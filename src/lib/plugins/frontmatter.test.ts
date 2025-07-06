@@ -1,20 +1,6 @@
-import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { describe, test, expect, beforeEach } from 'vitest';
 import type { VFile } from 'vfile';
 import { processFrontmatter } from './frontmatter.js';
-
-// Mock the denote utility
-vi.mock('../utils/denote.js', () => ({
-  extractSlugFromFilename: vi.fn((filename: string) => {
-    // Simple mock implementation
-    if (filename.includes('20240326T195811--lxd__lxd_ubuntu.org')) {
-      return 'lxd';
-    }
-    if (filename.includes('simple-post.org')) {
-      return 'simple-post';
-    }
-    return 'test-slug';
-  })
-}));
 
 describe('processFrontmatter', () => {
   let mockFile: VFile;
@@ -53,7 +39,7 @@ describe('processFrontmatter', () => {
 
     expect(mockFile.data.astro?.frontmatter?.title).toBe('My Test Post');
     expect(mockFile.data.astro?.frontmatter?.identifier).toBe('20240326T195811');
-    expect(mockFile.data.astro?.frontmatter?.slug).toBe('test-slug');
+    expect(mockFile.data.astro?.frontmatter?.slug).toBe('test-file');
   });
 
   test('parses org-mode date format correctly', () => {
@@ -111,7 +97,7 @@ describe('processFrontmatter', () => {
   });
 
   test('extracts slug from filename using utility', () => {
-    mockFile.history = ['/path/to/20240326T195811--lxd__lxd_ubuntu.org'];
+    mockFile.history = ['/path/to/lxd.org'];
     mockFile.data.keywords = {
       title: 'LXD Setup'
     };

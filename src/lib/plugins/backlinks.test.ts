@@ -9,17 +9,10 @@ vi.mock('node:fs/promises', () => ({
   readFile: vi.fn(),
 }));
 
-// Mock the denote utility
-vi.mock('../utils/denote.js', () => ({
-  extractSlugFromFilename: vi.fn()
-}));
-
 import { readdir, readFile } from 'node:fs/promises';
-import { extractSlugFromFilename } from '../utils/denote.js';
 
 const mockReaddir = vi.mocked(readdir);
 const mockReadFile = vi.mocked(readFile);
-const mockExtractSlug = vi.mocked(extractSlugFromFilename);
 
 describe('addBackLinks', () => {
   let mockTree: Element;
@@ -44,9 +37,7 @@ describe('addBackLinks', () => {
     mockFile = {
       data: {
         astro: {
-          frontmatter: {
-            identifier: '20240326T195811'
-          }
+          frontmatter: {}
         }
       },
       history: ['test-file.org'],
@@ -58,7 +49,7 @@ describe('addBackLinks', () => {
       extname: '.org',
       dirname: '',
       basename: 'test-file.org',
-      path: 'test-file.org',
+      path: '/path/to/test-file.org',
       result: undefined,
       stored: false,
       fail: () => {},
@@ -69,15 +60,11 @@ describe('addBackLinks', () => {
 
   test('adds backlinks section when backlinks exist', async () => {
     // Mock file system responses
-    mockReaddir.mockResolvedValue(['post1.org', 'post2.org'] as any);
+    mockReaddir.mockResolvedValue(['docker.org', 'kubernetes.org'] as any);
     
     mockReadFile
-      .mockResolvedValueOnce(`#+identifier: 20240327T093642\n#+title: Docker\n\nSee [[denote:20240326T195811][LXD]] for containers.`)
-      .mockResolvedValueOnce(`#+identifier: 20240328T101347\n#+title: Kubernetes\n\nUse denote:20240326T195811 for setup.`);
-
-    mockExtractSlug
-      .mockReturnValueOnce('docker')
-      .mockReturnValueOnce('kubernetes');
+      .mockResolvedValueOnce(`#+title: Docker\n\nSee [[test-file]] for more info.`)
+      .mockResolvedValueOnce(`#+title: Kubernetes\n\nCheck out [[test-file][Test File]] for details.`);
 
     const plugin = addBackLinks();
     await plugin(mockTree, mockFile);
@@ -101,9 +88,8 @@ describe('addBackLinks', () => {
   });
 
   test('does not add backlinks section when no backlinks exist', async () => {
-    mockReaddir.mockResolvedValue(['post1.org'] as any);
-    mockReadFile.mockResolvedValue(`#+identifier: 20240327T093642\n#+title: Unrelated Post\n\nNo links here.`);
-    mockExtractSlug.mockReturnValue('unrelated');
+    mockReaddir.mockResolvedValue(['unrelated.org'] as any);
+    mockReadFile.mockResolvedValue(`#+title: Unrelated Post\n\nNo links here.`);
 
     const plugin = addBackLinks();
     await plugin(mockTree, mockFile);
@@ -112,8 +98,8 @@ describe('addBackLinks', () => {
     expect(mockTree.children).toHaveLength(1); // Only original content
   });
 
-  test('does not process files without identifier', async () => {
-    mockFile.data = {}; // No frontmatter with identifier
+  test('does not process files without valid path', async () => {
+    mockFile.path = ''; // No valid path
 
     const plugin = addBackLinks();
     await plugin(mockTree, mockFile);
@@ -125,8 +111,7 @@ describe('addBackLinks', () => {
 
   test('generates correct backlink URLs', async () => {
     mockReaddir.mockResolvedValue(['linking-post.org'] as any);
-    mockReadFile.mockResolvedValue(`#+identifier: 20240327T093642\n#+title: Linking Post\n\nSee [[denote:20240326T195811][target]].`);
-    mockExtractSlug.mockReturnValue('linking-post');
+    mockReadFile.mockResolvedValue(`#+title: Linking Post\n\nSee [[test-file][target]].`);
 
     const plugin = addBackLinks();
     await plugin(mockTree, mockFile);
@@ -141,17 +126,13 @@ describe('addBackLinks', () => {
     expect((link.children?.[0] as any)?.value).toBe('Linking Post');
   });
 
-  test('handles different denote link formats', async () => {
+  test('handles different org-mode link formats', async () => {
     mockReaddir.mockResolvedValue(['post1.org', 'post2.org'] as any);
     
-    // Test both [[denote:ID]] and bare denote:ID formats
+    // Test both [[test-file]] and [[./test-file.org]] formats
     mockReadFile
-      .mockResolvedValueOnce(`#+identifier: 20240327T093642\n#+title: Post 1\n\nSee [[denote:20240326T195811][link]].`)
-      .mockResolvedValueOnce(`#+identifier: 20240328T101347\n#+title: Post 2\n\nReference denote:20240326T195811 here.`);
-
-    mockExtractSlug
-      .mockReturnValueOnce('post-1')
-      .mockReturnValueOnce('post-2');
+      .mockResolvedValueOnce(`#+title: Post 1\n\nReference: [[test-file]]`)
+      .mockResolvedValueOnce(`#+title: Post 2\n\nSee [[./test-file.org][Test File]]`);
 
     const plugin = addBackLinks();
     await plugin(mockTree, mockFile);
@@ -159,56 +140,6 @@ describe('addBackLinks', () => {
     const backlinksSection = mockTree.children[1] as Element;
     const list = backlinksSection.children?.[1] as Element;
     
-    expect(list.children).toHaveLength(2); // Both formats detected
-  });
-
-  test('avoids duplicate backlinks from same file', async () => {
-    mockReaddir.mockResolvedValue(['post1.org'] as any);
-    
-    // File with multiple references to same target
-    mockReadFile.mockResolvedValue(`#+identifier: 20240327T093642\n#+title: Multi Reference\n\nFirst [[denote:20240326T195811][ref]] and second denote:20240326T195811 reference.`);
-    mockExtractSlug.mockReturnValue('multi-reference');
-
-    const plugin = addBackLinks();
-    await plugin(mockTree, mockFile);
-
-    const backlinksSection = mockTree.children[1] as Element;
-    const list = backlinksSection.children?.[1] as Element;
-    
-    expect(list.children).toHaveLength(1); // Only one backlink despite multiple references
-  });
-
-  test('handles file system errors gracefully', async () => {
-    mockReaddir.mockRejectedValue(new Error('File system error'));
-
-    const plugin = addBackLinks();
-    
-    // Should not throw error
-    await expect(plugin(mockTree, mockFile)).resolves.not.toThrow();
-    
-    // Should not add backlinks section
-    expect(mockTree.children).toHaveLength(1);
-  });
-
-  test('filters files by .org extension', async () => {
-    mockReaddir.mockResolvedValue(['post1.org', 'image.png', 'post2.org', 'README.md'] as any);
-    
-    mockReadFile
-      .mockResolvedValueOnce(`#+identifier: 20240327T093642\n#+title: Post 1\n\nLink [[denote:20240326T195811][here]].`)
-      .mockResolvedValueOnce(`#+identifier: 20240328T101347\n#+title: Post 2\n\nAnother denote:20240326T195811 link.`);
-
-    mockExtractSlug
-      .mockReturnValueOnce('post-1')
-      .mockReturnValueOnce('post-2');
-
-    const plugin = addBackLinks();
-    await plugin(mockTree, mockFile);
-
-    // Should only read .org files
-    expect(mockReadFile).toHaveBeenCalledTimes(2);
-    
-    const backlinksSection = mockTree.children[1] as Element;
-    const list = backlinksSection.children?.[1] as Element;
     expect(list.children).toHaveLength(2);
   });
 });

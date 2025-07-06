@@ -1,8 +1,7 @@
 import type { VFile } from 'vfile';
-import { extractSlugFromFilename } from '../utils/denote.js';
 
 /**
- * Process org-mode keywords and extract Denote metadata for frontmatter
+ * Process org-mode keywords and extract metadata for frontmatter
  * Handles date parsing, filetags normalization, and slug generation
  */
 export const processFrontmatter = () => {
@@ -27,9 +26,9 @@ export const processFrontmatter = () => {
         ? keywords.filetags.split(':').filter(Boolean)
         : [];
 
-    // Extract slug from Denote filename
+    // Extract slug from filename (simple .org removal)
     const fileName = file.history[0]?.split('/').pop() || '';
-    const slug = extractSlugFromFilename(fileName);
+    const slug = fileName.replace('.org', '');
 
     // Ensure astro frontmatter structure exists
     if (!file.data.astro) {

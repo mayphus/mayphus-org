@@ -10,7 +10,7 @@ import orgPlugin, { type OrgPluginOptions } from 'rollup-plugin-orgx';
 import { extractKeywords } from 'uniorg-extract-keywords';
 import { uniorgSlug } from 'uniorg-slug';
 import { fileURLToPath } from 'node:url';
-import { resolveDenotLinks } from './plugins/denote-links.js';
+import { resolveOrgLinks } from './plugins/org-links.js';
 import { addBackLinks } from './plugins/backlinks.js';
 import { processFrontmatter } from './plugins/frontmatter.js';
 import { CONFIG } from '../config.js';
@@ -76,6 +76,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
 
         addRenderer({
           name: 'astro:jsx',
+          // @ts-ignore - import.meta.url is valid in Astro context
           serverEntrypoint: new URL('./server.js', import.meta.url),
         });
         addPageExtension(CONFIG.ORG_FILE_EXTENSION);
@@ -99,6 +100,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
             };
           },
           contentModuleTypes: await readFile(
+            // @ts-ignore - import.meta.url is valid in Astro context
             new URL('./content-module-types.d.ts', import.meta.url),
             'utf-8'
           ),
@@ -118,7 +120,7 @@ export default function org(options: ExtendedOrgPluginOptions = {}): AstroIntegr
                   uniorgPlugins,
                   rehypePlugins: [
                     ...(options.rehypePlugins ?? []),
-                    resolveDenotLinks,
+                    resolveOrgLinks,
                     addBackLinks,
                   ],
                   development: false,
