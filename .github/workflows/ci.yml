@@ -14,18 +14,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout mayphus/org
+      - name: Checkout mayphus/notes
         uses: actions/checkout@v4
         with:
-          repository: mayphus/org
+          repository: mayphus/notes
           token: ${{ secrets.TOKEN }}
-          path: org
+          path: notes
 
       - name: Prepare content
         run: |
           mkdir -p content
-          mv org/*.org content/
-          rm -fr org
+          mv notes/*.org content/
+          rm -fr notes
           rm -fr content/README.org
           
       - name: Setup
