@@ -5,7 +5,7 @@ const content = defineCollection({
   loader: glob({ pattern: "*.org", base: "./content" }),
   schema: z.object({
     title: z.string(),
-    date: z.coerce.date(),
+    date: z.coerce.date().optional(),
     filetags: z.array(z.string()).optional(),
     description: z.string().optional(),
     slug: z.string(),
