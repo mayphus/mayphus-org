@@ -1,4 +1,4 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir, readFile, stat, writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { CONFIG } from '../../config.js';
 
@@ -8,13 +8,11 @@ export interface BackLink {
   filename: string;
 }
 
-// Cache for performance with TTL
-interface CacheEntry {
-  data: Map<string, BackLink[]>;
-  timestamp: number;
-}
+// In-memory cache for the current build process
+let backlinksCache: Map<string, BackLink[]> | null = null;
 
-let backlinksCache: CacheEntry | null = null;
+const CACHE_DIR = join(process.cwd(), '.astro');
+const CACHE_FILE = join(CACHE_DIR, 'backlinks.json');
 
 // Rehype plugin to add backlinks to content
 export const addBackLinks = () => {
@@ -74,33 +72,53 @@ export const addBackLinks = () => {
 };
 
 async function getBackLinksForFilename(targetFilename: string): Promise<BackLink[]> {
-  const now = Date.now();
-  
-  // Force rebuild cache during build (disable cache for now)  
-  if (!backlinksCache || (now - backlinksCache.timestamp) > CONFIG.BACKLINKS_CACHE_TTL) {
+  if (!backlinksCache) {
     try {
-      const index = await buildBackLinksIndex();
-      backlinksCache = {
-        data: index,
-        timestamp: now,
-      };
+      backlinksCache = await buildBackLinksIndex();
     } catch (error) {
       console.warn('Failed to build backlinks index:', error);
-      return [];
+      backlinksCache = new Map(); // Ensure cache is not null
     }
   }
   
-  return backlinksCache.data.get(targetFilename) || [];
+  return backlinksCache.get(targetFilename) || [];
+}
+
+async function isCacheStale(contentFiles: string[], contentDir: string): Promise<boolean> {
+  try {
+    const cacheStat = await stat(CACHE_FILE);
+    for (const file of contentFiles) {
+      const fileStat = await stat(join(contentDir, file));
+      if (fileStat.mtime > cacheStat.mtime) {
+        return true; // A content file is newer than the cache
+      }
+    }
+    return false; // Cache is fresh
+  } catch (error) {
+    // If cache file doesn't exist or other error, it's stale
+    return true;
+  }
 }
 
 async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
+  const contentDir = join(process.cwd(), CONFIG.CONTENT_DIR);
+  const files = await readdir(contentDir);
+  const orgFiles = files.filter(file => file.endsWith(CONFIG.ORG_FILE_EXTENSION));
+
+  if (!await isCacheStale(orgFiles, contentDir)) {
+    try {
+      const cachedData = await readFile(CACHE_FILE, 'utf-8');
+      // JSON can't store a Map, so we store as an array and convert back
+      return new Map(JSON.parse(cachedData));
+    } catch (error) {
+      console.warn('Failed to read backlinks cache, rebuilding...', error);
+    }
+  }
+
+  // --- Cache is stale or missing, rebuild ---
   const index = new Map<string, BackLink[]>();
   
   try {
-    const contentDir = join(process.cwd(), CONFIG.CONTENT_DIR);
-    const files = await readdir(contentDir);
-    const orgFiles = files.filter(file => file.endsWith(CONFIG.ORG_FILE_EXTENSION));
-    
     // Read all files in parallel
     const fileContents = await Promise.all(
       orgFiles.map(async (file) => {
@@ -168,9 +186,19 @@ async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
       }
     }
     
+    // Write the new index to the cache file
+    try {
+      await mkdir(CACHE_DIR, { recursive: true });
+      // Convert Map to array for JSON serialization
+      await writeFile(CACHE_FILE, JSON.stringify(Array.from(index.entries())));
+    } catch (error) {
+      console.warn('Failed to write backlinks cache:', error);
+    }
+
     return index;
   } catch (error) {
-    console.warn('Failed to build backlinks index:', error);
+    console.error('FATAL: Failed to build backlinks index:', error);
+    // Return an empty map on fatal error to avoid crashing the build
     return new Map();
   }
 }
@@ -178,20 +206,39 @@ async function buildBackLinksIndex(): Promise<Map<string, BackLink[]>> {
 // Clear cache when needed (e.g., during development)
 export function clearBackLinksCache() {
   backlinksCache = null;
+  // Also remove the persistent cache file (async but don't wait)
+  if (typeof writeFile === 'function') {
+    try {
+      const result = writeFile(CACHE_FILE, '{}');
+      if (result && typeof result.catch === 'function') {
+        result.catch(err => console.warn('Could not clear persistent cache', err));
+      }
+    } catch (err) {
+      console.warn('Could not clear persistent cache', err);
+    }
+  }
 }
 
 // Get cache status for debugging
-export function getBackLinksCacheInfo() {
-  if (!backlinksCache) return { exists: false };
+export async function getBackLinksCacheInfo() {
+  const inMemoryExists = !!backlinksCache;
   
-  const now = Date.now();
-  const age = now - backlinksCache.timestamp;
-  const expired = age > CONFIG.BACKLINKS_CACHE_TTL;
-  
-  return {
-    exists: true,
-    age,
-    expired,
-    entries: backlinksCache.data.size,
-  };
+  try {
+    const cacheStat = await stat(CACHE_FILE);
+    return {
+      inMemoryExists,
+      persistent: {
+        exists: true,
+        size: cacheStat.size,
+        modified: cacheStat.mtime,
+      }
+    };
+  } catch {
+    return {
+      inMemoryExists,
+      persistent: {
+        exists: false,
+      }
+    };
+  }
 }
