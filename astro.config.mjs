@@ -25,8 +25,8 @@ export default defineConfig({
       }],
       [rehypeShiki, {
         themes: {
-          light: 'min-light',
-          dark: 'min-dark',
+          light: 'solarized-light',
+          dark: 'solarized-dark',
         },
       }],
       addBackLinks,

@@ -42,6 +42,10 @@ pre {
   overflow-x: hidden;
 }
 
+pre.shiki {
+  background: none !important;
+}
+
 blockquote {
   margin: 1.5rem 0;
   padding-left: 0.75rem;
@@ -135,9 +139,9 @@ img {
   p a:hover, td a:hover, li a:hover {
     border-bottom-color: #ccc;
   }
-  
-  code {
-    color: #ccc;
+
+  pre.shiki {
+    background: none !important;
   }
   
   blockquote {
