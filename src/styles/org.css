@@ -1,36 +1,55 @@
 .todo-keyword {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  margin-right: 0.5rem;
-  font-size: 0.6875rem;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-xs) var(--space-sm);
+  margin-right: var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  border: 1px solid #ddd;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+.todo-keyword.todo {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: color-mix(in oklch, var(--danger) 10%, transparent);
 }
 
 .todo-keyword.done {
-  color: #333;
-  border-color: #333;
+  color: var(--success);
+  border-color: var(--success);
+  background: color-mix(in oklch, var(--success) 10%, transparent);
 }
 
-.todo-keyword.cancelled {
-  color: #999;
+.todo-keyword.in-progress {
+  color: var(--warning);
+  border-color: var(--warning);
+  background: color-mix(in oklch, var(--warning) 10%, transparent);
+}
+
+.todo-keyword.started {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: color-mix(in oklch, var(--accent) 10%, transparent);
+}
+
+.todo-keyword.waiting {
+  color: var(--text-muted);
+  border-color: var(--text-muted);
+  background: color-mix(in oklch, var(--text-muted) 5%, transparent);
+  opacity: 0.7;
+}
+
+.todo-keyword.cancelled,
+.todo-keyword.canceled {
+  color: var(--text-muted);
+  border-color: var(--text-muted);
+  background: color-mix(in oklch, var(--text-muted) 5%, transparent);
   text-decoration: line-through;
-}
-
-@media (prefers-color-scheme: dark) {
-  .todo-keyword {
-    background: #2a2a2a;
-    border-color: #555;
-  }
-  
-  .todo-keyword.done {
-    color: #4ade80;
-    border-color: #4ade80;
-  }
-  
-  .todo-keyword.cancelled {
-    color: #666;
-  }
+  opacity: 0.6;
 }

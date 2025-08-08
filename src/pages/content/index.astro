@@ -40,25 +40,6 @@ const tags = Array.from(tagSet).sort();
       </article>
       <Footer />
     </main>
-    <style>
-      .tag-filter {
-        margin-bottom: 1.5rem;
-      }
-
-
-      .tag-button.active {
-        background: #0969da;
-        color: white;
-        border-color: #0969da;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        .tag-button.active {
-          background: #58a6ff;
-          border-color: #58a6ff;
-        }
-      }
-    </style>
     <script>
       // Cache DOM references
       const tagButtons = document.querySelectorAll<HTMLButtonElement>('.tag-button');
