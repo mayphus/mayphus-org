@@ -1,5 +1,15 @@
 @layer tokens, base, layout, components, utilities;
 
+@import '@fontsource/inter/300.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/source-serif-pro/400.css';
+@import '@fontsource/source-serif-pro/400-italic.css';
+@import '@fontsource/source-serif-pro/600.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
 @import './tokens.css';
 @import './org.css' layer(components);
 @import './components.css' layer(components);
@@ -21,6 +31,8 @@
     max-width: var(--container-width);
     margin: var(--space-2xl) auto;
     padding: 0 var(--space-lg);
+    font-feature-settings: "liga", "kern", "onum";
+    text-rendering: optimizeLegibility;
   }
 
   .skip-link {
@@ -68,11 +80,21 @@
   code {
     font-family: var(--font-mono);
     font-size: 0.9em;
+    font-feature-settings: "liga", "calt";
   }
 
   pre.shiki {
     background: none !important;
     overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    border: var(--border-width) solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+  }
+
+  pre.shiki::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
 
   th, td {
