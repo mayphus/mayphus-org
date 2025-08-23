@@ -1,0 +1,39 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`Podcasts - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <main id="main">
+      <h1><a href="/">Podcasts</a></h1>
+
+      <article>
+        <p>
+          A home for podcast recommendations, audio experiments, and conversations I’m collecting.
+        </p>
+
+        <section>
+          <h2>Featured</h2>
+          <p>No featured podcasts yet.</p>
+        </section>
+
+        <section>
+          <h2>All Podcasts</h2>
+          <ul>
+            <!-- Add podcast links or embeds here -->
+          </ul>
+        </section>
+      </article>
+
+      <Footer />
+    </main>
+  </body>
+</html>
+
