@@ -1,4 +1,5 @@
-export async function GET({ locals }: { locals: any }) {
+/* eslint-disable no-undef */
+export async function GET({ locals }: { locals: any }): Promise<Response> {
   try {
     const MEDIA = locals?.runtime?.env?.MEDIA;
     
