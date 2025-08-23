@@ -15,25 +15,73 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
       <h1><a href="/">Podcasts</a></h1>
 
       <article>
-        <p>
-          A home for podcast recommendations, audio experiments, and conversations I’m collecting.
-        </p>
-
-        <section>
-          <h2>Featured</h2>
-          <p>No featured podcasts yet.</p>
-        </section>
-
-        <section>
-          <h2>All Podcasts</h2>
-          <ul>
-            <!-- Add podcast links or embeds here -->
-          </ul>
-        </section>
+        <p id="episodes-note" hidden></p>
+        <ul id="episodes" style="list-style: none; padding: 0;"></ul>
       </article>
 
       <Footer />
     </main>
   </body>
 </html>
+
+<script>
+  const listEl = document.getElementById('episodes');
+  const noteEl = document.getElementById('episodes-note');
+
+  function mimeFor(url: string) {
+    const u = url.toLowerCase();
+    if (u.endsWith('.m4a') || u.includes('.m4a?') || u.endsWith('.mp4')) return 'audio/mp4';
+    return 'audio/mpeg';
+  }
+
+  function titleFromKey(key: string) {
+    const base = key.split('/').pop() || key;
+    const nameWithoutExt = base.replace(/\.[^.]+$/, '');
+    // Handle format: s1e1-<file name>
+    const match = nameWithoutExt.match(/^s\d+e\d+-(.+)$/);
+    if (match) {
+      return match[1].replace(/[\-_]+/g, ' ').trim();
+    }
+    return nameWithoutExt.replace(/[\-_]+/g, ' ').trim();
+  }
+
+  async function load() {
+    try {
+      const res = await fetch('/api/podcasts');
+      if (!res.ok) throw new Error('failed to load');
+      const data = await res.json();
+      const items = (data.items || []).filter((i: any) => /\.(mp3|m4a)$/i.test(i.key));
+
+      if (items.length === 0) {
+        if (noteEl) {
+          noteEl.hidden = false;
+          noteEl.textContent = 'No audio files found.';
+        }
+        return;
+      }
+
+      for (const it of items) {
+        const li = document.createElement('li');
+        li.className = 'episode';
+        const title = titleFromKey(it.key);
+        li.innerHTML = `
+          <p>${title}</p>
+          <audio controls preload="none" style="width:100%">
+            <source src="${it.url}" type="${mimeFor(it.url)}" />
+          </audio>
+        `;
+        if (listEl) {
+          listEl.appendChild(li);
+        }
+      }
+    } catch (e) {
+      if (noteEl) {
+        noteEl.hidden = false;
+        noteEl.textContent = 'Unable to load episodes.';
+      }
+    }
+  }
+
+  load();
+</script>
 
