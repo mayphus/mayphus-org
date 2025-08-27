@@ -94,7 +94,7 @@ async function isCacheStale(contentFiles: string[], contentDir: string): Promise
       }
     }
     return false; // Cache is fresh
-  } catch (error) {
+  } catch {
     // If cache file doesn't exist or other error, it's stale
     return true;
   }

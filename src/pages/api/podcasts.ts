@@ -29,7 +29,7 @@ export async function GET({ locals }: { locals: any }): Promise<Response> {
     return new Response(JSON.stringify({ items }), {
       headers: { 'Content-Type': 'application/json' }
     });
-  } catch (error) {
+  } catch {
     // Fallback on error - return your known podcast file
     const items = [
       {
