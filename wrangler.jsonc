@@ -6,6 +6,12 @@
     "directory": "./dist",
     "not_found_handling": "404-page"
   },
+  "routes": [
+    {
+      "pattern": "mayphus.org",
+      "custom_domain": true
+    }
+  ],
   "r2_buckets": [
     {
       "binding": "MEDIA",
