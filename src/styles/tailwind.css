@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Make Shiki code blocks use Typography's default pre background */
+  .prose pre,
+  .prose .shiki,
+  .prose .shiki pre,
+  .prose .shiki code,
+  pre.shiki {
+    background: var(--tw-prose-pre-bg) !important;
+    background-color: var(--tw-prose-pre-bg) !important;
+  }
+}
