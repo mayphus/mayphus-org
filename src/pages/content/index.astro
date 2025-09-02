@@ -19,18 +19,18 @@ const tags = Array.from(tagSet).sort();
   <head>
     <BaseHead title={`Content - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
-  <body class="bg-white text-zinc-900 antialiased dark:bg-zinc-900 dark:text-zinc-100">
+  <body class="bg-white text-zinc-900 antialiased font-sans dark:bg-zinc-900 dark:text-zinc-100">
     <a href="#main" class="sr-only focus:not-sr-only fixed left-2 top-2 z-50 rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">Skip to main content</a>
     <main id="main" class="mx-auto max-w-prose px-4 py-8">
-      <h1 class="prose dark:prose-invert"><a href="/">Content</a></h1>
-      <article class="prose dark:prose-invert">
+      <article class="prose prose-zinc dark:prose-invert">
+        <h1><a href="/">Content</a></h1>
         <div class="mb-6 flex flex-wrap gap-2">
           {tags.map(tag => (
             <button type="button" class="inline-flex items-center rounded border border-gray-300 px-3 py-1 text-xs font-medium uppercase tracking-wide text-gray-600 hover:bg-gray-50 hover:border-gray-400 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800" data-tag={tag} aria-pressed="false">{tag}</button>
           ))}
         </div>
 
-        <ul id="items" class="list-disc pl-5">
+        <ul id="items">
           {nodes.map(node => (
             <li data-tags={(node.data.filetags ?? []).join(' ')}>
               <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
