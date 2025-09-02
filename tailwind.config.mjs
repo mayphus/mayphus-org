@@ -35,6 +35,8 @@ export default {
               borderColor: theme('colors.gray.200'),
               borderRadius: theme('borderRadius.md'),
               padding: `${theme('spacing.4')} ${theme('spacing.5')}`,
+              overflowX: 'auto',
+              whiteSpace: 'pre',
             },
             code: {
               backgroundColor: 'transparent',
@@ -61,6 +63,8 @@ export default {
             pre: {
               backgroundColor: 'transparent',
               borderColor: theme('colors.gray.700'),
+              overflowX: 'auto',
+              whiteSpace: 'pre',
             },
           },
         },
