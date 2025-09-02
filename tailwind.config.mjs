@@ -14,13 +14,13 @@ export default {
               textDecoration: 'none',
               borderBottomWidth: '1px',
               borderBottomStyle: 'solid',
-              borderBottomColor: 'transparent',
+              borderBottomColor: theme('colors.zinc.300'),
               transitionProperty: 'color, border-color',
               transitionDuration: '150ms',
               textUnderlineOffset: '0.15em',
             },
             'a:hover': {
-              borderBottomColor: theme('colors.zinc.300'),
+              borderBottomColor: theme('colors.zinc.400'),
             },
             'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
               textDecoration: 'none',
@@ -47,10 +47,10 @@ export default {
         invert: {
           css: {
             a: {
-              borderBottomColor: 'transparent',
+              borderBottomColor: theme('colors.zinc.700'),
             },
             'a:hover': {
-              borderBottomColor: theme('colors.zinc.600'),
+              borderBottomColor: theme('colors.zinc.500'),
             },
             'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
               borderBottomColor: 'transparent',
