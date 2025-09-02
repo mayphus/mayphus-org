@@ -22,6 +22,13 @@ export default {
             'a:hover': {
               borderBottomColor: theme('colors.zinc.300'),
             },
+            'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
+              textDecoration: 'none',
+              borderBottomColor: 'transparent',
+            },
+            'h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover': {
+              borderBottomColor: 'transparent',
+            },
             pre: {
               backgroundColor: 'transparent',
               borderWidth: '1px',
@@ -44,6 +51,12 @@ export default {
             },
             'a:hover': {
               borderBottomColor: theme('colors.zinc.600'),
+            },
+            'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a': {
+              borderBottomColor: 'transparent',
+            },
+            'h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover': {
+              borderBottomColor: 'transparent',
             },
             pre: {
               backgroundColor: 'transparent',
