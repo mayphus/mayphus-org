@@ -35,4 +35,8 @@
   .prose code,
   pre.shiki code,
   .shiki code { white-space: inherit !important; }
+
+  /* Avoid UA warning: explicitly size h1 inside sectioning content */
+  h1 { font-size: 2em; }
+  :where(article, aside, nav, section) h1 { font-size: 2em; }
 }
