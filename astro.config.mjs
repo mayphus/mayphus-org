@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import tailwind from '@astrojs/tailwind';
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeShiki from '@shikijs/rehype';
@@ -31,7 +32,7 @@ export default defineConfig({
       }],
       addBackLinks,
     ],
-  }), sitemap()],
+  }), sitemap(), tailwind()],
   prefetch: {
     prefetchAll: true,
   },

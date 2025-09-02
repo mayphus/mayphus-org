@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Ensure Shiki-highlighted blocks have no background */
+  .shiki, .shiki code, .shiki pre { background: transparent !important; }
+}
+

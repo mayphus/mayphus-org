@@ -9,14 +9,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
   <head>
     <BaseHead title={`Podcasts - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
-  <body>
-    <a href="#main" class="skip-link">Skip to main content</a>
-    <main id="main">
-      <h1><a href="/">Podcasts</a></h1>
+  <body class="bg-white text-zinc-900 antialiased dark:bg-zinc-900 dark:text-zinc-100">
+    <a href="#main" class="sr-only focus:not-sr-only fixed left-2 top-2 z-50 rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">Skip to main content</a>
+    <main id="main" class="mx-auto max-w-prose px-4 py-8">
+      <h1 class="prose dark:prose-invert"><a href="/">Podcasts</a></h1>
 
-      <article>
+      <article class="prose dark:prose-invert">
         <p id="episodes-note" hidden></p>
-        <ul id="episodes" style="list-style: none; padding: 0;"></ul>
+        <ul id="episodes"></ul>
       </article>
 
       <Footer />
@@ -84,4 +84,3 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
   load();
 </script>
-
