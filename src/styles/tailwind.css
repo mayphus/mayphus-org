@@ -4,6 +4,17 @@
 
 @layer base {
   /* Ensure Shiki-highlighted blocks have no background */
-  .shiki, .shiki code, .shiki pre { background: transparent !important; }
-}
+  .shiki,
+  .shiki pre,
+  .shiki code,
+  pre.shiki,
+  pre.shiki code {
+    background-color: transparent !important;
+  }
 
+  /* Also clear Typography default if applied */
+  .prose pre,
+  .prose code {
+    background-color: transparent !important;
+  }
+}
