@@ -24,10 +24,10 @@ const tags = Array.from(tagSet).sort();
     <a href="#main" class="sr-only focus:not-sr-only fixed left-2 top-2 z-50 rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">Skip to main content</a>
     <SiteHeader />
     <main id="main" class="mx-auto max-w-prose px-4 py-8">
-      <header class="prose prose-zinc mb-6 dark:prose-invert md:mb-8">
+      <header class="prose mb-6 dark:prose-invert md:mb-8">
         <h1>Content</h1>
       </header>
-      <article class="prose prose-zinc dark:prose-invert">
+      <article class="prose dark:prose-invert">
         <nav class="mb-6 flex flex-wrap gap-2" aria-label="Filter by tag">
           {tags.map(tag => (
             <button
