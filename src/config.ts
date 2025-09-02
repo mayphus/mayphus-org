@@ -1,4 +1,4 @@
-// Centralized configuration for the mayphus.org site
+// Centralized configuration for the mayphus-org project
 export const CONFIG = {
   // Content directory configuration
   CONTENT_DIR: 'content',
