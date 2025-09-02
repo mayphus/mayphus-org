@@ -28,7 +28,13 @@ const tags = Array.from(tagSet).sort();
       <article class="prose prose-zinc dark:prose-invert">
         <nav class="mb-6 flex flex-wrap gap-2" aria-label="Filter by tag">
           {tags.map(tag => (
-            <button type="button" class="inline-flex items-center rounded border border-gray-300 px-3 py-1 text-xs font-medium uppercase tracking-wide text-gray-600 hover:bg-gray-50 hover:border-gray-400 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800" data-tag={tag} aria-pressed="false">{tag}</button>
+            <button
+              type="button"
+              class="inline-flex items-center rounded border border-gray-300 px-3 py-1 text-xs font-medium uppercase tracking-wide text-gray-600 hover:bg-gray-50 hover:border-gray-400 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
+              data-tag={tag}
+              aria-pressed="false"
+              aria-label={`Toggle tag ${tag}`}
+            >{tag}</button>
           ))}
         </nav>
 

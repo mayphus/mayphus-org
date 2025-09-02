@@ -34,6 +34,6 @@ export default defineConfig({
     ],
   }), sitemap(), tailwind()],
   prefetch: {
-    prefetchAll: true,
+    prefetchAll: false,
   },
 });
