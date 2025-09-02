@@ -9,6 +9,19 @@ export default {
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
+            a: {
+              color: 'inherit',
+              textDecoration: 'none',
+              borderBottomWidth: '1px',
+              borderBottomStyle: 'solid',
+              borderBottomColor: 'transparent',
+              transitionProperty: 'color, border-color',
+              transitionDuration: '150ms',
+              textUnderlineOffset: '0.15em',
+            },
+            'a:hover': {
+              borderBottomColor: theme('colors.zinc.300'),
+            },
             pre: {
               backgroundColor: 'transparent',
               borderWidth: '1px',
@@ -26,6 +39,12 @@ export default {
         },
         invert: {
           css: {
+            a: {
+              borderBottomColor: 'transparent',
+            },
+            'a:hover': {
+              borderBottomColor: theme('colors.zinc.600'),
+            },
             pre: {
               backgroundColor: 'transparent',
               borderColor: theme('colors.gray.700'),
@@ -37,4 +56,3 @@ export default {
   },
   plugins: [typography],
 };
-
