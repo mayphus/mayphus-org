@@ -13,3 +13,12 @@
     background-color: var(--tw-prose-pre-bg) !important;
   }
 }
+
+@layer components {
+  /* Remove underline from autolinked heading anchors */
+  .prose :where(h1,h2,h3,h4,h5,h6) a,
+  .prose :where(h1,h2,h3,h4,h5,h6) a:hover,
+  .prose :where(h1,h2,h3,h4,h5,h6) a:focus {
+    text-decoration: none;
+  }
+}
