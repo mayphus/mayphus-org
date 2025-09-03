@@ -21,4 +21,11 @@
   .prose :where(h1,h2,h3,h4,h5,h6) a:focus {
     text-decoration: none;
   }
+
+  /* Make general link underlines subtle */
+  .prose :where(a) {
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 0.04em;
+    text-decoration-skip-ink: auto;
+  }
 }
