@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import NodeLayout from '../../layouts/NodeLayout.astro';
 import { collections } from '../../content.config';
 import { render } from 'astro:content';
+import CodeBlock from '../../components/CodeBlock';
 
 export async function getStaticPaths() {
 	const entries = await Promise.all(
@@ -25,5 +26,6 @@ const { Content } = await render(node);
 ---
 
 <NodeLayout {...node.data}>
-	<Content />
+        <!-- Map fenced code blocks to our React CodeBlock component -->
+        <Content components={{ CodeBlock }} />
 </NodeLayout>

@@ -35,7 +35,6 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.5.1",
-    "@shikijs/rehype": "^3.6.0",
     "astro": "^5.13.4",
     "rehype-autolink-headings": "^7.1.0",
     "rollup-plugin-orgx": "^2.0.0",
@@ -45,11 +44,14 @@
     "uniorg-parse": "^3.2.0",
     "uniorg-slug": "^1.1.0",
     "unist-util-visit": "^5.0.0",
-    "vfile": "^6.0.3"
+    "vfile": "^6.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/react": "^3.5.0",
     "@eslint/js": "^9.29.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/hast": "^3.0.4",
@@ -66,6 +68,8 @@
     "tailwindcss": "^3.4.17",
     "vite": "^6.3.5",
     "vitest": "^3.2.4",
-    "wrangler": "^4.19.1"
+    "wrangler": "^4.19.1",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.1"
   }
 }

@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  /* Make Shiki code blocks use Typography's default pre background */
-  .prose pre,
-  .prose .shiki,
-  .prose .shiki pre,
-  .prose .shiki code,
-  pre.shiki {
-    background: var(--tw-prose-pre-bg) !important;
-    background-color: var(--tw-prose-pre-bg) !important;
-  }
-}
-
 @layer components {
   /* Remove underline from autolinked heading anchors */
   .prose :where(h1,h2,h3,h4,h5,h6) a,
