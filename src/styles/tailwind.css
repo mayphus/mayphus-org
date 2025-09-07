@@ -10,7 +10,7 @@
   pre.shiki {
     background: unset !important;
     background-color: unset !important;
-    border: 1px solid rgb(229 231 235) !important;
+    padding-left: 0 !important;
     overflow-x: auto !important;
     scrollbar-width: none !important; /* Firefox */
     -ms-overflow-style: none !important; /* IE/Edge */
@@ -30,13 +30,6 @@
     background-color: unset !important;
   }
 
-  /* Dark mode border */
-  .dark .prose pre,
-  .dark .prose .shiki,
-  .dark .prose .shiki pre,
-  .dark pre.shiki {
-    border-color: rgb(75 85 99) !important;
-  }
 }
 
 @layer components {
