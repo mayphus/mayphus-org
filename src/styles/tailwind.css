@@ -3,14 +3,39 @@
 @tailwind utilities;
 
 @layer base {
-  /* Make Shiki code blocks use Typography's default pre background */
+  /* Let Shiki code blocks use their theme-specific backgrounds */
   .prose pre,
   .prose .shiki,
   .prose .shiki pre,
-  .prose .shiki code,
   pre.shiki {
-    background: var(--tw-prose-pre-bg) !important;
-    background-color: var(--tw-prose-pre-bg) !important;
+    background: unset !important;
+    background-color: unset !important;
+    border: 1px solid rgb(229 231 235) !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE/Edge */
+  }
+
+  /* Hide scrollbar for WebKit browsers */
+  .prose pre::-webkit-scrollbar,
+  .prose .shiki::-webkit-scrollbar,
+  .prose .shiki pre::-webkit-scrollbar,
+  pre.shiki::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Remove background override from inline code */
+  .prose .shiki code {
+    background: unset !important;
+    background-color: unset !important;
+  }
+
+  /* Dark mode border */
+  .dark .prose pre,
+  .dark .prose .shiki,
+  .dark .prose .shiki pre,
+  .dark pre.shiki {
+    border-color: rgb(75 85 99) !important;
   }
 }
 
