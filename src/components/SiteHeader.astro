@@ -6,14 +6,20 @@ const links = [
 ];
 ---
 
-<header class="mx-auto max-w-prose px-4 py-4">
+<header class="mx-auto max-w-prose px-6 py-6 border-b border-zinc-100 dark:border-zinc-800">
   <nav aria-label="Primary">
-    <ul class="flex gap-4 text-sm text-zinc-600 dark:text-zinc-300">
+    <ul class="flex gap-6 text-sm font-medium">
       {links.map((l) => (
-        <li><a href={l.href}>{l.label}</a></li>
+        <li>
+          <a 
+            href={l.href} 
+            class="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors relative py-1"
+          >
+            {l.label}
+          </a>
+        </li>
       ))}
     </ul>
   </nav>
-  
 </header>
 

@@ -31,36 +31,36 @@ const recentArticles = nodes
   <body class="bg-white text-zinc-900 antialiased font-sans dark:bg-zinc-900 dark:text-zinc-100">
     <a href="#main" class="sr-only focus:not-sr-only fixed left-2 top-2 z-50 rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">Skip to main content</a>
     <SiteHeader />
-    <main id="main" class="prose mx-auto px-4 py-8 dark:prose-invert">
-      <h1>{SITE_TITLE}</h1>
-				<p>Hi, I'm Mayphus – a maker driven by curiosity who finds the most interesting discoveries at the edges where different worlds collide.</p>
+    <main id="main" class="prose prose-zinc mx-auto max-w-prose px-6 py-12 dark:prose-invert lg:prose-lg">
+      <h1 class="mb-8 text-4xl font-extrabold tracking-tight lg:text-5xl">{SITE_TITLE}</h1>
+				<p class="lead text-xl text-zinc-600 dark:text-zinc-400">Hi, I'm Mayphus – a maker driven by curiosity who finds the most interesting discoveries at the edges where different worlds collide.</p>
 				
 				<p>I'm fascinated by the irreplaceable human elements: the spark of a new idea, the intuition that connects seemingly unrelated concepts, and the persistence to iterate until something beautiful emerges. My workshop reflects this approach – it's a space where digital fabrication meets traditional craftsmanship, where engineering precision embraces creative experimentation.</p>
 				
 				<p>I think across boundaries, see patterns others miss, and understand that true innovation comes not from mastering a single domain, but from weaving together insights from many.</p>
 			
-			<h2>Projects</h2>
-			<ul>
+			<h2 class="mt-12 mb-6 text-2xl font-bold">Projects</h2>
+			<ul class="space-y-2">
 				{featuredProjects.map((node) => (
-					<li><a href={`/content/${node.data.slug}/`}>{node.data.title}</a></li>
+					<li><a href={`/content/${node.data.slug}/`} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{node.data.title}</a></li>
 				))}
 			</ul>
 
-			<h2>Articles</h2>
-			<ul>
+			<h2 class="mt-12 mb-6 text-2xl font-bold">Articles</h2>
+			<ul class="space-y-2">
 				{recentArticles.map((node) => (
-					<li><a href={`/content/${node.data.slug}/`}>{node.data.title}</a></li>
+					<li><a href={`/content/${node.data.slug}/`} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{node.data.title}</a></li>
 				))}
 			</ul>
 
-			<h2>Web Apps</h2>
-			<ul>
-				<li><a href="https://billionth-shit.org" target="_blank" rel="noopener noreferrer">Billionth Shit</a></li>
-				<li><a href="https://eat.zhengsanniu.com" target="_blank" rel="noopener noreferrer">Eat</a></li>
-				<li><a href="https://vocabvibe.uk" target="_blank" rel="noopener noreferrer">VocabVibe</a></li>
+			<h2 class="mt-12 mb-6 text-2xl font-bold">Web Apps</h2>
+			<ul class="space-y-2">
+				<li><a href="https://billionth-shit.org" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Billionth Shit</a></li>
+				<li><a href="https://eat.zhengsanniu.com" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Eat</a></li>
+				<li><a href="https://vocabvibe.uk" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">VocabVibe</a></li>
 			</ul>
 
-			<p>Browse all <a href="/content/">content</a>, explore <a href="/podcasts/">podcasts</a>, or <a href="mailto:tangmeifa@gmail.com">email me</a>.</p>
+			<p class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-700">Browse all <a href="/content/" class="font-semibold">content</a>, explore <a href="/podcasts/" class="font-semibold">podcasts</a>, or <a href="mailto:tangmeifa@gmail.com" class="font-semibold">email me</a>.</p>
 			<Footer />
 		</main>
 	</body>
