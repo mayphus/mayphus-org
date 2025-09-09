@@ -370,34 +370,64 @@
     font-style: italic;
   }
 
-  /* Org-mode tables */
+  /* Academic paper style tables */
   table, .prose table {
     border-collapse: collapse;
     width: 100%;
-    margin: 1.5rem 0;
+    margin: 2rem 0;
     background: var(--org-bg);
     font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+
+  /* Clean borders - only top and bottom for main table, bottom for header */
+  table, .prose table {
+    border-top: 2px solid var(--org-text-bright);
+    border-bottom: 2px solid var(--org-text-bright);
   }
 
   th, td, .prose th, .prose td {
-    border: 1px solid var(--org-border);
-    padding: 0.5rem 1rem;
+    border: none;
+    padding: 0.75rem 1rem;
     text-align: left;
     vertical-align: top;
   }
 
+  /* Header styling */
   th, .prose th {
-    background: var(--org-bg-alt);
+    background: transparent;
     color: var(--org-text-bright);
     font-weight: 600;
+    border-bottom: 1px solid var(--org-text-bright);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
+  /* Remove alternating row colors for cleaner academic look */
   tr:nth-child(even), .prose tr:nth-child(even) {
-    background: var(--org-bg-alt);
+    background: transparent;
   }
 
-  tr:hover, .prose tr:hover {
+  /* Subtle hover effect */
+  tbody tr:hover, .prose tbody tr:hover {
     background: var(--org-current-line);
+  }
+
+  /* Ensure header row doesn't have hover effect */
+  thead tr:hover, .prose thead tr:hover {
+    background: transparent;
+  }
+
+  /* Better spacing for table cells */
+  td, .prose td {
+    color: var(--org-text);
+  }
+
+  /* First column styling for better readability */
+  td:first-child, .prose td:first-child {
+    font-weight: 500;
+    color: var(--org-text-bright);
   }
 
 
