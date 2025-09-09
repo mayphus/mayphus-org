@@ -2,137 +2,81 @@ import typography from '@tailwindcss/typography';
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'media',
+  darkMode: 'class',
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}'],
   theme: {
     extend: {
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: '65ch',
-            h1: {
-              marginTop: '0',
-              marginBottom: '2rem',
-              fontSize: '2.25rem',
-              fontWeight: '800',
-              lineHeight: '1.1',
-            },
-            h2: {
-              marginTop: '3rem',
-              marginBottom: '1.25rem',
-              fontSize: '1.875rem',
-              fontWeight: '700',
-              lineHeight: '1.2',
-            },
-            h3: {
-              marginTop: '2.5rem',
-              marginBottom: '1rem',
-              fontSize: '1.5rem',
-              fontWeight: '600',
-              lineHeight: '1.25',
-            },
-            p: {
-              marginTop: '1.25rem',
-              marginBottom: '1.25rem',
-              lineHeight: '1.75',
-            },
-            ul: {
-              marginTop: '1.25rem',
-              marginBottom: '1.25rem',
-            },
-            ol: {
-              marginTop: '1.25rem',
-              marginBottom: '1.25rem',
-            },
-            li: {
-              marginTop: '0.5rem',
-              marginBottom: '0.5rem',
-            },
-            'ul > li': {
-              paddingLeft: '1.75rem',
-            },
-            'ol > li': {
-              paddingLeft: '1.75rem',
-            },
-            'ul ul, ul ol, ol ul, ol ol': {
-              marginTop: '0.75rem',
-              marginBottom: '0.75rem',
-            },
-            blockquote: {
-              marginTop: '2rem',
-              marginBottom: '2rem',
-              paddingLeft: '1.25rem',
-              borderLeftWidth: '4px',
-              borderLeftColor: '#e5e7eb',
-              fontStyle: 'italic',
-            },
-            pre: {
-              marginTop: '2rem',
-              marginBottom: '2rem',
-              padding: '1.25rem',
-              borderRadius: '0.5rem',
-            },
-            code: {
-              padding: '0.25rem 0.375rem',
-              borderRadius: '0.25rem',
-              backgroundColor: '#f3f4f6',
-              fontSize: '0.875rem',
-              fontWeight: '500',
-            },
-            'pre code': {
-              padding: '0',
-              backgroundColor: 'transparent',
-              fontSize: '0.875rem',
-              fontWeight: '400',
-            },
-            a: {
-              color: '#2563eb',
-              fontWeight: '500',
-              transition: 'color 0.15s',
-              '&:hover': {
-                color: '#1d4ed8',
-              },
-            },
-            strong: {
-              fontWeight: '700',
-            },
-            hr: {
-              marginTop: '3rem',
-              marginBottom: '3rem',
-              borderColor: '#e5e7eb',
-            },
+      fontFamily: {
+        'mono': ['JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Monaco', 'monospace'],
+        'sans': ['JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Monaco', 'monospace'],
+      },
+      fontSize: {
+        'xs': ['0.75rem', { lineHeight: '1.4' }],
+        'sm': ['0.875rem', { lineHeight: '1.5' }],
+        'base': ['1rem', { lineHeight: '1.6' }],
+        'lg': ['1.125rem', { lineHeight: '1.6' }],
+        'xl': ['1.25rem', { lineHeight: '1.6' }],
+        '2xl': ['1.5rem', { lineHeight: '1.5' }],
+        '3xl': ['1.875rem', { lineHeight: '1.4' }],
+      },
+      colors: {
+        'org': {
+          // Dark theme colors
+          'dark': {
+            'bg': '#282c34',
+            'bg-alt': '#21242b', 
+            'text': '#bbc2cf',
+            'text-bright': '#dfdfdf',
+            'text-dim': '#5b6268',
+            'keyword': '#c678dd',
+            'string': '#98c379', 
+            'constant': '#da8548',
+            'function': '#61afef',
+            'variable': '#e06c75',
+            'type': '#ecbe7b',
+            'comment': '#5c6370',
+            'heading': '#c678dd',
+            'link': '#61afef',
+            'todo': '#da8548',
+            'done': '#98c379',
+            'tag': '#ecbe7b',
+            'current-line': '#383d4a',
+            'selection': '#3e4451',
+            'border': '#484954',
+            'highlight': '#46d9ff',
           },
-        },
-        dark: {
-          css: {
-            color: '#e5e7eb',
-            blockquote: {
-              borderLeftColor: '#4b5563',
-              color: '#9ca3af',
-            },
-            'h1, h2, h3, h4, h5, h6': {
-              color: '#f9fafb',
-            },
-            strong: {
-              color: '#f9fafb',
-            },
-            code: {
-              backgroundColor: '#1f2937',
-              color: '#f3f4f6',
-            },
-            a: {
-              color: '#60a5fa',
-              '&:hover': {
-                color: '#93bbfc',
-              },
-            },
-            hr: {
-              borderColor: '#374151',
-            },
+          // Light theme colors - inspired by solarized light
+          'light': {
+            'bg': '#fdf6e3',
+            'bg-alt': '#eee8d5',
+            'text': '#586e75',
+            'text-bright': '#002b36',
+            'text-dim': '#93a1a1',
+            'keyword': '#6c71c4',
+            'string': '#859900',
+            'constant': '#cb4b16',
+            'function': '#268bd2',
+            'variable': '#dc322f',
+            'type': '#b58900',
+            'comment': '#93a1a1',
+            'heading': '#6c71c4',
+            'link': '#268bd2',
+            'todo': '#cb4b16',
+            'done': '#859900',
+            'tag': '#b58900',
+            'current-line': '#eee8d5',
+            'selection': '#d3d3d3',
+            'border': '#d3d3d3',
+            'highlight': '#268bd2',
           },
         },
       },
+      boxShadow: {
+        'org-subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+        'org-medium': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'org-large': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      },
     },
   },
-  plugins: [typography],
+  plugins: [],
 };

@@ -1,7 +1,7 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 
@@ -20,30 +20,40 @@ const tags = Array.from(tagSet).sort();
   <head>
     <BaseHead title={`Content - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
-  <body class="bg-white text-zinc-900 antialiased font-sans dark:bg-zinc-900 dark:text-zinc-100">
-    <a href="#main" class="sr-only focus:not-sr-only fixed left-2 top-2 z-50 rounded border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow focus:outline-none dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100">Skip to main content</a>
+  <body class="font-mono">
     <SiteHeader />
-    <main id="main" class="prose prose-zinc mx-auto max-w-prose px-6 py-12 dark:prose-invert lg:prose-lg">
-      <h1 class="mb-8 text-4xl font-extrabold tracking-tight lg:text-5xl">Content</h1>
-        <nav class="mb-8 flex flex-wrap gap-2" aria-label="Filter by tag">
+    <main id="main" class="org-content">
+      <h1>Content</h1>
+      
+      <div class="mb-8">
+        <div class="org-meta mb-4">#+TAGS: {tags.join(' ')}</div>
+        <nav class="flex flex-wrap gap-2 mb-6" aria-label="Filter by tag">
           {tags.map(tag => (
             <button
               type="button"
-              class="inline-flex items-center rounded-full border border-zinc-300 px-3 py-1.5 text-xs font-medium uppercase tracking-wide text-zinc-600 transition-all hover:bg-zinc-50 hover:border-zinc-400 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              class="org-tag-button"
               data-tag={tag}
               aria-pressed="false"
               aria-label={`Toggle tag ${tag}`}
-            >{tag}</button>
+            >:{tag}:</button>
           ))}
         </nav>
+      </div>
 
-        <ul id="items" class="space-y-3">
-          {nodes.map(node => (
-            <li data-tags={(node.data.filetags ?? []).join(' ')} class="transition-opacity duration-200">
-              <a href={`/content/${node.data.slug}/`} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{node.data.title}</a>
-            </li>
-          ))}
-        </ul>
+      <div id="items" class="org-list">
+        {nodes.map(node => (
+          <div data-tags={(node.data.filetags ?? []).join(' ')} class="org-list-item transition-opacity duration-200">
+            <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+            {node.data.filetags && (
+              <span class="ml-2">
+                {node.data.filetags.map(tag => 
+                  <span class="org-tag mr-1">:{tag}:</span>
+                )}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
       <Footer />
     </main>
     <script>
@@ -59,7 +69,8 @@ const tags = Array.from(tagSet).sort();
         // Update button states
         tagButtons.forEach(btn => {
           const tag = btn.dataset.tag!;
-          btn.setAttribute('aria-pressed', selectedTags.has(tag) ? 'true' : 'false');
+          const isSelected = selectedTags.has(tag);
+          btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
         });
 
         // Filter items

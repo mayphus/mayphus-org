@@ -1,49 +1,444 @@
+/* Import beautiful monospace font */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* Let Shiki code blocks use their theme-specific backgrounds */
+  /* CSS Custom Properties for theme switching */
+  :root {
+    --org-bg: #ffffff;
+    --org-bg-alt: #f8f8f8;
+    --org-text: #333333;
+    --org-text-bright: #000000;
+    --org-text-dim: #666666;
+    --org-keyword: #6c71c4;
+    --org-string: #859900;
+    --org-constant: #cb4b16;
+    --org-function: #268bd2;
+    --org-variable: #dc322f;
+    --org-type: #b58900;
+    --org-comment: #999999;
+    --org-heading: #6c71c4;
+    --org-link: #268bd2;
+    --org-todo: #cb4b16;
+    --org-done: #859900;
+    --org-tag: #b58900;
+    --org-current-line: #f0f0f0;
+    --org-selection: #e6f3ff;
+    --org-border: #dddddd;
+    --org-highlight: #268bd2;
+  }
+
+  .dark {
+    --org-bg: #282c34;
+    --org-bg-alt: #21242b;
+    --org-text: #bbc2cf;
+    --org-text-bright: #dfdfdf;
+    --org-text-dim: #5b6268;
+    --org-keyword: #c678dd;
+    --org-string: #98c379;
+    --org-constant: #da8548;
+    --org-function: #61afef;
+    --org-variable: #e06c75;
+    --org-type: #ecbe7b;
+    --org-comment: #5c6370;
+    --org-heading: #c678dd;
+    --org-link: #61afef;
+    --org-todo: #da8548;
+    --org-done: #98c379;
+    --org-tag: #ecbe7b;
+    --org-current-line: #383d4a;
+    --org-selection: #3e4451;
+    --org-border: #484954;
+    --org-highlight: #46d9ff;
+  }
+
+  /* Base body styling with theme support */
+  body {
+    @apply font-mono text-base leading-relaxed;
+    background-color: var(--org-bg);
+    color: var(--org-text);
+    font-feature-settings: "liga" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Smooth scrolling and hide horizontal scrollbars */
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  /* Hide horizontal scrollbars globally but keep trackpad scroll */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--org-border) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    height: 0px;
+    width: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: var(--org-border);
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--org-text-dim);
+  }
+
+  /* Remove all prose styling and start fresh */
+  .prose {
+    max-width: none !important;
+    color: inherit !important;
+    line-height: inherit !important;
+  }
+
+  .prose * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Beautiful code blocks with theme support */
   .prose pre,
   .prose .shiki,
   .prose .shiki pre,
   pre.shiki {
-    background: unset !important;
-    background-color: unset !important;
-    padding-left: 0 !important;
-    overflow-x: auto !important;
-    scrollbar-width: none !important; /* Firefox */
-    -ms-overflow-style: none !important; /* IE/Edge */
+    background: var(--org-bg) !important;
+    margin: 1.5em 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    transition: background-color 0.2s ease;
   }
 
-  /* Hide scrollbar for WebKit browsers */
   .prose pre::-webkit-scrollbar,
   .prose .shiki::-webkit-scrollbar,
-  .prose .shiki pre::-webkit-scrollbar,
   pre.shiki::-webkit-scrollbar {
-    display: none !important;
+    display: none;
   }
 
-  /* Remove background override from inline code */
-  .prose .shiki code {
-    background: unset !important;
-    background-color: unset !important;
+  .prose pre:hover,
+  .prose .shiki:hover,
+  .prose .shiki pre:hover,
+  pre.shiki:hover {
+    background: var(--org-bg-alt) !important;
   }
 
+  /* Add #+begin_src header to code blocks */
+  .prose pre::before,
+  .prose .shiki::before,
+  pre.shiki::before {
+    content: "#+begin_src";
+    display: block;
+    color: var(--org-comment);
+    font-size: 0.8em;
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+  }
+
+  /* Inline code with theme support */
+  .prose code {
+    background: var(--org-bg-alt);
+    color: var(--org-keyword);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+    border: 1px solid var(--org-border);
+  }
+
+  .prose pre code {
+    background: transparent;
+    padding: 0;
+    border: none;
+    font-weight: 400;
+  }
+
+  .prose pre code::before {
+    content: none;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus {
+    outline: 2px solid var(--org-highlight);
+    outline-offset: 2px;
+  }
+
+  /* Selection styling with theme support */
+  ::selection {
+    background-color: var(--org-selection);
+    color: var(--org-text-bright);
+  }
+
+  /* Universal org-mode headings - apply to ALL headings */
+  h1, h2, h3, h4, h5, h6,
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    @apply font-mono font-semibold;
+    color: var(--org-text-bright);
+    margin: 1.5rem 0 1rem 0;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+
+  h1::before, .prose h1::before { 
+    content: "* "; 
+    color: var(--org-heading); 
+    font-weight: bold;
+  }
+  h2::before, .prose h2::before { 
+    content: "** "; 
+    color: var(--org-heading); 
+    font-weight: bold;
+  }
+  h3::before, .prose h3::before { 
+    content: "*** "; 
+    color: var(--org-heading); 
+    font-weight: bold;
+  }
+  h4::before, .prose h4::before { 
+    content: "**** "; 
+    color: var(--org-heading); 
+    font-weight: bold;
+  }
+  h5::before, .prose h5::before { 
+    content: "***** "; 
+    color: var(--org-heading); 
+    font-weight: bold;
+  }
+  h6::before, .prose h6::before { 
+    content: "****** "; 
+    color: var(--org-heading); 
+    font-weight: bold;
+  }
+
+  /* Different sizes for heading hierarchy */
+  h1, .prose h1 { @apply text-2xl; }
+  h2, .prose h2 { @apply text-xl; }
+  h3, .prose h3 { @apply text-lg; }
+  h4, .prose h4 { @apply text-base; }
+  h5, .prose h5 { @apply text-base; }
+  h6, .prose h6 { @apply text-base; }
 }
 
 @layer components {
-  /* Remove underline from autolinked heading anchors */
-  .prose :where(h1,h2,h3,h4,h5,h6) a,
-  .prose :where(h1,h2,h3,h4,h5,h6) a:hover,
-  .prose :where(h1,h2,h3,h4,h5,h6) a:focus {
+  /* Apply link styling to ALL links */
+  a, .org-link {
+    color: var(--org-link);
     text-decoration: none;
+    transition: color 0.2s ease;
   }
 
-  /* Make general link underlines subtle */
-  .prose :where(a) {
-    text-underline-offset: 0.18em;
-    text-decoration-thickness: 0.04em;
-    text-decoration-skip-ink: auto;
+  a:hover, .org-link:hover {
+    color: var(--org-highlight);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  /* Org-mode lists with beautiful indentation */
+  .org-list {
+    margin: 1rem 0;
+  }
+
+  .org-list-item {
+    margin: 0.4rem 0;
+    padding-left: 1rem;
+    position: relative;
+    transition: background-color 0.2s ease;
+  }
+
+  .org-list-item:hover {
+    background-color: var(--org-current-line);
+    border-radius: 4px;
+  }
+
+  .org-list-item::before {
+    content: "-";
+    color: var(--org-constant);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+  }
+
+  /* Minimal navigation */
+  .org-nav {
+    background: var(--org-bg);
+    padding: 1rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s ease;
+    max-width: 80ch;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .org-nav-link {
+    color: var(--org-text-dim);
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: color 0.2s ease;
+    font-weight: 500;
+  }
+
+  .org-nav-link:hover {
+    color: var(--org-text-bright);
+  }
+
+  .org-nav-link.active {
+    color: var(--org-link);
+  }
+
+
+  /* Content area with proper spacing */
+  .org-content {
+    padding: 2rem;
+    line-height: 1.7;
+    max-width: 80ch;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .org-content {
+      padding: 1rem;
+    }
+    
+    .org-nav {
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  /* Beautiful paragraphs with perfect spacing */
+  .org-paragraph {
+    margin: 1rem 0;
+    line-height: 1.7;
+    color: var(--org-text);
+  }
+
+  /* Tag styling for org-mode */
+  .org-tag {
+    color: var(--org-tag);
+    font-size: 0.8em;
+    font-weight: 600;
+    padding: 0.1em 0.3em;
+    background: color-mix(in srgb, var(--org-tag) 10%, transparent);
+    border-radius: 3px;
+    border: 1px solid color-mix(in srgb, var(--org-tag) 30%, transparent);
+  }
+
+  .org-tag::before { content: ":"; }
+  .org-tag::after { content: ":"; }
+
+  /* Tag buttons for filtering */
+  .org-tag-button {
+    background: var(--org-bg-alt);
+    border: 1px solid var(--org-border);
+    color: var(--org-tag);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0.2rem;
+  }
+
+  .org-tag-button:hover {
+    background: var(--org-current-line);
+    border-color: var(--org-tag);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px color-mix(in srgb, var(--org-tag) 20%, transparent);
+  }
+
+  .org-tag-button[aria-pressed="true"] {
+    background: var(--org-tag);
+    color: var(--org-bg);
+    border-color: var(--org-tag);
+    box-shadow: 0 2px 4px color-mix(in srgb, var(--org-tag) 30%, transparent);
+  }
+
+  /* Org-mode metadata styling */
+  .org-meta {
+    color: var(--org-comment);
+    font-style: italic;
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+  }
+
+  /* Beautiful blockquotes */
+  .org-quote {
+    border-left: 4px solid var(--org-heading);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    background: color-mix(in srgb, var(--org-heading) 5%, transparent);
+    border-radius: 0 6px 6px 0;
+    color: var(--org-text-bright);
+    font-style: italic;
+  }
+
+  /* Org-mode tables */
+  table, .prose table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1.5rem 0;
+    background: var(--org-bg);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  th, td, .prose th, .prose td {
+    border: 1px solid var(--org-border);
+    padding: 0.5rem 1rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th, .prose th {
+    background: var(--org-bg-alt);
+    color: var(--org-text-bright);
+    font-weight: 600;
+  }
+
+  tr:nth-child(even), .prose tr:nth-child(even) {
+    background: var(--org-bg-alt);
+  }
+
+  tr:hover, .prose tr:hover {
+    background: var(--org-current-line);
+  }
+
+
+  /* Remove border-radius on inappropriate elements */
+  * {
+    border-radius: 0 !important;
+  }
+
+  /* But keep it on our carefully chosen elements */
+  .org-nav,
+  .org-list-item:hover,
+  .org-tag,
+  .org-tag-button,
+  .org-quote,
+  pre.shiki,
+  .prose pre,
+  .prose code {
+    border-radius: 6px !important;
+  }
+
+  /* Subtle animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .org-content > * {
+    animation: fadeIn 0.3s ease-out;
   }
 }
