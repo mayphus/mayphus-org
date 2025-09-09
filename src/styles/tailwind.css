@@ -266,7 +266,7 @@
     padding: 1rem 2rem;
     font-family: 'JetBrains Mono', monospace;
     transition: all 0.3s ease;
-    max-width: 80ch;
+    max-width: 65ch;
     margin: 0 auto;
     text-align: left;
   }
@@ -292,7 +292,7 @@
   .org-content {
     padding: 2rem;
     line-height: 1.7;
-    max-width: 80ch;
+    max-width: 65ch;
     margin: 0 auto;
     min-height: 100vh;
   }
