@@ -331,30 +331,24 @@
 
   /* Tag buttons for filtering */
   .org-tag-button {
-    background: var(--org-bg-alt);
+    background: transparent;
     border: 1px solid var(--org-border);
     color: var(--org-tag);
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
+    padding: 0.2rem 0.4rem;
     font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
     margin: 0.2rem;
   }
 
   .org-tag-button:hover {
-    background: var(--org-current-line);
-    border-color: var(--org-tag);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px color-mix(in srgb, var(--org-tag) 20%, transparent);
+    color: var(--org-text-bright);
   }
 
   .org-tag-button[aria-pressed="true"] {
-    background: var(--org-tag);
-    color: var(--org-bg);
-    border-color: var(--org-tag);
-    box-shadow: 0 2px 4px color-mix(in srgb, var(--org-tag) 30%, transparent);
+    color: var(--org-text-bright);
+    text-decoration: underline;
   }
 
   /* Org-mode metadata styling */

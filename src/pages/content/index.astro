@@ -26,7 +26,6 @@ const tags = Array.from(tagSet).sort();
       <h1>Content</h1>
       
       <div class="mb-8">
-        <div class="org-meta mb-4">#+TAGS: {tags.join(' ')}</div>
         <nav class="flex flex-wrap gap-2 mb-6" aria-label="Filter by tag">
           {tags.map(tag => (
             <button
@@ -45,9 +44,9 @@ const tags = Array.from(tagSet).sort();
           <div data-tags={(node.data.filetags ?? []).join(' ')} class="org-list-item transition-opacity duration-200">
             <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
             {node.data.filetags && (
-              <span class="ml-2">
+              <span class="ml-2 org-meta">
                 {node.data.filetags.map(tag => 
-                  <span class="org-tag mr-1">:{tag}:</span>
+                  <span class="mr-1">:{tag}:</span>
                 )}
               </span>
             )}

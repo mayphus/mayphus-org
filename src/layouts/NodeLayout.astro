@@ -8,7 +8,7 @@ type Props = CollectionEntry<'content'>['data'] & {
   children?: any;
 };
 
-const { title = 'Untitled' } = Astro.props;
+const { title = 'Untitled', filetags, date } = Astro.props;
 ---
 
 <html lang="en">
@@ -20,6 +20,16 @@ const { title = 'Untitled' } = Astro.props;
     <SiteHeader />
     <main id="main" class="org-content">
       <h1>{title}</h1>
+      {filetags && filetags.length > 0 && (
+        <div class="org-meta">
+          #+filetags: {filetags.map(tag => `:${tag}:`).join('')}
+        </div>
+      )}
+      {date && (
+        <div class="org-meta">
+          #+date: {date.toISOString().split('T')[0]}
+        </div>
+      )}
       <slot />
       <Footer />
     </main>
