@@ -190,33 +190,33 @@
 
   h1::before, .prose h1::before { 
     content: "* "; 
-    color: var(--org-heading); 
-    font-weight: bold;
+    color: var(--org-comment); 
+    font-weight: normal;
   }
   h2::before, .prose h2::before { 
     content: "** "; 
-    color: var(--org-heading); 
-    font-weight: bold;
+    color: var(--org-comment); 
+    font-weight: normal;
   }
   h3::before, .prose h3::before { 
     content: "*** "; 
-    color: var(--org-heading); 
-    font-weight: bold;
+    color: var(--org-comment); 
+    font-weight: normal;
   }
   h4::before, .prose h4::before { 
     content: "**** "; 
-    color: var(--org-heading); 
-    font-weight: bold;
+    color: var(--org-comment); 
+    font-weight: normal;
   }
   h5::before, .prose h5::before { 
     content: "***** "; 
-    color: var(--org-heading); 
-    font-weight: bold;
+    color: var(--org-comment); 
+    font-weight: normal;
   }
   h6::before, .prose h6::before { 
     content: "****** "; 
-    color: var(--org-heading); 
-    font-weight: bold;
+    color: var(--org-comment); 
+    font-weight: normal;
   }
 
   /* Same size for all headings - like content text */
