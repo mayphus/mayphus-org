@@ -186,31 +186,37 @@
     content: "* "; 
     color: var(--org-comment); 
     font-weight: normal;
+    font-feature-settings: "liga" 0, "calt" 0;
   }
   h2::before, .prose h2::before { 
     content: "** "; 
     color: var(--org-comment); 
     font-weight: normal;
+    font-feature-settings: "liga" 0, "calt" 0;
   }
   h3::before, .prose h3::before { 
     content: "*** "; 
     color: var(--org-comment); 
     font-weight: normal;
+    font-feature-settings: "liga" 0, "calt" 0;
   }
   h4::before, .prose h4::before { 
     content: "**** "; 
     color: var(--org-comment); 
     font-weight: normal;
+    font-feature-settings: "liga" 0, "calt" 0;
   }
   h5::before, .prose h5::before { 
     content: "***** "; 
     color: var(--org-comment); 
     font-weight: normal;
+    font-feature-settings: "liga" 0, "calt" 0;
   }
   h6::before, .prose h6::before { 
     content: "****** "; 
     color: var(--org-comment); 
     font-weight: normal;
+    font-feature-settings: "liga" 0, "calt" 0;
   }
 
   /* Same size for all headings - like content text */
