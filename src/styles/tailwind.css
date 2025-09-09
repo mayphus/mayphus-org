@@ -125,12 +125,6 @@
     display: none;
   }
 
-  .prose pre:hover,
-  .prose .shiki:hover,
-  .prose .shiki pre:hover,
-  pre.shiki:hover {
-    background: var(--org-bg-alt) !important;
-  }
 
   /* Add #+begin_src header to code blocks */
   .prose pre::before,
