@@ -59,7 +59,7 @@ const tags = Array.from(tagSet).sort();
     <script>
       // Cache DOM references
       const tagButtons = document.querySelectorAll<HTMLButtonElement>('button[data-tag]');
-      const items = document.querySelectorAll<HTMLLIElement>('#items li');
+      const items = document.querySelectorAll<HTMLElement>('#items .org-list-item');
       let selectedTags = new Set<string>();
 
       function updateDisplay() {
@@ -74,11 +74,11 @@ const tags = Array.from(tagSet).sort();
         });
 
         // Filter items
-        items.forEach(li => {
-          const itemTags = li.dataset.tags?.split(' ') || [];
+        items.forEach(item => {
+          const itemTags = item.dataset.tags?.split(' ') || [];
           const matches = selectedTags.size === 0 || 
             selectedTagsArray.every(tag => itemTags.includes(tag));
-          li.hidden = !matches;
+          item.hidden = !matches;
         });
 
         // Update URL
