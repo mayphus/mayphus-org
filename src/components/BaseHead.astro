@@ -50,6 +50,21 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 }
 </script>
 
+<!-- Auto theme switching based on system preference -->
+<script is:inline>
+  // Set theme immediately to prevent flash
+  function setTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.classList.toggle('dark', prefersDark);
+  }
+  
+  // Apply theme immediately
+  setTheme();
+  
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setTheme);
+</script>
+
 <!-- Optimized Google Analytics - loads after critical resources -->
 <script is:inline>
   // Initialize dataLayer immediately
