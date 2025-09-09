@@ -219,13 +219,11 @@
     font-weight: bold;
   }
 
-  /* Different sizes for heading hierarchy */
-  h1, .prose h1 { @apply text-2xl; }
-  h2, .prose h2 { @apply text-xl; }
-  h3, .prose h3 { @apply text-lg; }
-  h4, .prose h4 { @apply text-base; }
-  h5, .prose h5 { @apply text-base; }
-  h6, .prose h6 { @apply text-base; }
+  /* Same size for all headings - like content text */
+  h1, h2, h3, h4, h5, h6,
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { 
+    @apply text-base; 
+  }
 }
 
 @layer components {
