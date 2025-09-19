@@ -15,16 +15,27 @@ const isActive = (href: string) => {
 };
 ---
 
-<header class="org-nav">
-  <nav aria-label="Primary navigation">
-    {links.map((link) => (
-      <a 
-        href={link.href} 
-        class={`org-nav-link ${isActive(link.href) ? 'active' : ''}`}
-      >
-        {link.label}
+<header class="paper-header">
+  <div class="paper-header__inner">
+    <div class="paper-header__brand">
+      <a href="/" class="paper-header__brand-link">
+        Mayphus Tang
       </a>
-    ))}
-  </nav>
+      <p class="paper-header__brand-subtitle">Digital workshop journal</p>
+    </div>
+
+    <nav aria-label="Primary navigation" class="paper-header__nav">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class={`paper-header__nav-link ${
+            isActive(link.href) ? 'active' : ''
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+  </div>
 </header>
 

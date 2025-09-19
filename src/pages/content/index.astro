@@ -20,39 +20,49 @@ const tags = Array.from(tagSet).sort();
   <head>
     <BaseHead title={`Content - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
-  <body class="font-mono">
+  <body class="paper-body">
     <SiteHeader />
-    <main id="main" class="org-content">
-      <h1>Content</h1>
-      
-      <div class="mb-8">
-        <nav class="flex flex-wrap gap-2 mb-6" aria-label="Filter by tag">
-          {tags.map(tag => (
-            <button
-              type="button"
-              class="org-tag-button"
-              data-tag={tag}
-              aria-pressed="false"
-              aria-label={`Toggle tag ${tag}`}
-            >:{tag}:</button>
-          ))}
-        </nav>
-      </div>
+    <main id="main" class="org-content" role="main">
+      <header class="paper-article__header">
+        <p class="paper-article__kicker">Catalogue</p>
+        <h1>Content</h1>
+        <p class="paper-article__abstract">
+          Browse working notes, experiments, and essays. Use the keyword filter to explore related threads.
+        </p>
+      </header>
 
-      <div id="items" class="org-list">
-        {nodes.map(node => (
-          <div data-tags={(node.data.filetags ?? []).join(' ')} class="org-list-item transition-opacity duration-200">
-            <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
-            {node.data.filetags && (
-              <span class="ml-2 org-meta">
-                {node.data.filetags.map(tag => 
-                  <span class="mr-1">:{tag}:</span>
-                )}
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
+      <section class="paper-article__content">
+        <div class="paper-filter">
+          <nav class="paper-filter__tags" aria-label="Filter by tag">
+            {tags.map(tag => (
+              <button
+                type="button"
+                class="org-tag-button"
+                data-tag={tag}
+                aria-pressed="false"
+                aria-label={`Toggle tag ${tag}`}
+              >
+                :{tag}:
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        <div id="items" class="org-list">
+          {nodes.map(node => (
+            <div data-tags={(node.data.filetags ?? []).join(' ')} class="org-list-item transition-opacity duration-200">
+              <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+              {node.data.filetags && (
+                <span class="org-meta">
+                  {node.data.filetags.map(tag => (
+                    <span class="paper-keyword">{tag}</span>
+                  ))}
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
       <Footer />
     </main>
     <script>

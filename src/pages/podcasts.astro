@@ -10,12 +10,20 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
   <head>
     <BaseHead title={`Podcasts - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
-  <body class="font-mono">
+  <body class="paper-body">
     <SiteHeader />
-    <main id="main" class="org-content">
-      <h1>Podcasts</h1>
-      <p id="episodes-note" hidden></p>
-      <ul id="episodes" class="org-list"></ul>
+    <main id="main" class="org-content" role="main">
+      <header class="paper-article__header">
+        <p class="paper-article__kicker">Audio Dispatches</p>
+        <h1>Podcasts</h1>
+        <p class="paper-article__abstract">
+          A rolling log of recorded conversations and sound experiments from the workshop.
+        </p>
+      </header>
+      <section class="paper-article__content">
+        <p id="episodes-note" class="org-paragraph" hidden></p>
+        <ul id="episodes" class="org-list"></ul>
+      </section>
       <Footer />
     </main>
   </body>

@@ -28,57 +28,65 @@ const recentArticles = nodes
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-  <body class="font-mono">
+  <body class="paper-body">
     <SiteHeader />
-    <main id="main" class="org-content">
-      <h1>{SITE_TITLE}</h1>
-      
-      <div class="org-paragraph mb-4">
-        Hi, I'm Mayphus – a maker driven by curiosity who finds the most interesting discoveries at the edges where different worlds collide.
-      </div>
-      
-      <div class="org-paragraph mb-4">
-        I'm fascinated by the irreplaceable human elements: the spark of a new idea, the intuition that connects seemingly unrelated concepts, and the persistence to iterate until something beautiful emerges. My workshop reflects this approach – it's a space where digital fabrication meets traditional craftsmanship, where engineering precision embraces creative experimentation.
-      </div>
-      
-      <div class="org-paragraph mb-8">
-        I think across boundaries, see patterns others miss, and understand that true innovation comes not from mastering a single domain, but from weaving together insights from many.
-      </div>
-      
-      <h2>Projects</h2>
-      <div class="org-list mb-8">
-        {featuredProjects.map((node) => (
+    <main id="main" class="org-content" role="main">
+      <header class="paper-article__header">
+        <p class="paper-article__kicker">Mayphus Tang · Digital Workshop Journal</p>
+        <h1>{SITE_TITLE}</h1>
+        <p class="paper-article__abstract">
+          Field notes from experiments where fabrication, software, and play converge.
+        </p>
+      </header>
+
+      <section class="paper-article__content">
+        <p class="org-paragraph">
+          Hi, I'm Mayphus – a maker driven by curiosity who finds the most interesting discoveries at the edges where different worlds collide.
+        </p>
+
+        <p class="org-paragraph">
+          I'm fascinated by the irreplaceable human elements: the spark of a new idea, the intuition that connects seemingly unrelated concepts, and the persistence to iterate until something beautiful emerges. My workshop reflects this approach – it's a space where digital fabrication meets traditional craftsmanship, where engineering precision embraces creative experimentation.
+        </p>
+
+        <p class="org-paragraph">
+          I think across boundaries, see patterns others miss, and understand that true innovation comes not from mastering a single domain, but from weaving together insights from many.
+        </p>
+
+        <h2>Projects</h2>
+        <div class="org-list">
+          {featuredProjects.map((node) => (
+            <div class="org-list-item">
+              <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+            </div>
+          ))}
+        </div>
+
+        <h2>Articles</h2>
+        <div class="org-list">
+          {recentArticles.map((node) => (
+            <div class="org-list-item">
+              <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+            </div>
+          ))}
+        </div>
+
+        <h2>Web Apps</h2>
+        <div class="org-list">
           <div class="org-list-item">
-            <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+            <a href="https://billionth-shit.org" target="_blank" rel="noopener noreferrer" class="org-link">Billionth Shit</a>
           </div>
-        ))}
-      </div>
-
-      <h2>Articles</h2>
-      <div class="org-list mb-8">
-        {recentArticles.map((node) => (
           <div class="org-list-item">
-            <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+            <a href="https://eat.zhengsanniu.com" target="_blank" rel="noopener noreferrer" class="org-link">Eat</a>
           </div>
-        ))}
-      </div>
+          <div class="org-list-item">
+            <a href="https://vocabvibe.uk" target="_blank" rel="noopener noreferrer" class="org-link">VocabVibe</a>
+          </div>
+        </div>
 
-      <h2>Web Apps</h2>
-      <div class="org-list mb-8">
-        <div class="org-list-item">
-          <a href="https://billionth-shit.org" target="_blank" rel="noopener noreferrer" class="org-link">Billionth Shit</a>
-        </div>
-        <div class="org-list-item">
-          <a href="https://eat.zhengsanniu.com" target="_blank" rel="noopener noreferrer" class="org-link">Eat</a>
-        </div>
-        <div class="org-list-item">
-          <a href="https://vocabvibe.uk" target="_blank" rel="noopener noreferrer" class="org-link">VocabVibe</a>
-        </div>
-      </div>
-
-      <div class="org-paragraph mt-8">
-        Browse all <a href="/content/" class="org-link">content</a>, explore <a href="/podcasts/" class="org-link">podcasts</a>, or <a href="mailto:tangmeifa@gmail.com" class="org-link">email me</a>.
-      </div>
+        <p class="org-paragraph">
+          Browse all <a href="/content/" class="org-link">content</a>, explore <a href="/podcasts/" class="org-link">podcasts</a>, or <a href="mailto:tangmeifa@gmail.com" class="org-link">email me</a>.
+        </p>
+      </section>
       <Footer />
     </main>
   </body>

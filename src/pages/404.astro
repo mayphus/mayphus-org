@@ -1,5 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import SiteHeader from '../components/SiteHeader.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
@@ -8,11 +10,22 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body class="bg-white text-zinc-900 antialiased font-sans dark:bg-zinc-900 dark:text-zinc-100">
-			<main id="main" class="prose mx-auto px-4 py-8 dark:prose-invert">
-				<h1>Oops!</h1>
-				<p>The page you are looking for does not exist.</p>
-				<p>Go back to the <a href="/">homepage</a>.</p>
-		</main>
-	</body>
+        <body class="paper-body">
+                <SiteHeader />
+                <main id="main" class="org-content" role="main">
+                        <header class="paper-article__header">
+                                <p class="paper-article__kicker">404</p>
+                                <h1>Page not found</h1>
+                                <p class="paper-article__abstract">
+                                        The page you requested has drifted beyond the bounds of this notebook.
+                                </p>
+                        </header>
+                        <section class="paper-article__content">
+                                <p class="org-paragraph">
+                                        The content you were seeking could not be located. Return to the <a href="/" class="org-link">homepage</a> to continue exploring.
+                                </p>
+                        </section>
+                        <Footer />
+                </main>
+        </body>
 </html>
