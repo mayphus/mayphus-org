@@ -5,6 +5,7 @@ import { linkResolver } from './link-resolver.js';
 vi.mock('node:fs/promises', () => ({
   readdir: vi.fn(),
   readFile: vi.fn(),
+  stat: vi.fn(),
 }));
 
 // Mock config
@@ -20,15 +21,19 @@ vi.mock('../../config.js', () => ({
   })
 }));
 
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir, readFile, stat } from 'node:fs/promises';
 
 const mockReaddir = vi.mocked(readdir);
 const mockReadFile = vi.mocked(readFile);
+const mockStat = vi.mocked(stat);
 
 describe('LinkResolver', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     linkResolver.clearCache();
+    mockStat.mockResolvedValue({
+      isDirectory: () => false,
+    } as any);
   });
 
   afterEach(() => {
@@ -270,5 +275,24 @@ describe('LinkResolver', () => {
     // it may initialize multiple times but should still work correctly
     expect(mockReaddir).toHaveBeenCalled();
     expect(mockReadFile).toHaveBeenCalled();
+  });
+
+  test('handles nested directories and relative lookup', async () => {
+    mockReaddir
+      .mockResolvedValueOnce(['guides', 'index.org'] as any)
+      .mockResolvedValueOnce(['linux.org'] as any);
+
+    mockStat
+      .mockResolvedValueOnce({ isDirectory: () => true } as any)
+      .mockResolvedValueOnce({ isDirectory: () => false } as any)
+      .mockResolvedValueOnce({ isDirectory: () => false } as any);
+
+    mockReadFile
+      .mockResolvedValueOnce('#+title: Linux Guide\n\nContent...')
+      .mockResolvedValueOnce('#+title: Index\n\nContent...');
+
+    const result = await linkResolver.resolveFilenameToSlug('guides/linux');
+
+    expect(result).toBe('linux');
   });
 });

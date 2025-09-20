@@ -10,8 +10,6 @@
     "astro": "astro",
     "deploy": "npm run build && wrangler deploy",
     "dev:wrangler": "wrangler dev",
-    "sync": "./scripts/sync-content.sh",
-    "dev:sync": "npm run sync && npm run dev",
     "check": "astro check",
     "lint": "npx eslint src/ *.{js,mjs,ts}",
     "type-check": "tsc --noEmit",

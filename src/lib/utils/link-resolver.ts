@@ -1,11 +1,11 @@
-import { readdir, readFile } from 'node:fs/promises';
+import { readdir, readFile, stat } from 'node:fs/promises';
 import * as path from 'node:path';
 import { CONFIG, createProcessingError } from '../../config.js';
 
 interface FileMetadata {
   slug: string;
   title: string;
-  filename: string;
+  relativePath: string;
 }
 
 /**
@@ -15,6 +15,8 @@ class LinkResolver {
   private cache = new Map<string, FileMetadata>();
   private initialized = false;
 
+  private readonly orgExtension = CONFIG.ORG_FILE_EXTENSION;
+
   /**
    * Initialize the resolver by scanning all content files
    */
@@ -23,38 +25,68 @@ class LinkResolver {
 
     try {
       const contentDir = path.join(process.cwd(), CONFIG.CONTENT_DIR);
-      const files = await readdir(contentDir);
-
-      for (const file of files) {
-        if (file.endsWith(CONFIG.ORG_FILE_EXTENSION)) {
-          const filePath = path.join(contentDir, file);
-          const content = await readFile(filePath, 'utf-8');
-          
-          // Extract title from content
-          const titleMatch = content.match(/^\s*#\+title:\s*(.+)$/m);
-          const title = titleMatch ? titleMatch[1].trim() : '';
-          
-          // Generate slug and filename
-          const slug = file.replace('.org', '');
-          const filename = file.replace('.org', '');
-
-          const metadata: FileMetadata = {
-            slug,
-            title,
-            filename,
-          };
-
-          // Cache by filename for fast lookup
-          this.cache.set(filename, metadata);
-          this.cache.set(file, metadata);
-        }
-      }
+      await this.walkDirectory(contentDir, contentDir);
 
       this.initialized = true;
     } catch (error) {
       console.warn('Failed to initialize link resolver:', error);
       throw createProcessingError('Link resolver initialization failed', 'RESOLVER_INIT_FAILED');
     }
+  }
+
+  private async walkDirectory(rootDir: string, currentDir: string): Promise<void> {
+    const entries = await readdir(currentDir);
+
+    for (const entry of entries) {
+      const entryPath = path.join(currentDir, entry);
+      const entryStat = await stat(entryPath);
+
+      if (entryStat.isDirectory()) {
+        await this.walkDirectory(rootDir, entryPath);
+        continue;
+      }
+
+      if (!entry.endsWith(CONFIG.ORG_FILE_EXTENSION)) {
+        continue;
+      }
+
+      const content = await readFile(entryPath, 'utf-8');
+
+      // Extract title from content
+      const titleMatch = content.match(/^\s*#\+title:\s*(.+)$/m);
+      const title = titleMatch ? titleMatch[1].trim() : '';
+
+      const relativePathWithExt = path.relative(rootDir, entryPath).replace(/\\/g, '/');
+      const relativePath = relativePathWithExt.endsWith(this.orgExtension)
+        ? relativePathWithExt.slice(0, -this.orgExtension.length)
+        : relativePathWithExt;
+      const slug = path.posix.basename(relativePath);
+
+      const metadata: FileMetadata = {
+        slug,
+        title,
+        relativePath,
+      };
+
+      for (const key of this.generateCacheKeys(relativePath)) {
+        this.cache.set(key, metadata);
+      }
+    }
+  }
+
+  private generateCacheKeys(relativePath: string): string[] {
+    const normalized = relativePath.replace(/\\/g, '/');
+    const keys = new Set<string>();
+
+    const withExt = `${normalized}${this.orgExtension}`;
+    const baseName = path.posix.basename(normalized);
+
+    keys.add(normalized);
+    keys.add(withExt);
+    keys.add(baseName);
+    keys.add(`${baseName}${this.orgExtension}`);
+
+    return Array.from(keys);
   }
 
   /**
@@ -69,8 +101,42 @@ class LinkResolver {
 
     await this.initialize();
 
-    const metadata = this.cache.get(filename);
-    return metadata?.slug || null;
+    const lookupKeys = this.generateLookupKeys(filename);
+
+    for (const key of lookupKeys) {
+      const metadata = this.cache.get(key);
+      if (metadata) {
+        return metadata.slug;
+      }
+    }
+
+    return null;
+  }
+
+  private generateLookupKeys(input: string): string[] {
+    const sanitized = input.trim();
+    if (!sanitized) {
+      return [];
+    }
+
+    const cleaned = sanitized
+      .replace(/^file:/, '')
+      .replace(/^\.\//, '')
+      .replace(/\\/g, '/');
+
+    const normalized = cleaned.endsWith(this.orgExtension)
+      ? cleaned.slice(0, -this.orgExtension.length)
+      : cleaned;
+
+    const keys = new Set<string>();
+    keys.add(normalized);
+    keys.add(`${normalized}${this.orgExtension}`);
+
+    const baseName = path.posix.basename(normalized);
+    keys.add(baseName);
+    keys.add(`${baseName}${this.orgExtension}`);
+
+    return Array.from(keys).filter(Boolean);
   }
 
   /**

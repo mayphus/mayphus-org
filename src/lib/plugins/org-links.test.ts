@@ -15,6 +15,7 @@ const mockLinkResolver = vi.mocked(linkResolver);
 
 describe('resolveOrgLinks', () => {
   let mockTree: Element;
+  let mockFile: any;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -23,6 +24,10 @@ describe('resolveOrgLinks', () => {
       type: 'root',
       children: []
     } as any;
+
+    mockFile = {
+      path: `${process.cwd()}/content/source.org`,
+    };
   });
 
   test('resolves simple org-mode links', async () => {
@@ -37,7 +42,7 @@ describe('resolveOrgLinks', () => {
     mockLinkResolver.resolveFilenameToSlug.mockResolvedValue('emacs');
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).toHaveBeenCalledWith('emacs');
     expect(linkElement.properties?.href).toBe('/content/emacs/');
@@ -55,7 +60,7 @@ describe('resolveOrgLinks', () => {
     mockLinkResolver.resolveFilenameToSlug.mockResolvedValue('docker');
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).toHaveBeenCalledWith('docker');
     expect(linkElement.properties?.href).toBe('/content/docker/');
@@ -73,7 +78,7 @@ describe('resolveOrgLinks', () => {
     mockLinkResolver.resolveFilenameToSlug.mockResolvedValue('linux');
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).toHaveBeenCalledWith('linux');
     expect(linkElement.properties?.href).toBe('/content/linux/');
@@ -90,7 +95,7 @@ describe('resolveOrgLinks', () => {
     mockTree.children = [linkElement];
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).not.toHaveBeenCalled();
     expect(linkElement.properties?.href).toBe('https://example.com');
@@ -107,7 +112,7 @@ describe('resolveOrgLinks', () => {
     mockTree.children = [linkElement];
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).not.toHaveBeenCalled();
     expect(linkElement.properties?.href).toBe('#section');
@@ -124,7 +129,7 @@ describe('resolveOrgLinks', () => {
     mockTree.children = [linkElement];
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).not.toHaveBeenCalled();
     expect(linkElement.properties?.href).toBe('/content/something/');
@@ -141,7 +146,7 @@ describe('resolveOrgLinks', () => {
     mockTree.children = [linkElement];
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).not.toHaveBeenCalled();
     expect(linkElement.properties?.href).toBe('script.js');
@@ -161,7 +166,7 @@ describe('resolveOrgLinks', () => {
     mockLinkResolver.resolveFilenameToSlug.mockResolvedValue(null);
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(consoleWarnSpy).toHaveBeenCalledWith('Could not resolve org-mode link: nonexistent');
     expect(linkElement.properties?.href).toBe('nonexistent'); // Unchanged
@@ -194,11 +199,31 @@ describe('resolveOrgLinks', () => {
       .mockResolvedValueOnce('docker');
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).toHaveBeenCalledTimes(2);
     expect(link1.properties?.href).toBe('/content/emacs/');
     expect(link2.properties?.href).toBe('/content/docker/');
+  });
+
+  test('normalizes parent directory org links', async () => {
+    mockFile.path = `${process.cwd()}/content/guides/source.org`;
+
+    const linkElement: Element = {
+      type: 'element',
+      tagName: 'a',
+      properties: { href: '../notes/linux' },
+      children: [{ type: 'text', value: 'Linux Notes' }]
+    };
+
+    mockTree.children = [linkElement];
+    mockLinkResolver.resolveFilenameToSlug.mockResolvedValue('linux');
+
+    const plugin = resolveOrgLinks();
+    await plugin(mockTree, mockFile);
+
+    expect(mockLinkResolver.resolveFilenameToSlug).toHaveBeenCalledWith('notes/linux');
+    expect(linkElement.properties?.href).toBe('/content/linux/');
   });
 
   test('handles resolver errors gracefully', async () => {
@@ -215,7 +240,7 @@ describe('resolveOrgLinks', () => {
     mockLinkResolver.resolveFilenameToSlug.mockRejectedValue(new Error('Resolver error'));
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(consoleWarnSpy).toHaveBeenCalledWith('Failed to resolve org-mode links:', expect.any(Error));
     expect(linkElement.properties?.href).toBe('emacs'); // Unchanged
@@ -249,7 +274,7 @@ describe('resolveOrgLinks', () => {
     mockLinkResolver.resolveFilenameToSlug.mockResolvedValue('nested-content');
 
     const plugin = resolveOrgLinks();
-    await plugin(mockTree);
+    await plugin(mockTree, mockFile);
 
     expect(mockLinkResolver.resolveFilenameToSlug).toHaveBeenCalledWith('nested-content');
     expect(linkElement.properties?.href).toBe('/content/nested-content/');

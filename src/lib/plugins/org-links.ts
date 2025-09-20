@@ -1,6 +1,9 @@
 import { visit } from 'unist-util-visit';
 import type { Element } from 'hast';
+import type { VFile } from 'vfile';
+import * as path from 'node:path';
 import { linkResolver } from '../utils/link-resolver.js';
+import { CONFIG } from '../../config.js';
 
 /**
  * Rehype plugin to resolve org-mode links from [[link]] format to "/content/slug/" URLs
@@ -9,7 +12,7 @@ import { linkResolver } from '../utils/link-resolver.js';
  * Into: <a href="/content/emacs/">Emacs</a>
  */
 export const resolveOrgLinks = () => {
-  return async (tree: Element) => {
+  return async (tree: Element, file?: VFile) => {
     try {
       const orgLinks: Element[] = [];
       
@@ -21,7 +24,7 @@ export const resolveOrgLinks = () => {
       });
 
       // Resolve each org-mode link
-      await resolveLinks(orgLinks);
+      await resolveLinks(orgLinks, file?.path);
     } catch (error) {
       console.warn('Failed to resolve org-mode links:', error);
       // Continue without resolving links rather than failing the build
@@ -60,18 +63,17 @@ function isOrgLinkElement(node: any): node is Element {
 /**
  * Resolve an array of org-mode link elements
  */
-async function resolveLinks(linkNodes: Element[]): Promise<void> {
+async function resolveLinks(linkNodes: Element[], currentFilePath?: string): Promise<void> {
   for (const linkNode of linkNodes) {
     const href = linkNode.properties?.href;
     
     if (typeof href === 'string' && linkNode.properties) {
-      // Clean up the href - remove file: prefix, .org extension, and leading ./
-      const cleanHref = href
-        .replace(/^file:/, '')
-        .replace(/^\.\//, '')
-        .replace(/\.org$/, '');
-      
-      const resolvedSlug = await linkResolver.resolveFilenameToSlug(cleanHref);
+      const normalizedTarget = normalizeOrgLinkTarget(href, currentFilePath);
+      if (!normalizedTarget) {
+        continue;
+      }
+
+      const resolvedSlug = await linkResolver.resolveFilenameToSlug(normalizedTarget);
       
       if (resolvedSlug) {
         // Convert to content route format
@@ -81,4 +83,33 @@ async function resolveLinks(linkNodes: Element[]): Promise<void> {
       }
     }
   }
+}
+
+function normalizeOrgLinkTarget(href: string, currentFilePath?: string): string | null {
+  const contentRoot = path.join(process.cwd(), CONFIG.CONTENT_DIR);
+  const cleaned = href.replace(/^file:/, '').replace(/\\/g, '/');
+
+  if (!cleaned) {
+    return null;
+  }
+
+  const baseDir = currentFilePath ? path.dirname(currentFilePath) : contentRoot;
+  const hasExtension = cleaned.endsWith(CONFIG.ORG_FILE_EXTENSION);
+  const candidateWithExt = hasExtension ? cleaned : `${cleaned}${CONFIG.ORG_FILE_EXTENSION}`;
+
+  const candidatePath = path.resolve(baseDir, candidateWithExt);
+  const normalizedCandidate = candidatePath.replace(/\\/g, '/');
+
+  if (!normalizedCandidate.startsWith(contentRoot.replace(/\\/g, '/'))) {
+    // Fallback to slug-style lookup when the link points outside content root
+    const fallback = hasExtension ? cleaned.slice(0, -CONFIG.ORG_FILE_EXTENSION.length) : cleaned;
+    return fallback.replace(/^\.\//, '').replace(/\/+/g, '/');
+  }
+
+  const relativePathWithExt = path.relative(contentRoot, candidatePath).replace(/\\/g, '/');
+  const withoutExt = relativePathWithExt.endsWith(CONFIG.ORG_FILE_EXTENSION)
+    ? relativePathWithExt.slice(0, -CONFIG.ORG_FILE_EXTENSION.length)
+    : relativePathWithExt;
+
+  return withoutExt.replace(/^\.\//, '');
 }
