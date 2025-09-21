@@ -12,29 +12,29 @@ Personal knowledge garden and publication pipeline built with Astro and a custom
 ## Getting Started
 ### Prerequisites
 - Node.js 20+
-- npm 10+
+- pnpm 10+
 
 ### Install dependencies
 ```bash
-npm install
+pnpm install
 ```
 
 ### Local development
 ```bash
-npm run dev
+pnpm run dev
 ```
 The command launches the Astro dev server, processes Org files on the fly, and regenerates backlinks/link targets as you edit content.
 
 ### Build & preview
 ```bash
-npm run build
-npm run preview
+pnpm run build
+pnpm run preview
 ```
 `build` runs `astro check` and produces the static site in `dist/`. Use `preview` to verify the production bundle locally.
 
 ### Deploy
 ```bash
-npm run deploy
+pnpm run deploy
 ```
 Runs the production build and publishes to Cloudflare Workers via `wrangler`.
 
@@ -49,22 +49,22 @@ Runs the production build and publishes to Cloudflare Workers via `wrangler`.
   Backlinks are regenerated automatically and appended as a “Linked References” section if other pages point to the current file.
 
 ## Tooling & Scripts
-Commonly used npm scripts:
+Commonly used pnpm scripts:
 
 | Script | Description |
 | --- | --- |
-| `npm run dev` | Start the Astro dev server |
-| `npm run build` | Type-check and create a production build |
-| `npm run preview` | Preview the built site |
-| `npm run deploy` | Build and deploy with Cloudflare `wrangler` |
-| `npm run check` | Static analysis via `astro check` |
-| `npm run type-check` | `tsc --noEmit` for the integration and utilities |
-| `npm run lint` | ESLint over `src/` and root JS/TS files |
-| `npm run test` | Run all Vitest suites |
+| `pnpm run dev` | Start the Astro dev server |
+| `pnpm run build` | Type-check and create a production build |
+| `pnpm run preview` | Preview the built site |
+| `pnpm run deploy` | Build and deploy with Cloudflare `wrangler` |
+| `pnpm run check` | Static analysis via `astro check` |
+| `pnpm run type-check` | `tsc --noEmit` for the integration and utilities |
+| `pnpm run lint` | ESLint over `src/` and root JS/TS files |
+| `pnpm run test` | Run all Vitest suites |
 
 ## Testing
-- Unit tests cover the Org integration, link resolver, backlinks builder, and renderer utilities. Run `npm run test` while developing new features.
-- `npm run validate` executes type checks, linting, and the test suite for CI-style verification.
+- Unit tests cover the Org integration, link resolver, backlinks builder, and renderer utilities. Run `pnpm run test` while developing new features.
+- `pnpm run validate` executes type checks, linting, and the test suite for CI-style verification.
 
 ## Project Layout Highlights
 - `src/lib/astro-org.ts` – Integration that wires Org parsing into Astro.
