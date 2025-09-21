@@ -6,6 +6,10 @@ on:
       - main
       - 'codex*'
       - 'feature*'
+  create:
+    branches:
+      - 'codex*'
+      - 'feature*'
   workflow_dispatch:
   repository_dispatch:
     types: [notes-update]
