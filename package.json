@@ -24,7 +24,7 @@
       "eslint --fix"
     ],
     "*.ts": [
-      "tsc --noEmit --skipLibCheck"
+      "sh -c \"tsc --noEmit --skipLibCheck --project tsconfig.json\""
     ],
     "src/**/*.{ts,js}": [
       "vitest related --run"

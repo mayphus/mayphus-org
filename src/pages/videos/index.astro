@@ -1,0 +1,117 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import Footer from '../../components/Footer.astro';
+import {
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  YOUTUBE_CHANNEL_URL,
+  YOUTUBE_HANDLE,
+  YOUTUBE_SUBSCRIBE_URL,
+} from '../../consts';
+import {
+  formatVideoPublishedDate,
+  getYoutubeVideos,
+  type Video,
+} from '../../lib/videos';
+
+const videos: Video[] = await getYoutubeVideos();
+const pageTitle = `Videos | ${SITE_TITLE}`;
+const pageDescription = `Watch every YouTube upload from ${SITE_TITLE}. ${SITE_DESCRIPTION}`;
+const youtubeUsername = YOUTUBE_HANDLE.startsWith('@')
+  ? YOUTUBE_HANDLE.slice(1)
+  : YOUTUBE_HANDLE;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={pageTitle} description={pageDescription} />
+  </head>
+  <body>
+    <SiteHeader />
+    <main id="main" class="org-content">
+      <section class="mb-8 space-y-4">
+        <h1>Video Library</h1>
+        <div class="org-paragraph">
+          Explore every video from my workshop, from in-progress builds to finished pieces. Each upload is mirrored here moments after it lands on <a href={YOUTUBE_CHANNEL_URL} class="org-link" target="_blank" rel="noopener noreferrer">YouTube</a>.
+        </div>
+        <div class="org-paragraph">
+          Want the updates as soon as they drop? <a href={YOUTUBE_SUBSCRIBE_URL} class="org-link" target="_blank" rel="noopener noreferrer">Subscribe on YouTube</a> and join the community.
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-xl font-semibold text-[color:var(--org-text-bright)] mb-4">Latest uploads</h2>
+        <div class="grid gap-6 md:grid-cols-2" data-video-grid>
+          {videos.map((video) => (
+            <article
+              class="flex h-full flex-col overflow-hidden rounded-lg border border-[color:var(--org-border)] bg-[color:var(--org-bg-alt)] shadow-sm transition duration-200 hover:-translate-y-1 hover:border-[color:var(--org-highlight)]"
+            >
+              <a
+                href={video.url}
+                class="flex h-full flex-col group"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div class="relative aspect-video overflow-hidden bg-black">
+                  <img
+                    src={video.thumbnailUrl}
+                    alt={`Thumbnail for ${video.title}`}
+                    loading="lazy"
+                    width="640"
+                    height="360"
+                    class="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div class="flex flex-1 flex-col gap-3 p-4">
+                  <h3 class="text-lg font-medium leading-snug text-[color:var(--org-text-bright)] group-hover:text-[color:var(--org-highlight)]">
+                    {video.title}
+                  </h3>
+                  {video.publishedAt && (
+                    <p class="text-xs uppercase tracking-wide text-[color:var(--org-text-dim)]">
+                      {formatVideoPublishedDate(video.publishedAt)}
+                    </p>
+                  )}
+                  {video.description && (
+                    <p class="text-sm leading-relaxed text-[color:var(--org-text)]">
+                      {video.description}
+                    </p>
+                  )}
+                  <span class="mt-auto text-sm font-medium text-[color:var(--org-link)] group-hover:text-[color:var(--org-highlight)]">
+                    Watch on YouTube →
+                  </span>
+                </div>
+              </a>
+            </article>
+          ))}
+
+          {videos.length === 0 && (
+            <p class="org-paragraph col-span-full">
+              I couldn't load the channel feed right now. Catch every episode directly on <a href={YOUTUBE_CHANNEL_URL} class="org-link" target="_blank" rel="noopener noreferrer">YouTube</a>.
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section class="mb-12 space-y-4">
+        <h2>Queue up the full playlist</h2>
+        <div class="aspect-video w-full overflow-hidden rounded-lg border border-[color:var(--org-border)] bg-black">
+          <iframe
+            src={`https://www.youtube.com/embed?listType=user&list=${youtubeUsername}`}
+            title="Mayphus Tang YouTube uploads"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            class="h-full w-full"
+          ></iframe>
+        </div>
+        <div class="org-paragraph text-sm text-[color:var(--org-text-dim)]">
+          The embedded playlist streams every public upload in order. Use YouTube's controls to shuffle, loop, or pop the player out while you tinker.
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  </body>
+</html>
