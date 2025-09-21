@@ -2,7 +2,10 @@ name: mayphus-org
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'codex*'
+      - 'feature*'
   workflow_dispatch:
   repository_dispatch:
     types: [notes-update]
@@ -39,8 +42,19 @@ jobs:
           npm run astro check
           npm run build
 
-      - name: Deploy
+      - name: Deploy preview
+        if: startsWith(github.ref, 'refs/heads/codex') || startsWith(github.ref, 'refs/heads/feature')
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           wranglerVersion: 4.19.1
+          command: deploy --env preview
+          environment: preview
+
+      - name: Deploy production
+        if: github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          wranglerVersion: 4.19.1
+          environment: production
