@@ -19,6 +19,8 @@
       "routes": [],
       "workers_dev": true
     },
-    "production": {}
+    "production": {
+      "name": "mayphus-org"
+    }
   }
 }
