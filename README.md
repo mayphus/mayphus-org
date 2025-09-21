@@ -11,8 +11,8 @@ Personal knowledge garden and publication pipeline built with Astro and a custom
 
 ## Getting Started
 ### Prerequisites
-- Node.js 20+
-- pnpm 10+
+- Node.js (latest stable)
+- pnpm 10.17+
 
 ### Install dependencies
 ```bash
