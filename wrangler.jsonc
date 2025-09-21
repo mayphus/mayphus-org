@@ -12,5 +12,12 @@
       "pattern": "mayphus.org",
       "custom_domain": true
     }
-  ]
+  ],
+  "env": {
+    "preview": {
+      "name": "mayphus-org-preview",
+      "routes": [],
+      "workers_dev": true
+    }
+  }
 }

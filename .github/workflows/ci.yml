@@ -48,7 +48,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           wranglerVersion: 4.19.1
-          command: deploy --env preview
           environment: preview
 
       - name: Deploy production
@@ -57,4 +56,3 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           wranglerVersion: 4.19.1
-          environment: production
