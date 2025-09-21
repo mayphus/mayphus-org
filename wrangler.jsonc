@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mayphus-org",
+  "main": "worker/index.ts",
   "compatibility_date": "2025-06-05",
   "assets": {
     "directory": "./dist",
@@ -10,12 +11,6 @@
     {
       "pattern": "mayphus.org",
       "custom_domain": true
-    }
-  ],
-  "r2_buckets": [
-    {
-      "binding": "MEDIA",
-      "bucket_name": "media"
     }
   ]
 }

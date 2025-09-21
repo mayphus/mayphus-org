@@ -7,7 +7,7 @@ Personal knowledge garden and publication pipeline built with Astro and a custom
 - Automatic backlink section appended to each page, built from intra-site link analysis and cached for fast rebuilds.
 - Robust link resolution for `[[link]]` and `[[file:path/to/file.org][Label]]` syntax, including nested directories and relative paths such as `[[../notes/linux]]`.
 - Tag-based filtering UI on `/content/`, plus RSS feed, sitemap, Tailwind typography, and syntax-highlighted code blocks.
-- Cloudflare Workers deployment via `wrangler` with fallbacks that keep the podcasts API usable in local development.
+- Cloudflare Workers deployment via `wrangler` with local fallbacks to mirror production behavior during development.
 
 ## Getting Started
 ### Prerequisites
@@ -69,7 +69,7 @@ Commonly used npm scripts:
 ## Project Layout Highlights
 - `src/lib/astro-org.ts` – Integration that wires Org parsing into Astro.
 - `src/lib/plugins/` – Rehype/unified plugins for frontmatter, backlinks, headline adjustments, and link resolution.
-- `src/pages/` – Astro pages for index, content routing, podcasts API, and RSS feed.
+- `src/pages/` – Astro pages for the index, content routing, and RSS feed.
 - `content/` – Org-mode source files that feed the site.
 
 ## Notes

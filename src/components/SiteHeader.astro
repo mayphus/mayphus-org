@@ -4,7 +4,6 @@ const currentPath = Astro.url.pathname;
 const links = [
   { href: '/', label: 'Home' },
   { href: '/content/', label: 'Content' },
-  { href: '/podcasts/', label: 'Podcasts' },
 ];
 
 // Determine active link
@@ -27,4 +26,3 @@ const isActive = (href: string) => {
     ))}
   </nav>
 </header>
-
