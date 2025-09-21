@@ -24,24 +24,6 @@ const recentArticles = nodes
 
 const projectHighlights = featuredProjects.slice(0, 2);
 const writingHighlights = recentArticles.slice(0, 2);
-
-const appHighlights = [
-  {
-    label: 'Billionth Shit',
-    href: 'https://billionth-shit.org',
-    description: 'Daily countdown to the 1,000,000,000th human bowel movement.'
-  },
-  {
-    label: 'Eat',
-    href: 'https://eat.zhengsanniu.com',
-    description: 'Helps the family pick a dinner spot without the debate.'
-  },
-  {
-    label: 'VocabVibe',
-    href: 'https://vocabvibe.uk',
-    description: 'Builds rhythm with short, daily vocabulary drills.'
-  }
-];
 ---
 
 <!doctype html>
@@ -88,20 +70,6 @@ const appHighlights = [
           </div>
           <div class="org-paragraph">
             <a href="/content/" class="org-link">Browse every build log</a>
-          </div>
-        </section>
-      )}
-
-      {appHighlights.length > 0 && (
-        <section id="tools" class="mb-12">
-          <h2>Tools &amp; Experiments</h2>
-          <div class="org-list">
-            {appHighlights.map((app) => (
-              <div class="org-list-item">
-                <a href={app.href} target="_blank" rel="noopener noreferrer" class="org-link">{app.label}</a>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">{app.description}</div>
-              </div>
-            ))}
           </div>
         </section>
       )}
