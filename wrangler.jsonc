@@ -18,6 +18,7 @@
       "name": "mayphus-org-preview",
       "routes": [],
       "workers_dev": true
-    }
+    },
+    "production": {}
   }
 }
