@@ -47,6 +47,7 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy --env preview
           environment: preview
 
       - name: Deploy production
@@ -54,3 +55,4 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: 'deploy --env ""'
