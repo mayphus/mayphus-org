@@ -15,12 +15,33 @@ const nodes = collection
     });
 
 const featuredProjects = nodes
-    .filter((node) => node.data.filetags?.includes('project'))
-    .slice(0, 5);
+  .filter((node) => node.data.filetags?.includes('project'))
+  .slice(0, 5);
 
 const recentArticles = nodes
-    .filter((node) => node.data.filetags?.includes('article'))
-    .slice(0, 5);
+  .filter((node) => node.data.filetags?.includes('article'))
+  .slice(0, 5);
+
+const projectHighlights = featuredProjects.slice(0, 2);
+const writingHighlights = recentArticles.slice(0, 2);
+
+const appHighlights = [
+  {
+    label: 'Billionth Shit',
+    href: 'https://billionth-shit.org',
+    description: 'Daily countdown to the 1,000,000,000th human bowel movement.'
+  },
+  {
+    label: 'Eat',
+    href: 'https://eat.zhengsanniu.com',
+    description: 'Helps the family pick a dinner spot without the debate.'
+  },
+  {
+    label: 'VocabVibe',
+    href: 'https://vocabvibe.uk',
+    description: 'Builds rhythm with short, daily vocabulary drills.'
+  }
+];
 ---
 
 <!doctype html>
@@ -31,54 +52,86 @@ const recentArticles = nodes
   <body>
     <SiteHeader />
     <main id="main" class="org-content">
-      <h1>{SITE_TITLE}</h1>
-      
-      <div class="org-paragraph mb-4">
-        Hi, I'm Mayphus – a maker driven by curiosity who finds the most interesting discoveries at the edges where different worlds collide.
-      </div>
-      
-      <div class="org-paragraph mb-4">
-        I'm fascinated by the irreplaceable human elements: the spark of a new idea, the intuition that connects seemingly unrelated concepts, and the persistence to iterate until something beautiful emerges. My workshop reflects this approach – it's a space where digital fabrication meets traditional craftsmanship, where engineering precision embraces creative experimentation.
-      </div>
-      
-      <div class="org-paragraph mb-8">
-        I think across boundaries, see patterns others miss, and understand that true innovation comes not from mastering a single domain, but from weaving together insights from many.
-      </div>
-      
-      <h2>Projects</h2>
-      <div class="org-list mb-8">
-        {featuredProjects.map((node) => (
-          <div class="org-list-item">
-            <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+      <section class="mb-12">
+        <h1>{SITE_TITLE}</h1>
+
+        <div class="org-paragraph mb-4">
+          Hi, I'm Mayphus – a maker driven by curiosity who finds the most interesting discoveries at the edges where different worlds collide.
+        </div>
+
+        <div class="org-paragraph mb-4">
+          I'm fascinated by the irreplaceable human elements: the spark of a new idea, the intuition that connects seemingly unrelated concepts, and the persistence to iterate until something beautiful emerges. My workshop reflects this approach – it's a space where digital fabrication meets traditional craftsmanship, where engineering precision embraces creative experimentation.
+        </div>
+
+        <div class="org-paragraph mb-6">
+          I think across boundaries, see patterns others miss, and understand that true innovation comes not from mastering a single domain, but from weaving together insights from many.
+        </div>
+
+        <div class="flex flex-wrap gap-4">
+          <a class="org-link" href="#projects">Projects</a>
+          <a class="org-link" href="#writing">Articles</a>
+        </div>
+      </section>
+
+      {projectHighlights.length > 0 && (
+        <section id="projects" class="mb-12">
+          <h2>Projects</h2>
+          <div class="org-list mb-4">
+            {projectHighlights.map((node) => (
+              <div class="org-list-item">
+                <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">
+                  {node.data.description || 'Concept briefs and progress snapshots from the studio.'}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-
-      <h2>Articles</h2>
-      <div class="org-list mb-8">
-        {recentArticles.map((node) => (
-          <div class="org-list-item">
-            <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+          <div class="org-paragraph">
+            <a href="/content/" class="org-link">Browse every build log</a>
           </div>
-        ))}
-      </div>
+        </section>
+      )}
 
-      <h2>Web Apps</h2>
-      <div class="org-list mb-8">
-        <div class="org-list-item">
-          <a href="https://billionth-shit.org" target="_blank" rel="noopener noreferrer" class="org-link">Billionth Shit</a>
-        </div>
-        <div class="org-list-item">
-          <a href="https://eat.zhengsanniu.com" target="_blank" rel="noopener noreferrer" class="org-link">Eat</a>
-        </div>
-        <div class="org-list-item">
-          <a href="https://vocabvibe.uk" target="_blank" rel="noopener noreferrer" class="org-link">VocabVibe</a>
-        </div>
-      </div>
+      {appHighlights.length > 0 && (
+        <section id="tools" class="mb-12">
+          <h2>Tools &amp; Experiments</h2>
+          <div class="org-list">
+            {appHighlights.map((app) => (
+              <div class="org-list-item">
+                <a href={app.href} target="_blank" rel="noopener noreferrer" class="org-link">{app.label}</a>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">{app.description}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
-      <div class="org-paragraph mt-8">
-        Browse all <a href="/content/" class="org-link">content</a>, explore <a href="/podcasts/" class="org-link">podcasts</a>, or <a href="mailto:tangmeifa@gmail.com" class="org-link">email me</a>.
-      </div>
+      {writingHighlights.length > 0 && (
+        <section id="writing" class="mb-12">
+          <h2>Latest Writing</h2>
+          <div class="org-list mb-4">
+            {writingHighlights.map((node) => (
+              <div class="org-list-item">
+                <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">
+                  Voice-led reflections on design process, systems thinking, and staying curious.
+                </div>
+              </div>
+            ))}
+          </div>
+          <div class="org-paragraph">
+            <a href="/content/" class="org-link">Read more articles</a>
+          </div>
+        </section>
+      )}
+
+      <section id="connect" class="mb-12">
+        <h2>Connect</h2>
+        <div class="org-paragraph">
+          Say hello at <a href="mailto:tangmeifa@gmail.com" class="org-link">tangmeifa@gmail.com</a> or follow along on <a href="https://github.com/mayphus" target="_blank" rel="noopener noreferrer" class="org-link">GitHub</a>.
+        </div>
+      </section>
+
       <Footer />
     </main>
   </body>
