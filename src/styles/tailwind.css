@@ -1,5 +1,16 @@
-/* Import beautiful monospace font */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+/* Self-hosted font imports */
+@import '@fontsource/ibm-plex-sans/latin-300.css';
+@import '@fontsource/ibm-plex-sans/latin-300-italic.css';
+@import '@fontsource/ibm-plex-sans/latin-400.css';
+@import '@fontsource/ibm-plex-sans/latin-400-italic.css';
+@import '@fontsource/ibm-plex-sans/latin-500.css';
+@import '@fontsource/ibm-plex-sans/latin-600.css';
+@import '@fontsource/ibm-plex-sans/latin-700.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-400-italic.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+@import '@fontsource/jetbrains-mono/latin-600.css';
+@import '@fontsource/jetbrains-mono/latin-700.css';
 
 @tailwind base;
 @tailwind components;
@@ -57,10 +68,13 @@
 
   /* Base body styling with theme support */
   body {
-    @apply font-mono text-base leading-relaxed;
+    @apply font-sans antialiased;
+    font-size: 1.05rem;
+    line-height: 1.75;
     background-color: var(--org-bg);
     color: var(--org-text);
     font-feature-settings: "liga" 1, "calt" 1;
+    text-rendering: optimizeLegibility;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
@@ -177,8 +191,9 @@
   .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
     @apply font-mono font-semibold;
     color: var(--org-text-bright);
-    margin: 1.5rem 0 1rem 0;
+    margin: 2rem 0 1.1rem 0;
     position: relative;
+    scroll-margin-top: 5.5rem;
     transition: color 0.2s ease;
   }
 
@@ -219,10 +234,39 @@
     font-feature-settings: "liga" 0, "calt" 0;
   }
 
-  /* Same size for all headings - like content text */
-  h1, h2, h3, h4, h5, h6,
-  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 { 
-    @apply text-base; 
+  /* Typographic scale for headings */
+  h1, .prose h1 {
+    @apply text-3xl leading-tight;
+    margin-top: 2.5rem;
+  }
+
+  h2, .prose h2 {
+    @apply text-2xl leading-snug;
+    margin-top: 2.25rem;
+  }
+
+  h3, .prose h3 {
+    @apply text-xl leading-snug;
+    margin-top: 2rem;
+  }
+
+  h4, .prose h4 {
+    @apply text-lg leading-snug;
+    margin-top: 1.75rem;
+  }
+
+  h5, .prose h5 {
+    @apply text-base uppercase;
+    margin-top: 1.5rem;
+    color: var(--org-text);
+    letter-spacing: 0.2em;
+  }
+
+  h6, .prose h6 {
+    @apply text-sm uppercase;
+    margin-top: 1.25rem;
+    color: var(--org-text-dim);
+    letter-spacing: 0.3em;
   }
 }
 

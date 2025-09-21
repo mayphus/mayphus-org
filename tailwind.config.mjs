@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'mono': ['JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Monaco', 'monospace'],
-        'sans': ['JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Monaco', 'monospace'],
+        mono: ['JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Monaco', 'monospace'],
+        sans: ['IBM Plex Sans', 'Inter', 'system-ui', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
       },
       fontSize: {
         'xs': ['0.75rem', { lineHeight: '1.4' }],
