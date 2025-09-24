@@ -1,8 +1,20 @@
+---
+import { SITE_FOOTER_LINKS } from '../lib/site';
+
+const links = SITE_FOOTER_LINKS;
+const getRel = (external?: boolean) => external ? 'noopener noreferrer' : undefined;
+---
+
 <footer class="mt-16 text-sm">
   <nav class="flex gap-6">
-    <a href="https://github.com/mayphus" target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href="https://youtube.com/@mayphustang" target="_blank" rel="noopener noreferrer">YouTube</a>
-    <a href="https://www.pinterest.com/mayphustang" target="_blank" rel="noopener noreferrer">Pinterest</a>
-    <a href="mailto:tangmeifa@gmail.com">Email</a>
+    {links.map((link) => (
+      <a
+        href={link.href}
+        target={link.external ? '_blank' : undefined}
+        rel={getRel(link.external)}
+      >
+        {link.label}
+      </a>
+    ))}
   </nav>
 </footer>

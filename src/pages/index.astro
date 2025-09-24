@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
+import { SITE_HOME, formatWithEmail } from '../lib/site';
 
 const collection = await getCollection('content');
 const nodes = collection
@@ -24,6 +25,8 @@ const recentArticles = nodes
 
 const projectHighlights = featuredProjects.slice(0, 2);
 const writingHighlights = recentArticles.slice(0, 2);
+const homeConfig = SITE_HOME;
+const connectLead = formatWithEmail(homeConfig.connect.lead);
 ---
 
 <!doctype html>
@@ -37,63 +40,69 @@ const writingHighlights = recentArticles.slice(0, 2);
       <section class="mb-12">
         <h1>{SITE_TITLE}</h1>
 
-        <div class="org-paragraph mb-4">
-          Hi, I'm Mayphus – a maker driven by curiosity who finds the most interesting discoveries at the edges where different worlds collide.
-        </div>
-
-        <div class="org-paragraph mb-4">
-          I'm fascinated by the irreplaceable human elements: the spark of a new idea, the intuition that connects seemingly unrelated concepts, and the persistence to iterate until something beautiful emerges. My workshop reflects this approach – it's a space where digital fabrication meets traditional craftsmanship, where engineering precision embraces creative experimentation.
-        </div>
-
-        <div class="org-paragraph mb-6">
-          I think across boundaries, see patterns others miss, and understand that true innovation comes not from mastering a single domain, but from weaving together insights from many.
-        </div>
+        {homeConfig.heroIntro.map((paragraph) => (
+          <div class="org-paragraph mb-4">{paragraph}</div>
+        ))}
 
       </section>
 
       {projectHighlights.length > 0 && (
         <section id="projects" class="mb-12">
-          <h2>Projects</h2>
+          <h2>{homeConfig.projects.title}</h2>
           <div class="org-list mb-4">
             {projectHighlights.map((node) => (
               <div class="org-list-item">
                 <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
                 <div class="text-sm text-neutral-600 dark:text-neutral-400">
-                  {node.data.description || 'Concept briefs and progress snapshots from the studio.'}
+                  {node.data.description || homeConfig.projects.itemFallbackDescription}
                 </div>
               </div>
             ))}
           </div>
           <div class="org-paragraph">
-            <a href="/content/" class="org-link">Browse every build log</a>
+            <a href={homeConfig.projects.ctaHref} class="org-link">{homeConfig.projects.ctaLabel}</a>
           </div>
         </section>
       )}
 
       {writingHighlights.length > 0 && (
         <section id="writing" class="mb-12">
-          <h2>Latest Writing</h2>
+          <h2>{homeConfig.writing.title}</h2>
           <div class="org-list mb-4">
             {writingHighlights.map((node) => (
               <div class="org-list-item">
                 <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
                 <div class="text-sm text-neutral-600 dark:text-neutral-400">
-                  Voice-led reflections on design process, systems thinking, and staying curious.
+                  {node.data.description || homeConfig.writing.itemFallbackDescription}
                 </div>
               </div>
             ))}
           </div>
           <div class="org-paragraph">
-            <a href="/content/" class="org-link">Read more articles</a>
+            <a href={homeConfig.writing.ctaHref} class="org-link">{homeConfig.writing.ctaLabel}</a>
           </div>
         </section>
       )}
 
       <section id="connect" class="mb-12">
-        <h2>Connect</h2>
-        <div class="org-paragraph">
-          Say hello at <a href="mailto:tangmeifa@gmail.com" class="org-link">tangmeifa@gmail.com</a> or follow along on <a href="https://github.com/mayphus" target="_blank" rel="noopener noreferrer" class="org-link">GitHub</a>.
-        </div>
+        <h2>{homeConfig.connect.heading}</h2>
+        <div class="org-paragraph" set:html={connectLead ?? ''}></div>
+        {homeConfig.connect.links.length > 0 && (
+          <div class="org-list mt-4">
+            {homeConfig.connect.links.map((link) => (
+              <div class="org-list-item">
+                <a
+                  href={link.href}
+                  class="org-link"
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener noreferrer' : undefined}
+                >
+                  {link.label}
+                </a>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       <Footer />

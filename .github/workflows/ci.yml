@@ -16,24 +16,51 @@ on:
 
 jobs:
   deploy:
+    name: Deploy ${{ matrix.site.id }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        site:
+          - id: mayphus
+            site_key: mayphus
+            notes_repo: mayphus/notes
+            content_dir: content
+            preview_enabled: true
+            wrangler_env_preview: preview
+            wrangler_env: production
+          - id: tangmeifa
+            site_key: tangmeifa
+            notes_repo: ''
+            content_dir: content/tangmeifa
+            preview_enabled: false
+            wrangler_env_preview: ''
+            wrangler_env: tangmeifa
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Checkout mayphus/notes
+      - name: Checkout content repo
+        if: matrix.site.notes_repo != ''
         uses: actions/checkout@v4
+        id: checkout_notes
+        continue-on-error: true
         with:
-          repository: mayphus/notes
+          repository: ${{ matrix.site.notes_repo }}
           token: ${{ secrets.TOKEN }}
           path: notes
 
       - name: Prepare content
+        if: matrix.site.notes_repo != '' && steps.checkout_notes.outcome == 'success'
         run: |
-          mkdir -p content
-          mv notes/*.org content/
+          mkdir -p "${{ matrix.site.content_dir }}"
+          find notes -maxdepth 1 -type f -name '*.org' -exec mv {} "${{ matrix.site.content_dir }}" \;
           rm -fr notes
-          rm -fr content/README.org
+          rm -f "${{ matrix.site.content_dir }}/README.org"
+
+      - name: Skip external content import
+        if: matrix.site.notes_repo != '' && steps.checkout_notes.outcome != 'success'
+        run: |
+          echo "Content repository '${{ matrix.site.notes_repo }}' not available; continuing with in-repo content."
           
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -48,22 +75,26 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
 
       - name: Build
+        env:
+          SITE_KEY: ${{ matrix.site.site_key }}
+          PUBLIC_SITE_KEY: ${{ matrix.site.site_key }}
         run: |
           pnpm install
           pnpm run astro check
           pnpm run build
 
       - name: Deploy preview
-        if: startsWith(github.ref, 'refs/heads/codex') || startsWith(github.ref, 'refs/heads/feature')
+        if: matrix.site.preview_enabled && (startsWith(github.ref, 'refs/heads/codex') || startsWith(github.ref, 'refs/heads/feature'))
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: deploy --env preview
-          environment: preview
+          command: deploy --env ${{ matrix.site.wrangler_env_preview }}
+          environment: ${{ matrix.site.wrangler_env_preview }}
 
       - name: Deploy production
         if: github.ref == 'refs/heads/main' || github.event_name == 'repository_dispatch'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          command: deploy --env production
+          command: deploy --env ${{ matrix.site.wrangler_env }}
+          environment: ${{ matrix.site.wrangler_env }}

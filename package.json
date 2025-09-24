@@ -19,17 +19,6 @@
     "validate": "pnpm run check && pnpm run type-check && pnpm run lint && pnpm run test:run",
     "prepare": "husky"
   },
-  "lint-staged": {
-    "*.{ts,js,astro}": [
-      "eslint --fix"
-    ],
-    "*.ts": [
-      "tsc --noEmit --skipLibCheck"
-    ],
-    "src/**/*.{ts,js}": [
-      "vitest related --run"
-    ]
-  },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.5.1",

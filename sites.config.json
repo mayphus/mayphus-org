@@ -1,0 +1,93 @@
+{
+  "mayphus": {
+    "site": "https://mayphus.org",
+    "title": "Mayphus",
+    "description": "A dad, a maker, a perpetual learner",
+    "contentDir": "content",
+    "contactEmail": "tangmeifa@gmail.com",
+    "analyticsId": "G-XLGB1ZDPYC",
+    "navigation": [
+      { "href": "/", "label": "Home" },
+      { "href": "/content/", "label": "Content" }
+    ],
+    "footerLinks": [
+      { "href": "https://github.com/mayphus", "label": "GitHub", "external": true },
+      { "href": "https://youtube.com/@mayphustang", "label": "YouTube", "external": true },
+      { "href": "https://www.pinterest.com/mayphustang", "label": "Pinterest", "external": true },
+      { "href": "mailto:tangmeifa@gmail.com", "label": "Email", "external": true }
+    ],
+    "socialProfiles": [
+      "https://github.com/mayphus",
+      "https://youtube.com/@mayphustang"
+    ],
+    "home": {
+      "heroIntro": [
+        "Hi, I'm Mayphus – a maker driven by curiosity who finds the most interesting discoveries at the edges where different worlds collide.",
+        "I'm fascinated by the irreplaceable human elements: the spark of a new idea, the intuition that connects seemingly unrelated concepts, and the persistence to iterate until something beautiful emerges. My workshop reflects this approach – it's a space where digital fabrication meets traditional craftsmanship, where engineering precision embraces creative experimentation.",
+        "I think across boundaries, see patterns others miss, and understand that true innovation comes not from mastering a single domain, but from weaving together insights from many."
+      ],
+      "projects": {
+        "title": "Projects",
+        "ctaLabel": "Browse every build log",
+        "ctaHref": "/content/",
+        "itemFallbackDescription": "Concept briefs and progress snapshots from the studio."
+      },
+      "writing": {
+        "title": "Latest Writing",
+        "ctaLabel": "Read more articles",
+        "ctaHref": "/content/",
+        "itemFallbackDescription": "Voice-led reflections on design process, systems thinking, and staying curious."
+      },
+      "connect": {
+        "heading": "Connect",
+        "lead": "Say hello at {email} or follow along on the links below.",
+        "links": [
+          { "href": "https://github.com/mayphus", "label": "GitHub", "external": true },
+          { "href": "https://youtube.com/@mayphustang", "label": "YouTube", "external": true },
+          { "href": "mailto:tangmeifa@gmail.com", "label": "Email", "external": true }
+        ]
+      }
+    }
+  },
+  "tangmeifa": {
+    "site": "https://tangmeifa.com",
+    "title": "Tang Mei Fa",
+    "description": "Learning, culture, and story-driven Mandarin lessons",
+    "contentDir": "content/tangmeifa",
+    "contactEmail": "hello@tangmeifa.com",
+    "navigation": [
+      { "href": "/", "label": "Home" },
+      { "href": "/content/", "label": "Content" }
+    ],
+    "footerLinks": [
+      { "href": "mailto:hello@tangmeifa.com", "label": "Email", "external": true }
+    ],
+    "socialProfiles": [],
+    "home": {
+      "heroIntro": [
+        "你好，我是唐美發 – I share Mandarin through stories that connect language with everyday life.",
+        "Lessons blend culture, personal narratives, and practical vocabulary so learners stay motivated beyond textbooks.",
+        "TangMeiFa.com curates workshops, study guides, and multimedia practice for curious minds."
+      ],
+      "projects": {
+        "title": "Programs",
+        "ctaLabel": "Explore every lesson",
+        "ctaHref": "/content/",
+        "itemFallbackDescription": "Lesson outlines, teaching experiments, and study guides in progress."
+      },
+      "writing": {
+        "title": "Latest Notes",
+        "ctaLabel": "Read more insights",
+        "ctaHref": "/content/",
+        "itemFallbackDescription": "Cultural insights, classroom reflections, and new vocabulary stories."
+      },
+      "connect": {
+        "heading": "Connect",
+        "lead": "Have questions about upcoming lessons? Reach me at {email} or follow the latest updates.",
+        "links": [
+          { "href": "mailto:hello@tangmeifa.com", "label": "Email", "external": true }
+        ]
+      }
+    }
+  }
+}

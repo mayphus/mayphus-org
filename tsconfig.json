@@ -2,6 +2,8 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "strictNullChecks": true,
-    "module": "ESNext"
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true
   }
 }

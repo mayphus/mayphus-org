@@ -1,6 +1,6 @@
 # mayphus.org
 
-Personal knowledge garden and publication pipeline built with Astro and a custom Org-mode integration.
+Personal knowledge garden and publication pipeline built with Astro and a custom Org-mode integration, now able to build multiple branded sites from the same project.
 
 ## Features
 - Astro integration (`src/lib/astro-org.ts`) that understands Org-mode keywords, generates frontmatter, and exposes content through the standard `astro:content` APIs.
@@ -23,7 +23,7 @@ pnpm install
 ```bash
 pnpm run dev
 ```
-The command launches the Astro dev server, processes Org files on the fly, and regenerates backlinks/link targets as you edit content.
+The command launches the Astro dev server, processes Org files on the fly, and regenerates backlinks/link targets as you edit content. The `mayphus` site is the default; set `SITE_KEY` / `PUBLIC_SITE_KEY` only when previewing another entry (e.g. `SITE_KEY=tangmeifa PUBLIC_SITE_KEY=tangmeifa pnpm run dev`).
 
 ### Build & preview
 ```bash
@@ -36,10 +36,17 @@ pnpm run preview
 ```bash
 pnpm run deploy
 ```
-Runs the production build and publishes to Cloudflare Workers via `wrangler`.
+Runs the production build and publishes to Cloudflare Workers via `wrangler`. The `mayphus` configuration is used automatically; specify `SITE_KEY` / `PUBLIC_SITE_KEY` only when deploying another site (for example `SITE_KEY=tangmeifa PUBLIC_SITE_KEY=tangmeifa pnpm run deploy`).
+
+## Multi-site configuration
+- Edit `sites.config.json` to register each domain. Provide the `site` URL, `title`, `description`, content directory, contact email, navigation, and homepage copy per site.
+- Ensure the `contentDir` folder exists (e.g. `content/` for `mayphus`, `content/tangmeifa/` for `tangmeifa`). Place Org-mode sources inside the respective folder.
+- At build time set both `SITE_KEY` and `PUBLIC_SITE_KEY` to one of the keys in `sites.config.json` *only* when you need a non-default site. Omitting them falls back to `mayphus`.
+- GitHub Actions deploys both sites via a build matrix; adjust `notes_repo`, `content_dir`, and Wrangler environment names in `.github/workflows/ci.yml` if the content sources or deployment targets change. Leave `notes_repo` empty to skip cloning external content and use the repository's own `content/` tree.
+- To deploy manually with Wrangler, run `SITE_KEY=<key> PUBLIC_SITE_KEY=<key> pnpm run build` followed by `wrangler deploy --env <matching-env>`.
 
 ## Content Authoring
-- Place `.org` files in the `content/` directory. Subdirectories are supported; their relative paths are used when resolving links.
+- Place `.org` files inside the directory declared for the active site (default `content/`; for `tangmeifa` use `content/tangmeifa/`). Subdirectories are supported; their relative paths are used when resolving links.
 - Org keywords (`#+title:`, `#+description:`, `#+date:`, `#+filetags:`) are extracted into frontmatter automatically. Dates expressed as `[YYYY-MM-DD Day HH:MM]` are converted to `Date` objects.
 - Use `filetags` to drive the homepage “Projects/Articles” sections and the tag filter on `/content/`.
 - Cross-link entries with Org syntax. Examples:

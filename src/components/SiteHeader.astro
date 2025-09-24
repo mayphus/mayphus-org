@@ -1,10 +1,9 @@
 ---
+import { SITE_NAVIGATION } from '../lib/site';
+
 const currentPath = Astro.url.pathname;
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/content/', label: 'Content' },
-];
+const links = SITE_NAVIGATION;
 
 // Determine active link
 const isActive = (href: string) => {

@@ -21,6 +21,15 @@
     },
     "production": {
       "name": "mayphus-org"
+    },
+    "tangmeifa": {
+      "name": "tangmeifa-com",
+      "routes": [
+        {
+          "pattern": "tangmeifa.com",
+          "custom_domain": true
+        }
+      ]
     }
   }
 }

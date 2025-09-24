@@ -1,7 +1,9 @@
-// Centralized configuration for the mayphus-org project
+import { SITE_CONFIG } from './lib/site';
+
+// Centralized configuration for the multi-site project
 export const CONFIG = {
   // Content directory configuration
-  CONTENT_DIR: 'content',
+  CONTENT_DIR: SITE_CONFIG.contentDir,
   
   // File patterns
   ORG_FILE_EXTENSION: '.org',

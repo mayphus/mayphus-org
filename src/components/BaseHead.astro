@@ -1,5 +1,7 @@
 ---
 import '../styles/tailwind.css';
+import { SITE_CONFIG, SITE_SOCIAL_PROFILES } from '../lib/site';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../consts';
 
 interface Props {
 	title: string;
@@ -10,6 +12,39 @@ interface Props {
 const canonicalURL = new globalThis.URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image = '/favicon.svg' } = Astro.props;
+const analyticsId = SITE_CONFIG.analyticsId;
+const socialProfiles = SITE_SOCIAL_PROFILES;
+const structuredDataJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  url: SITE_URL,
+  sameAs: socialProfiles,
+});
+structuredDataJson;
+const analyticsSnippet = analyticsId
+  ? `
+    const analyticsId = ${JSON.stringify(analyticsId)};
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+
+    const loadAnalytics = () => {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + analyticsId;
+      document.head.appendChild(script);
+      gtag('js', new Date());
+      gtag('config', analyticsId);
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadAnalytics);
+    } else {
+      setTimeout(loadAnalytics, 1000);
+    }
+  `
+  : undefined;
 ---
 
 <meta charset="utf-8" />
@@ -37,18 +72,7 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 <meta property="twitter:image" content={new globalThis.URL(image, Astro.url)} />
 
 <!-- Structured data for better SEO -->
-<script type="application/ld+json" is:inline>
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Mayphus Tang",
-  "description": "A dad, a maker, a perpetual learner",
-  "url": "https://mayphus.org",
-  "sameAs": [
-    "https://github.com/mayphus"
-  ]
-}
-</script>
+<script type="application/ld+json" is:inline>{structuredDataJson}</script>
 
 <!-- Auto theme switching based on system preference -->
 <script is:inline>
@@ -66,30 +90,6 @@ const { title, description, image = '/favicon.svg' } = Astro.props;
 </script>
 
 <!-- Optimized Google Analytics - loads after critical resources -->
-<script is:inline>
-  // Initialize dataLayer immediately
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  
-  // Load analytics after page is interactive
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(() => {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC';
-      document.head.appendChild(script);
-      gtag('js', new Date());
-      gtag('config', 'G-XLGB1ZDPYC');
-    });
-  } else {
-    // Fallback for browsers without requestIdleCallback
-    setTimeout(() => {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-XLGB1ZDPYC';
-      document.head.appendChild(script);
-      gtag('js', new Date());
-      gtag('config', 'G-XLGB1ZDPYC');
-    }, 1000);
-  }
-</script>
+{analyticsSnippet && (
+  <script is:inline>{analyticsSnippet}</script>
+)}
