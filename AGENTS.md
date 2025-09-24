@@ -5,6 +5,7 @@
 - Tests live beside code as `*.test.ts`. Shared defaults sit in `src/config.ts` and `src/content.config.ts`.
 - `content/` stores Org-mode sources processed at build time; register new collections in `src/content.config.ts`.
 - `public/` serves static assets directly. Root configs (`astro.config.mjs`, `tailwind.config.mjs`, `vitest.config.ts`, `wrangler.jsonc`) govern build, styling, tests, and deployment.
+- Multi-site configuration lives in `sites.config.json`; the active site is resolved through `src/lib/site.ts` and drives branded copy, navigation, content directories, and analytics settings.
 
 ## Build, Test, and Development Commands
 - `pnpm run dev` launches the Astro dev server with hot reload.
@@ -32,3 +33,5 @@
 ## Deployment & Environment Notes
 - Cloudflare Workers power production. Review `wrangler.jsonc` before altering routes or bindings and document changes.
 - Secrets stay outside git; set them with `wrangler secrets put` and add defaults to `.env.example` when introducing new variables.
+- Builds default to the `mayphus` site; set `SITE_KEY` (and optionally `PUBLIC_SITE_KEY` when client access is required) to target other entries in `sites.config.json`.
+- GitHub Actions deploys each configured site via matrix builds. Leave a matrix entry’s `notes_repo` empty when content ships from the repository itself.
