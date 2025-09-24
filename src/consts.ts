@@ -6,3 +6,5 @@ import { SITE_CONFIG } from './lib/site';
 export const SITE_TITLE = SITE_CONFIG.title;
 export const SITE_DESCRIPTION = SITE_CONFIG.description;
 export const SITE_URL = SITE_CONFIG.site;
+export const SITE_THEME_COLOR = '#0f172a';
+export const SITE_BACKGROUND_COLOR = '#ffffff';
