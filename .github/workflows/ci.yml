@@ -32,8 +32,8 @@ jobs:
             site_key: tangmeifa
             notes_repo: ''
             content_dir: content/tangmeifa
-            preview_enabled: false
-            wrangler_env_preview: ''
+            preview_enabled: true
+            wrangler_env_preview: tangmeifa-preview
             wrangler_env: tangmeifa
     steps:
       - name: Checkout

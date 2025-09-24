@@ -30,6 +30,11 @@
           "custom_domain": true
         }
       ]
+    },
+    "tangmeifa-preview": {
+      "name": "tangmeifa-com-preview",
+      "routes": [],
+      "workers_dev": true
     }
   }
 }
