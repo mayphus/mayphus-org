@@ -39,6 +39,20 @@ jobs:
             preview_enabled: true
             wrangler_env_preview: tangmeifa-preview
             wrangler_env: tangmeifa
+          - id: zhengsanniu
+            site_key: zhengsanniu
+            notes_repo: ''
+            content_dir: content/zhengsanniu
+            preview_enabled: true
+            wrangler_env_preview: zhengsanniu-preview
+            wrangler_env: zhengsanniu
+          - id: tangqiao
+            site_key: tangqiao
+            notes_repo: ''
+            content_dir: content/tangqiao
+            preview_enabled: true
+            wrangler_env_preview: tangqiao-preview
+            wrangler_env: tangqiao
     steps:
       - name: Checkout
         uses: actions/checkout@v4

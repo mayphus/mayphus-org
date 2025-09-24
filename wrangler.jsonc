@@ -35,6 +35,34 @@
       "name": "tangmeifa-com-preview",
       "routes": [],
       "workers_dev": true
+    },
+    "zhengsanniu": {
+      "name": "zhengsanniu-com",
+      "routes": [
+        {
+          "pattern": "zhengsanniu.com",
+          "custom_domain": true
+        }
+      ]
+    },
+    "zhengsanniu-preview": {
+      "name": "zhengsanniu-com-preview",
+      "routes": [],
+      "workers_dev": true
+    },
+    "tangqiao": {
+      "name": "tangqiao-org",
+      "routes": [
+        {
+          "pattern": "tangqiao.org",
+          "custom_domain": true
+        }
+      ]
+    },
+    "tangqiao-preview": {
+      "name": "tangqiao-org-preview",
+      "routes": [],
+      "workers_dev": true
     }
   }
 }

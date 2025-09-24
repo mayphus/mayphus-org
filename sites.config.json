@@ -89,5 +89,95 @@
         ]
       }
     }
+  },
+  "zhengsanniu": {
+    "site": "https://zhengsanniu.com",
+    "title": "Zheng Sanniu Studio",
+    "description": "Handcrafted prototypes that blend hardware sketches with poetic software",
+    "contentDir": "content/zhengsanniu",
+    "contactEmail": "hello@zhengsanniu.com",
+    "navigation": [
+      { "href": "/", "label": "Home" },
+      { "href": "/content/", "label": "Lab Notes" }
+    ],
+    "footerLinks": [
+      { "href": "mailto:hello@zhengsanniu.com", "label": "Email", "external": true },
+      { "href": "https://instagram.com/zhengsanniu", "label": "Instagram", "external": true }
+    ],
+    "socialProfiles": [
+      "https://instagram.com/zhengsanniu"
+    ],
+    "home": {
+      "heroIntro": [
+        "你好，我是郑三牛 – I document the sketches, circuits, and poems that guide each prototype.",
+        "My studio is equal parts solder smoke and narrative voice. Each build log shows the why behind the wiring.",
+        "If you enjoy tangible storytelling and gentle technology, you will feel at home here."
+      ],
+      "projects": {
+        "title": "Current Experiments",
+        "ctaLabel": "Browse the build diary",
+        "ctaHref": "/content/",
+        "itemFallbackDescription": "Logbook entries for tactile prototypes, sensor studies, and narrative hardware."
+      },
+      "writing": {
+        "title": "Studio Essays",
+        "ctaLabel": "Read reflections",
+        "ctaHref": "/content/",
+        "itemFallbackDescription": "Short essays that connect craft technique with personal storytelling."
+      },
+      "connect": {
+        "heading": "Keep in Touch",
+        "lead": "Have a collaboration in mind? Write to {email} or follow daily sketches on Instagram.",
+        "links": [
+          { "href": "mailto:hello@zhengsanniu.com", "label": "Email", "external": true },
+          { "href": "https://instagram.com/zhengsanniu", "label": "Instagram", "external": true }
+        ]
+      }
+    }
+  },
+  "tangqiao": {
+    "site": "https://tangqiao.org",
+    "title": "Tang Qiao Foundation",
+    "description": "Community-led learning circles for makers, gardeners, and storytellers",
+    "contentDir": "content/tangqiao",
+    "contactEmail": "team@tangqiao.org",
+    "navigation": [
+      { "href": "/", "label": "Home" },
+      { "href": "/content/", "label": "Community Journal" }
+    ],
+    "footerLinks": [
+      { "href": "mailto:team@tangqiao.org", "label": "Email", "external": true },
+      { "href": "https://tangqiao.org/support", "label": "Support", "external": true }
+    ],
+    "socialProfiles": [
+      "https://newsletter.tangqiao.org"
+    ],
+    "home": {
+      "heroIntro": [
+        "Tang Qiao nurtures small, resilient communities around food, fabrication, and folklore.",
+        "We host learning circles where neighbors trade craft skills, swap seeds, and archive personal histories.",
+        "The projects captured here are living invitations—join a workshop, share a recipe, or start a new circle."
+      ],
+      "projects": {
+        "title": "Active Circles",
+        "ctaLabel": "See open gatherings",
+        "ctaHref": "/content/",
+        "itemFallbackDescription": "Workshop snapshots and community projects seeking new collaborators."
+      },
+      "writing": {
+        "title": "Field Notes",
+        "ctaLabel": "Read community stories",
+        "ctaHref": "/content/",
+        "itemFallbackDescription": "Stories from the gardens, fabrication lab, and oral history archives."
+      },
+      "connect": {
+        "heading": "Join Us",
+        "lead": "Drop a note at {email} or subscribe to the community digest for upcoming circles.",
+        "links": [
+          { "href": "mailto:team@tangqiao.org", "label": "Email", "external": true },
+          { "href": "https://newsletter.tangqiao.org", "label": "Newsletter", "external": true }
+        ]
+      }
+    }
   }
 }
