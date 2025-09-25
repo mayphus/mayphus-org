@@ -1,7 +1,5 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
-import SiteHeader from '../../components/SiteHeader.astro';
-import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 
@@ -21,7 +19,6 @@ const tags = Array.from(tagSet).sort();
     <BaseHead title={`Content - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
   <body>
-    <SiteHeader />
     <main id="main" class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
       <article class="prose dark:prose-invert">
         <h1>Content</h1>
@@ -60,9 +57,6 @@ const tags = Array.from(tagSet).sort();
         ))}
       </ul>
 
-      <div class="not-prose mt-16">
-        <Footer />
-      </div>
     </main>
     <script>
       // Cache DOM references
