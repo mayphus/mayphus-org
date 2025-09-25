@@ -36,76 +36,76 @@ const connectLead = formatWithEmail(homeConfig.connect.lead);
 	</head>
   <body>
     <SiteHeader />
-    <main id="main" class="org-content">
-      <section class="mb-12">
-        <h1>{SITE_TITLE}</h1>
-
-        {homeConfig.heroIntro.map((paragraph) => (
-          <div class="org-paragraph mb-4">{paragraph}</div>
-        ))}
-
-      </section>
-
-      {projectHighlights.length > 0 && (
-        <section id="projects" class="mb-12">
-          <h2>{homeConfig.projects.title}</h2>
-          <div class="org-list mb-4">
-            {projectHighlights.map((node) => (
-              <div class="org-list-item">
-                <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">
-                  {node.data.description || homeConfig.projects.itemFallbackDescription}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div class="org-paragraph">
-            <a href={homeConfig.projects.ctaHref} class="org-link">{homeConfig.projects.ctaLabel}</a>
-          </div>
+    <main id="main" class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
+      <article class="prose dark:prose-invert">
+        <section class="mb-12">
+          <h1>{SITE_TITLE}</h1>
+          {homeConfig.heroIntro.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
         </section>
-      )}
 
-      {writingHighlights.length > 0 && (
-        <section id="writing" class="mb-12">
-          <h2>{homeConfig.writing.title}</h2>
-          <div class="org-list mb-4">
-            {writingHighlights.map((node) => (
-              <div class="org-list-item">
-                <a href={`/content/${node.data.slug}/`} class="org-link">{node.data.title}</a>
-                <div class="text-sm text-neutral-600 dark:text-neutral-400">
-                  {node.data.description || homeConfig.writing.itemFallbackDescription}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div class="org-paragraph">
-            <a href={homeConfig.writing.ctaHref} class="org-link">{homeConfig.writing.ctaLabel}</a>
-          </div>
-        </section>
-      )}
-
-      <section id="connect" class="mb-12">
-        <h2>{homeConfig.connect.heading}</h2>
-        <div class="org-paragraph" set:html={connectLead ?? ''}></div>
-        {homeConfig.connect.links.length > 0 && (
-          <div class="org-list mt-4">
-            {homeConfig.connect.links.map((link) => (
-              <div class="org-list-item">
-                <a
-                  href={link.href}
-                  class="org-link"
-                  target={link.external ? '_blank' : undefined}
-                  rel={link.external ? 'noopener noreferrer' : undefined}
-                >
-                  {link.label}
-                </a>
-              </div>
-            ))}
-          </div>
+        {projectHighlights.length > 0 && (
+          <section id="projects" class="mb-12">
+            <h2>{homeConfig.projects.title}</h2>
+            <ul>
+              {projectHighlights.map((node) => (
+                <li>
+                  <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
+                  <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                    {node.data.description || homeConfig.projects.itemFallbackDescription}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <p>
+              <a href={homeConfig.projects.ctaHref}>{homeConfig.projects.ctaLabel}</a>
+            </p>
+          </section>
         )}
-      </section>
 
-      <Footer />
+        {writingHighlights.length > 0 && (
+          <section id="writing" class="mb-12">
+            <h2>{homeConfig.writing.title}</h2>
+            <ul>
+              {writingHighlights.map((node) => (
+                <li>
+                  <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
+                  <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                    {node.data.description || homeConfig.writing.itemFallbackDescription}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <p>
+              <a href={homeConfig.writing.ctaHref}>{homeConfig.writing.ctaLabel}</a>
+            </p>
+          </section>
+        )}
+
+        <section id="connect" class="mb-12">
+          <h2>{homeConfig.connect.heading}</h2>
+          <div set:html={connectLead ?? ''}></div>
+          {homeConfig.connect.links.length > 0 && (
+            <ul>
+              {homeConfig.connect.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noopener noreferrer' : undefined}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </article>
+      <div class="not-prose mt-16">
+        <Footer />
+      </div>
     </main>
   </body>
 </html>

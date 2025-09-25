@@ -175,7 +175,7 @@ export function formatWithEmail(
   const useHtml = options?.html !== false;
   const email = SITE_CONFIG.contactEmail;
   const emailValue = useHtml
-    ? `<a href="mailto:${email}" class="org-link">${email}</a>`
+    ? `<a href="mailto:${email}">${email}</a>`
     : email;
 
   return template.replace('{email}', emailValue);

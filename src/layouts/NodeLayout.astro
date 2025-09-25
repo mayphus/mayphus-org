@@ -18,20 +18,24 @@ const { title = 'Untitled', filetags, date } = Astro.props;
 
   <body>
     <SiteHeader />
-    <main id="main" class="org-content">
-      <h1>{title}</h1>
-      {filetags && filetags.length > 0 && (
-        <div class="org-meta">
-          #+filetags: {filetags.map(tag => `:${tag}:`).join('')}
-        </div>
-      )}
-      {date && (
-        <div class="org-meta">
-          #+date: {date.toISOString().split('T')[0]}
-        </div>
-      )}
-      <slot />
-      <Footer />
+    <main id="main" class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
+      <article class="prose dark:prose-invert">
+        <h1>{title}</h1>
+        {filetags && filetags.length > 0 && (
+          <p class="text-sm font-mono uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
+            #+filetags: {filetags.join(', ')}
+          </p>
+        )}
+        {date && (
+          <p class="text-sm font-mono text-neutral-500 dark:text-neutral-400">
+            #+date: {date.toISOString().split('T')[0]}
+          </p>
+        )}
+        <slot />
+      </article>
+      <div class="not-prose mt-16">
+        <Footer />
+      </div>
     </main>
   </body>
 </html>

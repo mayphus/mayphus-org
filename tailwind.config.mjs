@@ -1,80 +1,11 @@
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,ts,tsx}'],
   theme: {
-    extend: {
-      fontFamily: {
-        mono: ['JetBrains Mono', 'Fira Code', 'SF Mono', 'Consolas', 'Monaco', 'monospace'],
-        sans: ['IBM Plex Sans', 'Inter', 'system-ui', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-      },
-      fontSize: {
-        'xs': ['0.75rem', { lineHeight: '1.4' }],
-        'sm': ['0.875rem', { lineHeight: '1.5' }],
-        'base': ['1rem', { lineHeight: '1.6' }],
-        'lg': ['1.125rem', { lineHeight: '1.6' }],
-        'xl': ['1.25rem', { lineHeight: '1.6' }],
-        '2xl': ['1.5rem', { lineHeight: '1.5' }],
-        '3xl': ['1.875rem', { lineHeight: '1.4' }],
-      },
-      colors: {
-        'org': {
-          // Dark theme colors
-          'dark': {
-            'bg': '#282c34',
-            'bg-alt': '#21242b', 
-            'text': '#bbc2cf',
-            'text-bright': '#dfdfdf',
-            'text-dim': '#5b6268',
-            'keyword': '#c678dd',
-            'string': '#98c379', 
-            'constant': '#da8548',
-            'function': '#61afef',
-            'variable': '#e06c75',
-            'type': '#ecbe7b',
-            'comment': '#5c6370',
-            'heading': '#c678dd',
-            'link': '#61afef',
-            'todo': '#da8548',
-            'done': '#98c379',
-            'tag': '#ecbe7b',
-            'current-line': '#383d4a',
-            'selection': '#3e4451',
-            'border': '#484954',
-            'highlight': '#46d9ff',
-          },
-          // Light theme colors - inspired by solarized light
-          'light': {
-            'bg': '#fdf6e3',
-            'bg-alt': '#eee8d5',
-            'text': '#586e75',
-            'text-bright': '#002b36',
-            'text-dim': '#93a1a1',
-            'keyword': '#6c71c4',
-            'string': '#859900',
-            'constant': '#cb4b16',
-            'function': '#268bd2',
-            'variable': '#dc322f',
-            'type': '#b58900',
-            'comment': '#93a1a1',
-            'heading': '#6c71c4',
-            'link': '#268bd2',
-            'todo': '#cb4b16',
-            'done': '#859900',
-            'tag': '#b58900',
-            'current-line': '#eee8d5',
-            'selection': '#d3d3d3',
-            'border': '#d3d3d3',
-            'highlight': '#268bd2',
-          },
-        },
-      },
-      boxShadow: {
-        'org-subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-        'org-medium': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'org-large': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-      },
-    },
+    extend: {},
   },
-  plugins: [],
+  plugins: [typography],
 };
