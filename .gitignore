@@ -37,6 +37,3 @@ yarn-error.log*
 
 # development vars
 .dev.vars
-
-# claude
-.claude/
