@@ -7,10 +7,6 @@ const collection = await getCollection('content');
 const nodes = collection
   .filter(node => node.data)
   .sort((a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0));
-
-const tagSet = new Set<string>();
-nodes.forEach(node => node.data.filetags?.forEach(tag => tagSet.add(tag)));
-const tags = Array.from(tagSet).sort();
 ---
 
 <!doctype html>
@@ -25,32 +21,9 @@ const tags = Array.from(tagSet).sort();
           <a href="/">Content</a>
         </h1>
       </article>
-
-      {tags.length > 0 && (
-        <nav aria-label="Filter by tag">
-          {tags.map(tag => (
-            <button
-              type="button"
-              data-tag={tag}
-              aria-pressed="false"
-              aria-label={`Toggle tag ${tag}`}
-              >
-              {tag}
-            </button>
-          ))}
-          <button
-            type="button"
-            id="clear-tags"
-            aria-label="Clear selected tags"
-          >
-            Clear filters
-          </button>
-        </nav>
-      )}
-
       <ul id="items">
         {nodes.map(node => (
-          <li data-tags={(node.data.filetags ?? []).join(' ')}>
+          <li>
             <a href={`/content/${node.data.slug}/`}>
               {node.data.title}
             </a>
@@ -59,68 +32,5 @@ const tags = Array.from(tagSet).sort();
       </ul>
 
     </main>
-    <script>
-      // Cache DOM references
-      const tagButtons = document.querySelectorAll<HTMLButtonElement>('button[data-tag]');
-      const clearButton = document.querySelector<HTMLButtonElement>('#clear-tags');
-      const items = document.querySelectorAll<HTMLElement>('#items li');
-      let selectedTags = new Set<string>();
-
-      function updateDisplay() {
-        // Convert selectedTags to array once for efficiency
-        const selectedTagsArray = Array.from(selectedTags);
-        
-        // Update button states
-        tagButtons.forEach(btn => {
-          const tag = btn.dataset.tag!;
-          const isSelected = selectedTags.has(tag);
-          btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
-        });
-
-        if (clearButton) {
-          clearButton.disabled = selectedTags.size === 0;
-        }
-
-        // Filter items
-        items.forEach(item => {
-          const itemTags = item.dataset.tags?.split(' ') || [];
-          const matches = selectedTags.size === 0 || 
-            selectedTagsArray.every(tag => itemTags.includes(tag));
-          item.hidden = !matches;
-        });
-
-        // Update URL
-        const query = selectedTags.size > 0 ? 
-          `?tags=${selectedTagsArray.join(',')}` : '';
-        history.replaceState(null, '', query);
-      }
-
-      // Use event delegation for better performance
-      document.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
-        if (target.tagName === 'BUTTON') {
-          if (target.hasAttribute('data-tag')) {
-            const tag = target.dataset.tag!;
-            if (selectedTags.has(tag)) {
-              selectedTags.delete(tag);
-            } else {
-              selectedTags.add(tag);
-            }
-            updateDisplay();
-          } else if (target.id === 'clear-tags') {
-            selectedTags.clear();
-            updateDisplay();
-          }
-        }
-      });
-
-      // Handle initial URL parameters
-      const params = new URLSearchParams(location.search);
-      const initialTags = params.get('tags');
-      if (initialTags) {
-        selectedTags = new Set(initialTags.split(','));
-        updateDisplay();
-      }
-    </script>
   </body>
 </html>
