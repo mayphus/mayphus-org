@@ -17,7 +17,9 @@ const { title = 'Untitled', filetags, date } = Astro.props;
   <body>
     <main id="main">
       <article>
-        <h1>{title}</h1>
+        <h1>
+          <a href="/">{title}</a>
+        </h1>
         {filetags && filetags.length > 0 && (
           <p>
             #+filetags: {filetags.join(', ')}
