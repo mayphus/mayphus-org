@@ -1,0 +1,16 @@
+:root {
+  --font-system-monospace: ui-monospace, SFMono-Regular, SFMono, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Ubuntu Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Liberation Mono", "Courier New", monospace;
+}
+
+html,
+body {
+  font-family: var(--font-system-monospace);
+}
+
+code,
+kbd,
+samp,
+pre,
+tt {
+  font-family: inherit;
+}
