@@ -10,6 +10,7 @@ export interface SiteLink {
   href: string;
   label: string;
   external?: boolean;
+  profile?: boolean;
 }
 
 export interface SiteHomeSectionCTA {
@@ -41,7 +42,6 @@ export interface SiteConfigInput {
   analyticsId?: string;
   navigation?: SiteLink[];
   footerLinks?: SiteLink[];
-  socialProfiles?: string[];
   home?: SiteHomeConfig;
 }
 
@@ -120,6 +120,12 @@ const resolvedFooterLinks = activeConfig.footerLinks ?? [
   { href: `mailto:${activeConfig.contactEmail}`, label: 'Email', external: true },
 ];
 
+const resolvedSocialProfiles = Array.from(new Set(
+  resolvedFooterLinks
+    .filter((link) => link.profile)
+    .map((link) => link.href),
+));
+
 const resolvedConnectLinks = activeConfig.home?.connect?.links
   ?? (defaultHome.connect.links.length > 0 ? defaultHome.connect.links : resolvedFooterLinks);
 
@@ -132,7 +138,7 @@ const resolvedConfig: ResolvedSiteConfig = {
   analyticsId: activeConfig.analyticsId,
   navigation: activeConfig.navigation ?? DEFAULT_LINKS,
   footerLinks: resolvedFooterLinks,
-  socialProfiles: activeConfig.socialProfiles ?? [],
+  socialProfiles: resolvedSocialProfiles,
   home: {
     ...defaultHome,
     ...(activeConfig.home ?? {}),

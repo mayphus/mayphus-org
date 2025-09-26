@@ -11,14 +11,10 @@
       { "href": "/content/", "label": "Content" }
     ],
     "footerLinks": [
-      { "href": "https://github.com/mayphus", "label": "GitHub", "external": true },
-      { "href": "https://youtube.com/@mayphustang", "label": "YouTube", "external": true },
+      { "href": "https://github.com/mayphus", "label": "GitHub", "external": true, "profile": true },
+      { "href": "https://youtube.com/@mayphustang", "label": "YouTube", "external": true, "profile": true },
       { "href": "https://www.pinterest.com/mayphustang", "label": "Pinterest", "external": true },
       { "href": "mailto:tangmeifa@gmail.com", "label": "Email", "external": true }
-    ],
-    "socialProfiles": [
-      "https://github.com/mayphus",
-      "https://youtube.com/@mayphustang"
     ],
     "home": {
       "heroIntro": [
@@ -62,7 +58,6 @@
     "footerLinks": [
       { "href": "mailto:hello@tangmeifa.com", "label": "Email", "external": true }
     ],
-    "socialProfiles": [],
     "home": {
       "heroIntro": [
         "你好，我是唐美發 – I share Mandarin through stories that connect language with everyday life.",
@@ -102,10 +97,7 @@
     ],
     "footerLinks": [
       { "href": "mailto:hello@zhengsanniu.com", "label": "Email", "external": true },
-      { "href": "https://instagram.com/zhengsanniu", "label": "Instagram", "external": true }
-    ],
-    "socialProfiles": [
-      "https://instagram.com/zhengsanniu"
+      { "href": "https://instagram.com/zhengsanniu", "label": "Instagram", "external": true, "profile": true }
     ],
     "home": {
       "heroIntro": [
@@ -147,10 +139,8 @@
     ],
     "footerLinks": [
       { "href": "mailto:team@tangqiao.org", "label": "Email", "external": true },
+      { "href": "https://newsletter.tangqiao.org", "label": "Newsletter", "external": true, "profile": true },
       { "href": "https://tangqiao.org/support", "label": "Support", "external": true }
-    ],
-    "socialProfiles": [
-      "https://newsletter.tangqiao.org"
     ],
     "home": {
       "heroIntro": [
