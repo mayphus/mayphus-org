@@ -19,17 +19,16 @@ const tags = Array.from(tagSet).sort();
     <BaseHead title={`Content - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
   <body>
-    <main id="main" class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
-      <article class="prose dark:prose-invert">
+    <main id="main">
+      <article>
         <h1>Content</h1>
       </article>
 
       {tags.length > 0 && (
-        <nav class="mt-8 flex flex-wrap gap-2" aria-label="Filter by tag">
+        <nav aria-label="Filter by tag">
           {tags.map(tag => (
             <button
               type="button"
-              class="rounded-full border border-neutral-300 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 aria-[pressed=true]:border-neutral-900 aria-[pressed=true]:bg-neutral-900 aria-[pressed=true]:text-white dark:border-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-100 dark:aria-[pressed=true]:border-neutral-100 dark:aria-[pressed=true]:bg-neutral-100 dark:aria-[pressed=true]:text-neutral-900"
               data-tag={tag}
               aria-pressed="false"
               aria-label={`Toggle tag ${tag}`}
@@ -40,16 +39,16 @@ const tags = Array.from(tagSet).sort();
         </nav>
       )}
 
-      <ul id="items" class="mt-8 space-y-6">
+      <ul id="items">
         {nodes.map(node => (
-          <li data-tags={(node.data.filetags ?? []).join(' ')} class="transition-opacity duration-200">
-            <a href={`/content/${node.data.slug}/`} class="font-medium text-neutral-900 transition-colors hover:text-neutral-600 dark:text-neutral-100 dark:hover:text-neutral-300">
+          <li data-tags={(node.data.filetags ?? []).join(' ')}>
+            <a href={`/content/${node.data.slug}/`}>
               {node.data.title}
             </a>
             {node.data.filetags && (
-              <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
+              <p>
                 {node.data.filetags.map(tag => (
-                  <span class="mr-1">{tag}</span>
+                  <span>{tag}</span>
                 ))}
               </p>
             )}

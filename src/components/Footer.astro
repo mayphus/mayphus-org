@@ -5,8 +5,8 @@ const links = SITE_FOOTER_LINKS;
 const getRel = (external?: boolean) => external ? 'noopener noreferrer' : undefined;
 ---
 
-<footer class="mx-auto max-w-3xl px-4 text-sm text-neutral-500 dark:text-neutral-400 lg:px-6">
-  <nav class="flex flex-wrap gap-4">
+<footer>
+  <nav>
     {links.map((link) => (
       <a
         href={link.href}

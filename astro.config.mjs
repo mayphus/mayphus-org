@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
 import VitePWA from '@vite-pwa/astro';
 
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -57,7 +56,7 @@ export default defineConfig({
         },
       }],
     ],
-  }), sitemap(), tailwind(), VitePWA({
+  }), sitemap(), VitePWA({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.svg'],
     manifest,

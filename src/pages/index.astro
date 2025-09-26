@@ -33,9 +33,9 @@ const connectLead = formatWithEmail(homeConfig.connect.lead);
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
   <body>
-    <main id="main" class="mx-auto max-w-3xl px-4 py-12 lg:px-6">
-      <article class="prose dark:prose-invert">
-        <section class="mb-12">
+    <main id="main">
+      <article>
+        <section>
           <h1>{SITE_TITLE}</h1>
           {homeConfig.heroIntro.map((paragraph) => (
             <p>{paragraph}</p>
@@ -43,13 +43,13 @@ const connectLead = formatWithEmail(homeConfig.connect.lead);
         </section>
 
         {projectHighlights.length > 0 && (
-          <section id="projects" class="mb-12">
+          <section id="projects">
             <h2>{homeConfig.projects.title}</h2>
             <ul>
               {projectHighlights.map((node) => (
                 <li>
                   <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
-                  <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                  <p>
                     {node.data.description || homeConfig.projects.itemFallbackDescription}
                   </p>
                 </li>
@@ -62,13 +62,13 @@ const connectLead = formatWithEmail(homeConfig.connect.lead);
         )}
 
         {writingHighlights.length > 0 && (
-          <section id="writing" class="mb-12">
+          <section id="writing">
             <h2>{homeConfig.writing.title}</h2>
             <ul>
               {writingHighlights.map((node) => (
                 <li>
                   <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
-                  <p class="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+                  <p>
                     {node.data.description || homeConfig.writing.itemFallbackDescription}
                   </p>
                 </li>
@@ -80,7 +80,7 @@ const connectLead = formatWithEmail(homeConfig.connect.lead);
           </section>
         )}
 
-        <section id="connect" class="mb-12">
+        <section id="connect">
           <h2>{homeConfig.connect.heading}</h2>
           <div set:html={connectLead ?? ''}></div>
           {homeConfig.connect.links.length > 0 && (

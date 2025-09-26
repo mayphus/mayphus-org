@@ -4,7 +4,7 @@
 - `src/` contains Astro pages, layouts, components, and utilities; add UI under `src/components/`, logic in `src/lib/`, and routes inside `src/pages/`.
 - Tests live beside code as `*.test.ts`. Shared defaults sit in `src/config.ts` and `src/content.config.ts`.
 - `content/` stores Org-mode sources processed at build time; register new collections in `src/content.config.ts`.
-- `public/` serves static assets directly. Root configs (`astro.config.mjs`, `tailwind.config.mjs`, `vitest.config.ts`, `wrangler.jsonc`) govern build, styling, tests, and deployment.
+- `public/` serves static assets directly. Root configs (`astro.config.mjs`, `vitest.config.ts`, `wrangler.jsonc`) govern build, styling, tests, and deployment.
 - Multi-site configuration lives in `sites.config.json`; the active site is resolved through `src/lib/site.ts` and drives branded copy, navigation, content directories, and analytics settings.
 
 ## Build, Test, and Development Commands
