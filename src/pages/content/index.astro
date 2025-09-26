@@ -21,7 +21,9 @@ const tags = Array.from(tagSet).sort();
   <body>
     <main id="main">
       <article>
-        <h1>Content</h1>
+        <h1>
+          <a href="/">Content</a>
+        </h1>
       </article>
 
       {tags.length > 0 && (
@@ -36,6 +38,13 @@ const tags = Array.from(tagSet).sort();
               {tag}
             </button>
           ))}
+          <button
+            type="button"
+            id="clear-tags"
+            aria-label="Clear selected tags"
+          >
+            Clear filters
+          </button>
         </nav>
       )}
 
@@ -45,13 +54,6 @@ const tags = Array.from(tagSet).sort();
             <a href={`/content/${node.data.slug}/`}>
               {node.data.title}
             </a>
-            {node.data.filetags && (
-              <p>
-                {node.data.filetags.map(tag => (
-                  <span>{tag}</span>
-                ))}
-              </p>
-            )}
           </li>
         ))}
       </ul>
@@ -60,6 +62,7 @@ const tags = Array.from(tagSet).sort();
     <script>
       // Cache DOM references
       const tagButtons = document.querySelectorAll<HTMLButtonElement>('button[data-tag]');
+      const clearButton = document.querySelector<HTMLButtonElement>('#clear-tags');
       const items = document.querySelectorAll<HTMLElement>('#items li');
       let selectedTags = new Set<string>();
 
@@ -73,6 +76,10 @@ const tags = Array.from(tagSet).sort();
           const isSelected = selectedTags.has(tag);
           btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
         });
+
+        if (clearButton) {
+          clearButton.disabled = selectedTags.size === 0;
+        }
 
         // Filter items
         items.forEach(item => {
@@ -91,14 +98,19 @@ const tags = Array.from(tagSet).sort();
       // Use event delegation for better performance
       document.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        if (target.tagName === 'BUTTON' && target.hasAttribute('data-tag')) {
-          const tag = target.dataset.tag!;
-          if (selectedTags.has(tag)) {
-            selectedTags.delete(tag);
-          } else {
-            selectedTags.add(tag);
+        if (target.tagName === 'BUTTON') {
+          if (target.hasAttribute('data-tag')) {
+            const tag = target.dataset.tag!;
+            if (selectedTags.has(tag)) {
+              selectedTags.delete(tag);
+            } else {
+              selectedTags.add(tag);
+            }
+            updateDisplay();
+          } else if (target.id === 'clear-tags') {
+            selectedTags.clear();
+            updateDisplay();
           }
-          updateDisplay();
         }
       });
 
