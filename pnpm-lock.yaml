@@ -14,6 +14,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.5.1
         version: 3.6.0
+      '@fontsource/ubuntu-mono':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@shikijs/rehype':
         specifier: ^3.6.0
         version: 3.13.0
@@ -1061,6 +1064,9 @@ packages:
   '@eslint/plugin-kit@0.3.5':
     resolution: {integrity: sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource/ubuntu-mono@5.2.8':
+    resolution: {integrity: sha512-N4nT8+GYWWcDODVSBLU4f3PycZQH9YIF6SypDI0rti3HrLqcXFS9u6wMvAd9vx1FmjAQkYv7Ld9CZ8XYTEOD0A==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -5459,6 +5465,8 @@ snapshots:
     dependencies:
       '@eslint/core': 0.15.2
       levn: 0.4.1
+
+  '@fontsource/ubuntu-mono@5.2.8': {}
 
   '@humanfs/core@0.19.1': {}
 
