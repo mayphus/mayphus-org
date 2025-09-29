@@ -80,9 +80,9 @@ const analyticsSnippet = analyticsId
 <meta property="twitter:image" content={new globalThis.URL(image, Astro.url)} />
 
 <!-- Structured data for better SEO -->
-<script type="application/ld+json" is:inline>{structuredDataJson}</script>
+<script is:inline type="application/ld+json" set:html={structuredDataJson}></script>
 
 <!-- Optimized Google Analytics - loads after critical resources -->
 {analyticsSnippet && (
-  <script is:inline>{analyticsSnippet}</script>
+  <script is:inline set:html={analyticsSnippet}></script>
 )}
