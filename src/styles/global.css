@@ -15,23 +15,106 @@
 }
 
 :root {
+  color-scheme: light;
   --font-body: "Ubuntu Mono", "SFMono-Regular", "Segoe UI Mono", monospace;
   --font-monospace: "Ubuntu Mono", ui-monospace, SFMono-Regular, SFMono, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Liberation Mono", "Courier New", monospace;
+  --theme-transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text: #0f172a;
+  --color-muted: #475569;
+  --color-border: #cbd5f5;
   --link-color: #1d4ed8;
+  --link-color-hover: #1e40af;
+  --inline-code-background: rgba(15, 23, 42, 0.08);
+  --inline-code-text: #0f172a;
+  --code-background: #e2e8f0;
+  --code-text: #0f172a;
+  --selection-background: #bfdbfe;
+  --selection-text: #0f172a;
+  --code-shadow: rgba(15, 23, 42, 0.08);
 }
 
-html,
-body {
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-background: #020617;
+    --color-surface: #0f172a;
+    --color-text: #e2e8f0;
+    --color-muted: #94a3b8;
+    --color-border: #273449;
+    --link-color: #93c5fd;
+    --link-color-hover: #bfdbfe;
+    --inline-code-background: rgba(148, 163, 184, 0.24);
+    --inline-code-text: #e2e8f0;
+    --code-background: #111b2f;
+    --code-text: #f8fafc;
+    --selection-background: #1d4ed8;
+    --selection-text: #e2e8f0;
+    --code-shadow: rgba(2, 6, 23, 0.45);
+  }
+
+  pre.shiki {
+    background-color: var(--shiki-dark-bg, var(--code-background)) !important;
+    color: var(--code-text) !important;
+    border-color: var(--color-border);
+    box-shadow: 0 14px 30px var(--code-shadow);
+  }
+
+  pre.shiki code span {
+    color: var(--shiki-dark, inherit) !important;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
   font-family: var(--font-body);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: inherit;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  line-height: 1.6;
+  transition: var(--theme-transition);
+}
+
+::selection {
+  background-color: var(--selection-background);
+  color: var(--selection-text);
+}
+
+main {
+  width: min(72ch, 100%);
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+
+p,
+li {
+  color: var(--color-text);
+}
+
+p {
+  margin: 1rem 0;
 }
 
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
 }
 
 a:any-link:hover,
 a:any-link:focus-visible {
+  color: var(--link-color-hover);
   text-decoration: underline;
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.2em;
@@ -40,9 +123,48 @@ a:any-link:focus-visible {
 code,
 kbd,
 samp,
-pre,
 tt {
   font-family: var(--font-monospace);
+  background-color: var(--inline-code-background);
+  color: var(--inline-code-text);
+  padding: 0.1em 0.35em;
+  border-radius: 0.35em;
+}
+
+pre {
+  font-family: var(--font-monospace);
+  background-color: var(--code-background);
+  color: var(--code-text);
+  padding: 1.25rem;
+  border-radius: 0.8rem;
+  border: 1px solid var(--color-border);
+  overflow-x: auto;
+  box-shadow: 0 14px 30px var(--code-shadow);
+  transition: var(--theme-transition);
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+pre.shiki {
+  background-color: var(--code-background) !important;
+  color: var(--code-text) !important;
+  border-radius: 0.8rem;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 14px 30px var(--code-shadow);
+}
+
+pre.shiki .line {
+  min-width: 100%;
+}
+
+:is(h1, h2, h3, h4, h5, h6) {
+  color: var(--color-text);
+  line-height: 1.2;
+  margin: 2rem 0 1rem;
 }
 
 :is(h1, h2, h3, h4, h5, h6) > a:any-link {
@@ -68,4 +190,24 @@ tt {
   outline: 2px solid currentColor;
   outline-offset: 0.2em;
   border-radius: 0.1em;
+}
+
+@media (max-width: 640px) {
+  main {
+    padding-inline: 1rem;
+  }
+
+  main > article {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

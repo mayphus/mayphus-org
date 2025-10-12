@@ -1,6 +1,14 @@
 ---
 import { SITE_CONFIG, SITE_SOCIAL_PROFILES } from '../lib/site';
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_THEME_COLOR, SITE_BACKGROUND_COLOR } from '../consts';
+import {
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  SITE_URL,
+  SITE_THEME_COLOR_LIGHT,
+  SITE_THEME_COLOR_DARK,
+  SITE_BACKGROUND_COLOR_LIGHT,
+  SITE_BACKGROUND_COLOR_DARK,
+} from '../consts';
 import '../styles/global.css';
 
 interface Props {
@@ -51,13 +59,16 @@ const analyticsSnippet = analyticsId
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="manifest" href="/manifest.webmanifest" />
-<meta name="theme-color" content={SITE_THEME_COLOR} />
-<meta name="background-color" content={SITE_BACKGROUND_COLOR} />
+<meta name="theme-color" content={SITE_THEME_COLOR_LIGHT} />
+<meta name="theme-color" content={SITE_THEME_COLOR_DARK} media="(prefers-color-scheme: dark)" />
+<meta name="background-color" content={SITE_BACKGROUND_COLOR_LIGHT} />
+<meta name="background-color" content={SITE_BACKGROUND_COLOR_DARK} media="(prefers-color-scheme: dark)" />
 <meta name="application-name" content={SITE_TITLE} />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content={SITE_TITLE} />
-<meta name="msapplication-TileColor" content={SITE_THEME_COLOR} />
+<meta name="msapplication-TileColor" content={SITE_THEME_COLOR_LIGHT} />
+<meta name="color-scheme" content="light dark" />
 <meta name="generator" content={Astro.generator} />
 
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
