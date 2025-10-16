@@ -196,10 +196,6 @@ pre.shiki .line {
   main {
     padding-inline: 1rem;
   }
-
-  main > article {
-    padding: 2rem 1.5rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
