@@ -16,8 +16,9 @@
 
 :root {
   color-scheme: light;
-  --font-body: "Ubuntu Mono", "SFMono-Regular", "Segoe UI Mono", monospace;
+  --font-body: "Inter", "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-monospace: "Ubuntu Mono", ui-monospace, SFMono-Regular, SFMono, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Liberation Mono", "Courier New", monospace;
+  --font-heading: var(--font-monospace);
   --theme-transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
   --color-background: #f8fafc;
   --color-surface: #ffffff;
@@ -82,7 +83,7 @@ body {
   font-family: inherit;
   background-color: var(--color-background);
   color: var(--color-text);
-  line-height: 1.6;
+  line-height: 1.75;
   transition: var(--theme-transition);
 }
 
@@ -102,22 +103,25 @@ li {
   color: var(--color-text);
 }
 
+li {
+  margin-bottom: 0.5rem;
+}
+
 p {
-  margin: 1rem 0;
+  margin: 1.25rem 0;
 }
 
 a:any-link {
   color: var(--link-color);
   text-decoration: none;
-  transition: color 120ms ease, text-decoration-color 120ms ease;
+  border-bottom: 1px solid transparent;
+  transition: color 150ms ease, border-color 150ms ease;
 }
 
 a:any-link:hover,
 a:any-link:focus-visible {
   color: var(--link-color-hover);
-  text-decoration: underline;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.2em;
+  border-bottom-color: var(--link-color-hover);
 }
 
 code,
@@ -162,12 +166,13 @@ pre.shiki .line {
 }
 
 :is(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-heading);
   color: var(--color-text);
-  line-height: 1.2;
+  line-height: 1.3;
   margin: 2rem 0 1rem;
 }
 
-:is(h1, h2, h3, h4, h5, h6) > a:any-link {
+:is(h1, h2, h3, h4, h5, h6)>a:any-link {
   color: inherit;
   text-decoration: none;
   display: inline-flex;
@@ -181,12 +186,12 @@ pre.shiki .line {
   padding-bottom: 0.04em;
 }
 
-:is(h1, h2, h3, h4, h5, h6) > a:any-link:hover,
-:is(h1, h2, h3, h4, h5, h6) > a:any-link:focus-visible {
+:is(h1, h2, h3, h4, h5, h6)>a:any-link:hover,
+:is(h1, h2, h3, h4, h5, h6)>a:any-link:focus-visible {
   background-size: 100% 0.12em;
 }
 
-:is(h1, h2, h3, h4, h5, h6) > a:any-link:focus-visible {
+:is(h1, h2, h3, h4, h5, h6)>a:any-link:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 0.2em;
   border-radius: 0.1em;
@@ -199,6 +204,7 @@ pre.shiki .line {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

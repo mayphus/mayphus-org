@@ -1,5 +1,7 @@
 ---
 import BaseHead from '../../components/BaseHead.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 
@@ -15,11 +17,10 @@ const nodes = collection
     <BaseHead title={`Content - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
   </head>
   <body>
+    <SiteHeader />
     <main id="main">
       <article>
-        <h1>
-          <a href="/">Content</a>
-        </h1>
+        <h1>Content</h1>
         <ul id="items">
           {nodes.map(node => (
             <li>
@@ -31,5 +32,6 @@ const nodes = collection
         </ul>
       </article>
     </main>
+    <Footer />
   </body>
 </html>
