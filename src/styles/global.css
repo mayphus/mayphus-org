@@ -19,51 +19,43 @@
   --font-body: "Inter", "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-monospace: "Ubuntu Mono", ui-monospace, SFMono-Regular, SFMono, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Liberation Mono", "Courier New", monospace;
   --font-heading: var(--font-monospace);
-  --theme-transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
-  --color-background: #f8fafc;
+  --theme-transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+
+  --color-background: #fafafa;
   --color-surface: #ffffff;
-  --color-text: #0f172a;
-  --color-muted: #475569;
-  --color-border: #cbd5f5;
-  --link-color: #1d4ed8;
-  --link-color-hover: #1e40af;
-  --inline-code-background: rgba(15, 23, 42, 0.08);
-  --inline-code-text: #0f172a;
-  --code-background: #e2e8f0;
-  --code-text: #0f172a;
-  --selection-background: #bfdbfe;
-  --selection-text: #0f172a;
-  --code-shadow: rgba(15, 23, 42, 0.08);
+  --color-text: #171717;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+
+  --link-color: #2563eb;
+  --link-color-hover: #1d4ed8;
+
+  --inline-code-background: rgba(23, 23, 23, 0.05);
+  --inline-code-text: #171717;
+  --code-background: #f3f4f6;
+  --code-text: #111827;
+  --selection-background: #dbeafe;
+  --selection-text: #1e3a8a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --color-background: #020617;
-    --color-surface: #0f172a;
-    --color-text: #e2e8f0;
-    --color-muted: #94a3b8;
-    --color-border: #273449;
-    --link-color: #93c5fd;
-    --link-color-hover: #bfdbfe;
-    --inline-code-background: rgba(148, 163, 184, 0.24);
-    --inline-code-text: #e2e8f0;
-    --code-background: #111b2f;
-    --code-text: #f8fafc;
-    --selection-background: #1d4ed8;
-    --selection-text: #e2e8f0;
-    --code-shadow: rgba(2, 6, 23, 0.45);
-  }
+    --color-background: #0a0a0a;
+    --color-surface: #121212;
+    --color-text: #e5e5e5;
+    --color-muted: #a3a3a3;
+    --color-border: #262626;
 
-  pre.shiki {
-    background-color: var(--shiki-dark-bg, var(--code-background)) !important;
-    color: var(--code-text) !important;
-    border-color: var(--color-border);
-    box-shadow: 0 14px 30px var(--code-shadow);
-  }
+    --link-color: #60a5fa;
+    --link-color-hover: #93c5fd;
 
-  pre.shiki code span {
-    color: var(--shiki-dark, inherit) !important;
+    --inline-code-background: rgba(229, 229, 229, 0.1);
+    --inline-code-text: #e5e5e5;
+    --code-background: #171717;
+    --code-text: #f3f4f6;
+    --selection-background: #1e3a8a;
+    --selection-text: #e5e5e5;
   }
 }
 
@@ -213,6 +205,7 @@ pre.shiki .line {
     animation-iteration-count: 1 !important;
   }
 }
+
 /* TODO keyword styling */
 .todo-keyword.TODO {
   display: inline-block;
@@ -270,4 +263,89 @@ article h4::before {
   color: var(--color-muted);
   font-weight: 400;
   margin-right: 0.25em;
+}
+
+/* Log-style content list */
+.log-list {
+  list-style: none;
+  padding: 0;
+  margin: 3rem 0;
+}
+
+.log-item {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.log-item:hover {
+  border-bottom-color: var(--color-border);
+}
+
+.item-content {
+  flex-grow: 1;
+}
+
+.item-title {
+  font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.item-tags {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin-left: 0.75rem;
+}
+
+.item-tag {
+  font-family: var(--font-monospace);
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  opacity: 0.6;
+}
+
+/* Refined TODO keyword */
+.todo-keyword.TODO {
+  background: transparent;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  padding: 0.05em 0.3em;
+  font-size: 0.65em;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 0.5em;
+}
+
+@media (max-width: 640px) {
+  .log-item {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .item-date {
+    min-width: unset;
+  }
+}
+
+/* Home header rhythm */
+.home-header {
+  margin-bottom: 5rem;
+}
+
+.intro-p {
+  max-width: 68ch;
+  color: var(--color-muted);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.home-header h1 {
+  margin-top: 0;
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
 }

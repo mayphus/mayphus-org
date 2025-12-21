@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
-import { SITE_HOME, formatWithEmail } from '../lib/site';
+import { SITE_HOME } from '../lib/site';
 
 const collection = await getCollection('content');
 const nodes = collection
@@ -14,7 +14,6 @@ const nodes = collection
     });
 
 const homeConfig = SITE_HOME;
-const connectLead = formatWithEmail(homeConfig.connect.lead);
 ---
 
 <!doctype html>
@@ -25,41 +24,32 @@ const connectLead = formatWithEmail(homeConfig.connect.lead);
   <body>
     <main id="main">
       <article>
-        <header>
+        <header class="home-header">
           <h1>{SITE_TITLE}</h1>
           {homeConfig.heroIntro.map((paragraph) => (
-            <p>{paragraph}</p>
+            <p class="intro-p">{paragraph}</p>
           ))}
         </header>
 
         <section id="content">
-          <ul>
+          <ul class="log-list">
             {nodes.map((node) => (
-              <li>
-                <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
+              <li class="log-item">
+                <div class="item-content">
+                  <a href={`/content/${node.data.slug}/`} class="item-title">
+                    {node.data.title}
+                  </a>
+                  {node.data.filetags && node.data.filetags.length > 0 && (
+                    <span class="item-tags">
+                      {node.data.filetags.map((tag: string) => (
+                        <span class="item-tag">#{tag}</span>
+                      ))}
+                    </span>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
-        </section>
-
-        <section id="connect">
-          <h2>{homeConfig.connect.heading}</h2>
-          <div set:html={connectLead ?? ''}></div>
-          {homeConfig.connect.links.length > 0 && (
-            <ul>
-              {homeConfig.connect.links.map((link) => (
-                <li>
-                  <a
-                    href={link.href}
-                    target={link.external ? '_blank' : undefined}
-                    rel={link.external ? 'noopener noreferrer' : undefined}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
         </section>
       </article>
     </main>
