@@ -8,7 +8,7 @@ import animate from "tailwindcss-animate";
 import typography from "@tailwindcss/typography";
 
 export default {
-    darkMode: ["class"],
+    darkMode: ["media"],
     content: ["./app/**/*.{ts,tsx}"],
     theme: {
         container: {

@@ -10,8 +10,6 @@ import {
 import React from "react";
 import type { LinksFunction } from "@remix-run/cloudflare";
 import styles from "./styles/global.css?url";
-import { SiteHeader } from "~/components/SiteHeader";
-import { Footer } from "~/components/Footer";
 
 export const links: LinksFunction = () => [
     { rel: "stylesheet", href: styles },
@@ -33,11 +31,9 @@ function Document({ children }: { children: React.ReactNode }) {
                 <Links />
             </head>
             <body className="flex min-h-screen flex-col font-sans antialiased text-foreground bg-background">
-                <SiteHeader />
                 <div className="flex-1">
                     {children}
                 </div>
-                <Footer />
                 <ScrollRestoration />
                 <Scripts />
             </body>
@@ -65,7 +61,6 @@ export function ErrorBoundary() {
                 <Links />
             </head>
             <body className="flex min-h-screen flex-col font-sans antialiased text-foreground bg-background">
-                <SiteHeader />
                 <div className="flex-1 flex flex-col items-center justify-center p-4">
                     {isRouteErrorResponse(error) ? (
                         <>
