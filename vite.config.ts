@@ -29,7 +29,7 @@ export default defineConfig({
                 uniorgSlug
             ],
             rehypePlugins: [
-                [rehypeAutolinkHeadings, { behavior: "wrap" }],
+                [rehypeAutolinkHeadings, { behavior: "prepend", content: { type: "text", value: "# " } }],
                 [rehypeShiki, { themes: { light: "min-light", dark: "min-dark" } }]
             ],
             jsxImportSource: "react"

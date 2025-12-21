@@ -4,7 +4,7 @@ import { getPosts } from "~/models/content.server";
 
 export const meta: MetaFunction = () => {
     return [
-        { title: "Mayphus.org" },
+        { title: "Mayphus" },
         { name: "description", content: "Personal website and blog of Mayphus." },
     ];
 };
@@ -21,8 +21,8 @@ export default function Index() {
         <main>
             <div>
                 <div>
-                    <h1>Latest Updates</h1>
-                    <p>My thoughts on tech, life, and everything in between.</p>
+                    <h1>Mayphus</h1>
+                    <p>Personal website and blog of Mayphus.</p>
                 </div>
 
                 <ul>

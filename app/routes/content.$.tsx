@@ -34,7 +34,11 @@ export default function BlogPost() {
             <article>
                 <h1>{postMetadata.title}</h1>
                 <div>
-                    <time>{new Date(postMetadata.date).toLocaleDateString()}</time>
+                    <time>{new Date(postMetadata.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })}</time>
                     {postMetadata.tags?.map(tag => <span key={tag}>#{tag}</span>)}
                 </div>
                 <PostContent slug={postMetadata.slug} />
