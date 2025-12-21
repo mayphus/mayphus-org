@@ -1,5 +1,6 @@
 
 import { createRequestHandler } from "@remix-run/cloudflare";
+// @ts-ignore - build output is generated during `pnpm run build`
 import * as build from "../build/server/index.js";
 
 // @ts-ignore - build type mismatch due to inferred types
