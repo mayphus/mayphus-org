@@ -1,7 +1,7 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { getPost } from "~/models/content.server";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
     if (!data || !data.postMetadata) {

@@ -3,6 +3,7 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
 
 export default [
+  { ignores: ['build/**', '.cache/**', 'public/**'] },
   js.configs.recommended,
   {
     files: ['**/*.{js,ts,jsx,tsx,mjs}'],
@@ -25,7 +26,11 @@ export default [
         URL: 'readonly',
         navigator: 'readonly',
         window: 'readonly',
-        document: 'readonly'
+        document: 'readonly',
+        Response: 'readonly',
+        Request: 'readonly',
+        fetch: 'readonly',
+        Headers: 'readonly'
       }
     },
     plugins: {

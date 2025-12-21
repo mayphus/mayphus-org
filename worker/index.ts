@@ -1,4 +1,4 @@
-/* global Request, Response, Headers, fetch */
+
 
 type AssetNamespace = {
   fetch: typeof fetch;

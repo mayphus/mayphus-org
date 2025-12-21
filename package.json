@@ -5,7 +5,7 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",
-    "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc"
   },
@@ -40,9 +40,12 @@
     "@typescript-eslint/parser": "^8.41.0",
     "@uniorgjs/orgx": "^2.0.1",
     "@vitest/ui": "^3.2.4",
+    "autoprefixer": "^10.4.23",
     "eslint": "^9.34.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3",
     "uniorg-extract-keywords": "^1.1.0",

@@ -7,6 +7,7 @@ import {
     isRouteErrorResponse,
     useRouteError,
 } from "@remix-run/react";
+import React from "react";
 import type { LinksFunction } from "@remix-run/cloudflare";
 import styles from "./styles/global.css?url";
 import { SiteHeader } from "~/components/SiteHeader";
