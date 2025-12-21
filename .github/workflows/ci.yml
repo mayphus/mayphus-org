@@ -98,7 +98,7 @@ jobs:
           PUBLIC_SITE_KEY: ${{ matrix.site.site_key }}
         run: |
           pnpm install
-          pnpm run astro check
+          pnpm run typecheck
           pnpm run build
 
       - name: Deploy preview
