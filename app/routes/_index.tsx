@@ -18,7 +18,7 @@ export default function Index() {
     const { posts } = useLoaderData<typeof loader>();
 
     return (
-        <main>
+        <div className="prose prose-slate dark:prose-invert max-w-none">
             <div>
                 <div>
                     <h1>Mayphus</h1>
@@ -35,26 +35,11 @@ export default function Index() {
                                 {post.description && (
                                     <p>{post.description}</p>
                                 )}
-                                <div>
-                                    <time dateTime={post.date}>
-                                        {new Date(post.date).toLocaleDateString("en-US", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
-                                    </time>
-                                    {post.tags && post.tags.length > 0 && (
-                                        <span>
-                                            •
-                                            {post.tags.map(tag => <span key={tag}>#{tag}</span>)}
-                                        </span>
-                                    )}
-                                </div>
                             </Link>
                         </li>
                     ))}
                 </ul>
             </div>
-        </main>
+        </div>
     );
 }

@@ -1,11 +1,9 @@
 export function Footer() {
-    return (
-        <footer>
-            <div>
-                <p>
-                    Built with <a href="https://remix.run">Remix</a>.
-                </p>
-            </div>
-        </footer>
-    );
+  return (
+    <footer className="border-t">
+      <div className="container max-w-3xl py-6 text-sm text-muted-foreground">
+        <p>Mayphus</p>
+      </div>
+    </footer>
+  );
 }

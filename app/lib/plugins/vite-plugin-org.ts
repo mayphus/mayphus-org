@@ -32,10 +32,12 @@ export default function org(options: Options = {}): Plugin {
 
                 // Ensure we don't double export if orgx already did (but it didn't)
                 // We use JSON.stringify to safely serialize the object
-                code += `\nexport const attributes = ${JSON.stringify(attributes)};`;
+                code += `
+export const attributes = ${JSON.stringify(attributes)};`;
 
                 // Also export filename or other metadata if needed
-                code += `\nexport const filename = ${JSON.stringify(path)};`;
+                code += `
+export const filename = ${JSON.stringify(path)};`;
 
                 return { code, map: compiled.map };
             } catch (e) {

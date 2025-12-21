@@ -31,7 +31,7 @@ export default function BlogPost() {
 
     return (
         <div>
-            <article>
+            <article className="prose prose-slate dark:prose-invert max-w-none">
                 <h1>{postMetadata.title}</h1>
                 <div>
                     <time>{new Date(postMetadata.date).toLocaleDateString("en-US", {

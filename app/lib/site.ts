@@ -166,23 +166,3 @@ export const SITE_FOOTER_LINKS = SITE_CONFIG.footerLinks;
 export const SITE_SOCIAL_PROFILES = SITE_CONFIG.socialProfiles;
 export const SITE_HOME = SITE_CONFIG.home;
 
-interface FormatOptions {
-  html?: boolean;
-}
-
-export function formatWithEmail(
-  template: string | undefined,
-  options?: FormatOptions,
-): string | undefined {
-  if (!template) {
-    return template;
-  }
-
-  const useHtml = options?.html !== false;
-  const email = SITE_CONFIG.contactEmail;
-  const emailValue = useHtml
-    ? `<a href="mailto:${email}">${email}</a>`
-    : email;
-
-  return template.replace('{email}', emailValue);
-}
