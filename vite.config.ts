@@ -21,7 +21,7 @@ export default defineConfig({
                 uniorgSlug
             ],
             rehypePlugins: [
-                [rehypeAutolinkHeadings, { behavior: "prepend", content: { type: "text", value: "# " } }],
+                [rehypeAutolinkHeadings, { behavior: "wrap", properties: { className: ["no-underline", "text-inherit"] } }],
                 [rehypeShiki, { themes: { light: "min-light", dark: "min-dark" } }]
             ],
             jsxImportSource: "react"
