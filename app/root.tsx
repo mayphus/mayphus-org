@@ -9,17 +9,8 @@ import {
 } from "@remix-run/react";
 import React from "react";
 import type { LinksFunction } from "@remix-run/cloudflare";
-import styles from "./styles/global.css?url";
 
-export const links: LinksFunction = () => [
-    { rel: "stylesheet", href: styles },
-    { rel: "preconnect", href: "https://fonts.googleapis.com" },
-    { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-    {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
-    },
-];
+export const links: LinksFunction = () => [];
 
 function Document({ children }: { children: React.ReactNode }) {
     return (
@@ -30,8 +21,8 @@ function Document({ children }: { children: React.ReactNode }) {
                 <Meta />
                 <Links />
             </head>
-            <body className="flex min-h-screen flex-col font-sans antialiased text-foreground bg-background">
-                <div className="flex-1">
+            <body>
+                <div>
                     {children}
                 </div>
                 <ScrollRestoration />
@@ -60,18 +51,18 @@ export function ErrorBoundary() {
                 <Meta />
                 <Links />
             </head>
-            <body className="flex min-h-screen flex-col font-sans antialiased text-foreground bg-background">
-                <div className="flex-1 flex flex-col items-center justify-center p-4">
+            <body>
+                <div>
                     {isRouteErrorResponse(error) ? (
                         <>
-                            <h1 className="text-4xl font-bold mb-2">{error.status}</h1>
-                            <p className="text-muted-foreground">{error.statusText}</p>
+                            <h1>{error.status}</h1>
+                            <p>{error.statusText}</p>
                         </>
                     ) : (
                         <>
-                            <h1 className="text-4xl font-bold mb-2">Error</h1>
-                            <p className="text-muted-foreground">Something went wrong</p>
-                            <pre className="mt-4 p-4 bg-muted rounded text-xs overflow-auto max-w-full">
+                            <h1>Error</h1>
+                            <p>Something went wrong</p>
+                            <pre>
                                 {error instanceof Error ? error.stack : String(error)}
                             </pre>
                         </>

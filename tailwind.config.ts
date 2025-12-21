@@ -1,14 +1,14 @@
 // @ts-nocheck
 import type { Config } from "tailwindcss";
 // @ts-ignore
-import { fontFamily } from "tailwindcss/defaultTheme";
+import colors from "tailwindcss/colors";
 // @ts-ignore
 import animate from "tailwindcss-animate";
 // @ts-ignore
 import typography from "@tailwindcss/typography";
 
 export default {
-    darkMode: ["media"],
+    darkMode: ["class"],
     content: ["./app/**/*.{ts,tsx}"],
     theme: {
         container: {
@@ -20,48 +20,46 @@ export default {
         },
         extend: {
             colors: {
-                border: "hsl(var(--border))",
-                input: "hsl(var(--input))",
-                ring: "hsl(var(--ring))",
-                background: "hsl(var(--background))",
-                foreground: "hsl(var(--foreground))",
+                border: colors.zinc[800],
+                input: colors.zinc[800],
+                ring: colors.zinc[400],
+                background: colors.zinc[950],
+                foreground: colors.zinc[50],
                 primary: {
-                    DEFAULT: "hsl(var(--primary))",
-                    foreground: "hsl(var(--primary-foreground))",
+                    DEFAULT: colors.zinc[50],
+                    foreground: colors.zinc[950],
                 },
                 secondary: {
-                    DEFAULT: "hsl(var(--secondary))",
-                    foreground: "hsl(var(--secondary-foreground))",
+                    DEFAULT: colors.zinc[800],
+                    foreground: colors.zinc[50],
                 },
                 destructive: {
-                    DEFAULT: "hsl(var(--destructive))",
-                    foreground: "hsl(var(--destructive-foreground))",
+                    DEFAULT: colors.red[500],
+                    foreground: colors.zinc[50],
                 },
                 muted: {
-                    DEFAULT: "hsl(var(--muted))",
-                    foreground: "hsl(var(--muted-foreground))",
+                    DEFAULT: colors.zinc[800],
+                    foreground: colors.zinc[400],
                 },
                 accent: {
-                    DEFAULT: "hsl(var(--accent))",
-                    foreground: "hsl(var(--accent-foreground))",
+                    DEFAULT: colors.zinc[800],
+                    foreground: colors.zinc[50],
                 },
                 popover: {
-                    DEFAULT: "hsl(var(--popover))",
-                    foreground: "hsl(var(--popover-foreground))",
+                    DEFAULT: colors.zinc[950],
+                    foreground: colors.zinc[50],
                 },
                 card: {
-                    DEFAULT: "hsl(var(--card))",
-                    foreground: "hsl(var(--card-foreground))",
+                    DEFAULT: colors.zinc[950],
+                    foreground: colors.zinc[50],
                 },
             },
             borderRadius: {
-                lg: "var(--radius)",
-                md: "calc(var(--radius) - 2px)",
-                sm: "calc(var(--radius) - 4px)",
+                lg: "0.5rem",
+                md: "calc(0.5rem - 2px)",
+                sm: "calc(0.5rem - 4px)",
             },
-            fontFamily: {
-                sans: ["var(--font-sans)", ...fontFamily.sans],
-            },
+
             keyframes: {
                 "accordion-down": {
                     from: { height: "0" },

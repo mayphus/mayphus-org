@@ -31,14 +31,14 @@ export default function BlogPost() {
 
     return (
         <div>
-            <div className="container mx-auto py-10 px-4 max-w-3xl">
-                <h1 className="text-4xl font-bold mb-4">{postMetadata.title}</h1>
-                <div className="flex gap-2 text-muted-foreground mb-8">
+            <article>
+                <h1>{postMetadata.title}</h1>
+                <div>
                     <time>{new Date(postMetadata.date).toLocaleDateString()}</time>
                     {postMetadata.tags?.map(tag => <span key={tag}>#{tag}</span>)}
                 </div>
                 <PostContent slug={postMetadata.slug} />
-            </div>
+            </article>
         </div>
     );
 }
@@ -62,9 +62,5 @@ function PostContent({ slug }: { slug: string }) {
         return <div>Loading...</div>;
     }
 
-    return (
-        <article className="prose dark:prose-invert prose-slate lg:prose-lg max-w-none">
-            <Component />
-        </article>
-    );
+    return <Component />;
 }

@@ -18,24 +18,24 @@ export default function Index() {
     const { posts } = useLoaderData<typeof loader>();
 
     return (
-        <main className="container mx-auto py-10 px-4 max-w-3xl">
-            <div className="flex flex-col gap-8">
-                <div className="flex flex-col gap-2">
-                    <h1 className="text-3xl font-bold tracking-tight">Latest Updates</h1>
-                    <p className="text-muted-foreground">My thoughts on tech, life, and everything in between.</p>
+        <main>
+            <div>
+                <div>
+                    <h1>Latest Updates</h1>
+                    <p>My thoughts on tech, life, and everything in between.</p>
                 </div>
 
-                <ul className="grid gap-6">
+                <ul>
                     {posts.map((post) => (
-                        <li key={post.slug} className="group flex flex-col gap-2 border-b pb-6 last:border-0 border-border">
-                            <Link to={`/content/${post.slug}`} className="flex flex-col gap-1">
-                                <h2 className="text-xl font-semibold group-hover:underline decoration-primary/50 underline-offset-4">
+                        <li key={post.slug}>
+                            <Link to={`/content/${post.slug}`}>
+                                <h2>
                                     {post.title}
                                 </h2>
                                 {post.description && (
-                                    <p className="text-muted-foreground">{post.description}</p>
+                                    <p>{post.description}</p>
                                 )}
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                                <div>
                                     <time dateTime={post.date}>
                                         {new Date(post.date).toLocaleDateString("en-US", {
                                             year: "numeric",
@@ -44,7 +44,7 @@ export default function Index() {
                                         })}
                                     </time>
                                     {post.tags && post.tags.length > 0 && (
-                                        <span className="flex gap-1">
+                                        <span>
                                             •
                                             {post.tags.map(tag => <span key={tag}>#{tag}</span>)}
                                         </span>
