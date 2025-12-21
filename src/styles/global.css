@@ -57,6 +57,12 @@
     --selection-background: #1e3a8a;
     --selection-text: #e5e5e5;
   }
+
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark, inherit) !important;
+    background-color: var(--shiki-dark-bg, transparent) !important;
+  }
 }
 
 *,
@@ -206,20 +212,6 @@ pre.shiki .line {
   }
 }
 
-/* TODO keyword styling */
-.todo-keyword.TODO {
-  display: inline-block;
-  background-color: #ef4444;
-  color: white;
-  padding: 0.1em 0.4em;
-  border-radius: 4px;
-  font-size: 0.7em;
-  font-weight: 700;
-  vertical-align: middle;
-  margin-right: 0.5em;
-  letter-spacing: 0.05em;
-}
-
 /* Heading numbering system */
 article {
   counter-reset: h2counter;
@@ -325,10 +317,6 @@ article h4::before {
   .log-item {
     flex-direction: column;
     gap: 0.25rem;
-  }
-
-  .item-date {
-    min-width: unset;
   }
 }
 
