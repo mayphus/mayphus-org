@@ -12,6 +12,24 @@ const modules = import.meta.glob<{
     attributes?: Record<string, any>; // Orgx exports attributes (frontmatter) here
 }>("/content/**/*.org", { eager: true });
 
+function parseDate(dateStr: string | undefined): string {
+    if (!dateStr) return new Date().toISOString();
+
+    const clean = String(dateStr).trim();
+
+    // Handle Org mode timestamps: [2024-01-22 Mon 11:45] or [2024-01-22 Mon]
+    // Relaxed regex: allow flexible spacing and optional day/time
+    const orgTimestamp = clean.match(/^\[(\d{4}-\d{2}-\d{2})(?:\s+[a-zA-Z]{3})?(?:\s+(\d{2}:\d{2}))?\]$/);
+
+    if (orgTimestamp) {
+        const datePart = orgTimestamp[1];
+        const timePart = orgTimestamp[2] || "00:00";
+        return `${datePart}T${timePart}:00`;
+    }
+
+    return clean;
+}
+
 export function getPosts() {
     const posts = Object.entries(modules).map(([path, mod]) => {
         // path is like "/content/blog/hello-world.org"
@@ -35,7 +53,7 @@ export function getPosts() {
         return {
             slug,
             title: attrs.title || "Untitled",
-            date: attrs.date || new Date().toISOString(), // Fallback date
+            date: parseDate(attrs.date),
             tags: Array.isArray(tags) ? tags : [],
             description: attrs.description,
             Component: mod.default,
@@ -65,7 +83,7 @@ export function getPost(slug: string) {
             return {
                 slug,
                 title: attrs.title || "Untitled",
-                date: attrs.date || new Date().toISOString(),
+                date: parseDate(attrs.date),
                 tags: Array.isArray(tags) ? tags : [],
                 description: attrs.description,
                 Component: mod.default,
