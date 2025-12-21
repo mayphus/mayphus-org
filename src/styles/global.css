@@ -213,3 +213,61 @@ pre.shiki .line {
     animation-iteration-count: 1 !important;
   }
 }
+/* TODO keyword styling */
+.todo-keyword.TODO {
+  display: inline-block;
+  background-color: #ef4444;
+  color: white;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.7em;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  letter-spacing: 0.05em;
+}
+
+/* Heading numbering system */
+article {
+  counter-reset: h2counter;
+}
+
+article h2 {
+  counter-reset: h3counter;
+}
+
+article h3 {
+  counter-reset: h4counter;
+}
+
+article h4 {
+  counter-reset: h5counter;
+}
+
+article h5 {
+  counter-reset: h6counter;
+}
+
+article h2::before {
+  counter-increment: h2counter;
+  content: counter(h2counter) " ";
+  color: var(--color-muted);
+  font-weight: 400;
+  margin-right: 0.25em;
+}
+
+article h3::before {
+  counter-increment: h3counter;
+  content: counter(h2counter) "." counter(h3counter) " ";
+  color: var(--color-muted);
+  font-weight: 400;
+  margin-right: 0.25em;
+}
+
+article h4::before {
+  counter-increment: h4counter;
+  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) " ";
+  color: var(--color-muted);
+  font-weight: 400;
+  margin-right: 0.25em;
+}

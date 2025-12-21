@@ -32,31 +32,15 @@ const connectLead = formatWithEmail(homeConfig.connect.lead);
           ))}
         </header>
 
-        {nodes.filter(n => n.data.filetags?.includes('project')).length > 0 && (
-          <section id="projects">
-            <h2>{homeConfig.projects.title}</h2>
-            <ul>
-              {nodes.filter(n => n.data.filetags?.includes('project')).map((node) => (
-                <li>
-                  <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {nodes.filter(n => n.data.filetags?.includes('article')).length > 0 && (
-          <section id="writing">
-            <h2>{homeConfig.writing.title}</h2>
-            <ul>
-              {nodes.filter(n => n.data.filetags?.includes('article')).map((node) => (
-                <li>
-                  <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+        <section id="content">
+          <ul>
+            {nodes.map((node) => (
+              <li>
+                <a href={`/content/${node.data.slug}/`}>{node.data.title}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <section id="connect">
           <h2>{homeConfig.connect.heading}</h2>
