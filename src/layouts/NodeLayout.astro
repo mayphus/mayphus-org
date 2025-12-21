@@ -1,8 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import SiteHeader from '../components/SiteHeader.astro';
-import Footer from '../components/Footer.astro';
 
 type Props = CollectionEntry<'content'>['data'] & {
   children?: any;
@@ -17,7 +15,6 @@ const { title = 'Untitled', date } = Astro.props;
   </head>
 
   <body>
-    <SiteHeader />
     <main id="main">
       <article>
         <h1>{title}</h1>
@@ -29,7 +26,6 @@ const { title = 'Untitled', date } = Astro.props;
         <slot />
       </article>
     </main>
-    <Footer />
   </body>
 </html>
 

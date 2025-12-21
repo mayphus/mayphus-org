@@ -93,9 +93,9 @@ body {
 }
 
 main {
-  width: min(72ch, 100%);
+  width: min(120ch, 94%);
   margin: 0 auto;
-  padding: 3rem 1.5rem 6rem;
+  padding: 4rem 2rem 8rem;
 }
 
 p,
