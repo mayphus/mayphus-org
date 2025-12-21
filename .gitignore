@@ -1,39 +1,42 @@
-# build output
-dist/
-# generated types
-.astro/
+# Dependencies
+node_modules
+.pnpm-store
 
-# dependencies
-node_modules/
+# Production build
+build/
+server-build/
+public/build/
+.cache/
+.remix/
 
-# environment variables
+# Environment variables
 .env
 .env.production
+.dev.vars
 
-# macOS-specific files
-.DS_Store
-
-# local testing
-/content/
-
-# wrangler
+# Cloudflare Wrangler
 .wrangler
 
-# logs
-logs/
+# Logs
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# eslint cache
-.eslintcache
-
-# IDE
+# Editor/IDE
 .vscode/
 .idea/
+.DS_Store
 *.swp
 *.swo
 
-# development vars
-.dev.vars
+# Testing
+coverage/
+
+# Astro (legacy)
+.astro/
+dist/
+
+# Content (local only)
+content/

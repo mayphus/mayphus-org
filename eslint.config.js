@@ -1,18 +1,19 @@
 import js from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
-import astro from 'eslint-plugin-astro';
-import astroParser from 'astro-eslint-parser';
 
 export default [
   js.configs.recommended,
   {
-    files: ['**/*.{js,ts,mjs}'],
+    files: ['**/*.{js,ts,jsx,tsx,mjs}'],
     languageOptions: {
       parser: tsparser,
       parserOptions: {
         ecmaVersion: 'latest',
-        sourceType: 'module'
+        sourceType: 'module',
+        ecmaFeatures: {
+          jsx: true
+        }
       },
       globals: {
         console: 'readonly',
@@ -22,7 +23,9 @@ export default [
         __filename: 'readonly',
         global: 'readonly',
         URL: 'readonly',
-        HTMLElement: 'readonly'
+        navigator: 'readonly',
+        window: 'readonly',
+        document: 'readonly'
       }
     },
     plugins: {
@@ -33,25 +36,7 @@ export default [
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       'prefer-const': 'error',
       'no-console': 'off',
-      'indent': ['error', 2, { SwitchCase: 1 }],
-      'no-tabs': 'error'
-    }
-  },
-  {
-    files: ['**/*.astro'],
-    languageOptions: {
-      parser: astroParser,
-      parserOptions: {
-        parser: '@typescript-eslint/parser',
-        extraFileExtensions: ['.astro']
-      }
-    },
-    plugins: {
-      astro
-    },
-    rules: {
-      'astro/no-conflict-set-directives': 'error',
-      'astro/no-unused-define-vars-in-style': 'error'
+      // 'indent': ['error', 2, { SwitchCase: 1 }], // Prettier usually handles indent
     }
   }
 ];
