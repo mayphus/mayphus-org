@@ -10,8 +10,7 @@ import {
 import React from "react";
 import type { LinksFunction } from "@remix-run/cloudflare";
 import globalStylesUrl from "./styles/global.css?url";
-import { Footer } from "./components/Footer";
-import { SiteHeader } from "./components/SiteHeader";
+import { Sidebar } from "./components/Sidebar";
 
 // Font imports
 import "@fontsource/inter/400.css";
@@ -62,12 +61,13 @@ function Document({ children }: { children: React.ReactNode }) {
         <ThemeScript />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary">
-        <div className="relative flex min-h-screen flex-col bg-background">
-          <SiteHeader />
-          <main className="flex-1">
-            {children}
+        <div className="flex min-h-screen flex-col md:flex-row">
+          <Sidebar />
+          <main className="flex-1 md:pl-80">
+            <div className="w-full">
+              {children}
+            </div>
           </main>
-          <Footer />
         </div>
         <ScrollRestoration />
         <Scripts />
