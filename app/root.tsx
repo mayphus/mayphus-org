@@ -58,6 +58,8 @@ function ThemeScript() {
 function Document({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const isStudio = location.pathname === "/studio";
+  const isLogin = location.pathname === "/login";
+  const isMinimal = isStudio || isLogin;
 
   return (
     <html lang="en" className="scroll-smooth">
@@ -71,14 +73,15 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary">
         <div className="mx-auto max-w-[1600px]">
           <div className="flex min-h-screen flex-col md:flex-row">
-            {!isStudio && <Header />}
-            {isStudio ? <StudioSidebar /> : <Sidebar />}
+            {!isMinimal && <Header />}
+            {isStudio && <StudioSidebar />}
+            {!isMinimal && <Sidebar />}
             <main className="flex-1 min-w-0">
               <div className="w-full h-full">
                 {children}
               </div>
             </main>
-            {!isStudio && <TableOfContents />}
+            {!isMinimal && <TableOfContents />}
           </div>
         </div>
         <ScrollRestoration />
