@@ -14,6 +14,9 @@ importers:
       '@fontsource/ubuntu-mono':
         specifier: ^5.2.8
         version: 5.2.8
+      '@radix-ui/react-slot':
+        specifier: ^1.2.4
+        version: 1.2.4(@types/react@18.3.27)(react@18.3.1)
       '@remix-run/cloudflare':
         specifier: ^2.17.2
         version: 2.17.2(@cloudflare/workers-types@4.20251221.0)(typescript@5.9.3)
@@ -26,6 +29,9 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@3.4.19(yaml@2.8.2))
+      class-variance-authority:
+        specifier: ^0.7.1
+        version: 0.7.1
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -44,6 +50,12 @@ importers:
       rehype-autolink-headings:
         specifier: ^7.1.0
         version: 7.1.0
+      remix-auth:
+        specifier: 3.7.0
+        version: 3.7.0(@remix-run/react@2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@remix-run/server-runtime@2.17.2(typescript@5.9.3))
+      remix-auth-github:
+        specifier: 1.7.0
+        version: 1.7.0(@remix-run/server-runtime@2.17.2(typescript@5.9.3))(remix-auth@3.7.0(@remix-run/react@2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@remix-run/server-runtime@2.17.2(typescript@5.9.3)))
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
@@ -1163,6 +1175,24 @@ packages:
   '@poppinss/exception@1.2.3':
     resolution: {integrity: sha512-dCED+QRChTVatE9ibtoaxc+WkdzOSjYTKi/+uacHWIsfodVfpsueo3+DKpgU5Px8qXjgmXkSvhXvSCz3fnP9lw==}
 
+  '@radix-ui/react-compose-refs@1.1.2':
+    resolution: {integrity: sha512-z4eqJvfiNnFMHIIvXP3CY57y2WJs5g2v3X0zm9mEJkrkNv4rDxu+sg9Jh8EkXyeqBkB7SOcboo9dMVqhyrACIg==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@radix-ui/react-slot@1.2.4':
+    resolution: {integrity: sha512-Jl+bCv8HxKnlTLVrcDE8zTMJ09R9/ukw4qBs/oZClOfoQk/cOTbDn+NceXfV7j09YPVQUryJPHurafcSg6EVKA==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
   '@remix-run/cloudflare@2.17.2':
     resolution: {integrity: sha512-aLJdXZ6Uwos61Ct00KP5IluMylvwl8pMS0Zus+O7MtimG1k+CpcmqAwuiIku6WGNNsL9EZPPDfoJd1HFRGQwxA==}
     engines: {node: '>=18.0.0'}
@@ -1801,6 +1831,9 @@ packages:
   chownr@2.0.0:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
+
+  class-variance-authority@0.7.1:
+    resolution: {integrity: sha512-Ka+9Trutv7G8M6WT6SeiRWz792K5qEqIGEGzXKhAE6xOWAY6pPH8U+9IY3oCMv6kqTmLsv7Xh/2w2RigkePMsg==}
 
   clean-stack@2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
@@ -3554,6 +3587,24 @@ packages:
   remark-rehype@10.1.0:
     resolution: {integrity: sha512-EFmR5zppdBp0WQeDVZ/b66CWJipB2q2VLNFMabzDSGR66Z2fQii83G5gTBbgGEnEEA0QRussvrFHxk1HWGJskw==}
 
+  remix-auth-github@1.7.0:
+    resolution: {integrity: sha512-xuy/DW44y/eWU+vUsf9NlQUtLhayMZEJszgaVr1txwjA0OzpPee5qNxPQ9RBg8WdnY3pMWck5m070MW5Jt7nxg==}
+    peerDependencies:
+      '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
+      remix-auth: ^3.4.0
+
+  remix-auth-oauth2@1.11.2:
+    resolution: {integrity: sha512-5ORP+LMi5CVCA/Wb8Z+FCAJ73Uiy4uyjEzhlVwNBfdAkPOnfxzoi+q/pY/CrueYv3OniCXRM35ZYqkVi3G1UPw==}
+    peerDependencies:
+      '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
+      remix-auth: ^3.6.0
+
+  remix-auth@3.7.0:
+    resolution: {integrity: sha512-2QVjp2nJVaYxuFBecMQwzixCO7CLSssttLBU5eVlNcNlVeNMmY1g7OkmZ1Ogw9sBcoMXZ18J7xXSK0AISVFcfQ==}
+    peerDependencies:
+      '@remix-run/react': ^1.0.0 || ^2.0.0
+      '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
+
   require-like@0.1.2:
     resolution: {integrity: sha512-oyrU88skkMtDdauHDuKVrgR+zuItqr6/c//FXzvmxRGMexSDc6hNvJInGW3LL46n+8b50RykrvwSUIIQH2LQ5A==}
 
@@ -4072,6 +4123,14 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  uuid@8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+
+  uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
 
   uvu@0.5.6:
     resolution: {integrity: sha512-+g8ENReyr8YsOc6fv/NVJs2vFdHBnBNdfE49rshrTzDWOlUx4Gq7KOS2GD8eqhy2j+Ejq29+SbKH8yjkAqXqoA==}
@@ -5141,6 +5200,19 @@ snapshots:
 
   '@poppinss/exception@1.2.3': {}
 
+  '@radix-ui/react-compose-refs@1.1.2(@types/react@18.3.27)(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.27
+
+  '@radix-ui/react-slot@1.2.4(@types/react@18.3.27)(react@18.3.1)':
+    dependencies:
+      '@radix-ui/react-compose-refs': 1.1.2(@types/react@18.3.27)(react@18.3.1)
+      react: 18.3.1
+    optionalDependencies:
+      '@types/react': 18.3.27
+
   '@remix-run/cloudflare@2.17.2(@cloudflare/workers-types@4.20251221.0)(typescript@5.9.3)':
     dependencies:
       '@cloudflare/kv-asset-handler': 0.1.3
@@ -5953,6 +6025,10 @@ snapshots:
   chownr@1.1.4: {}
 
   chownr@2.0.0: {}
+
+  class-variance-authority@0.7.1:
+    dependencies:
+      clsx: 2.1.1
 
   clean-stack@2.2.0: {}
 
@@ -8143,6 +8219,29 @@ snapshots:
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
 
+  remix-auth-github@1.7.0(@remix-run/server-runtime@2.17.2(typescript@5.9.3))(remix-auth@3.7.0(@remix-run/react@2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@remix-run/server-runtime@2.17.2(typescript@5.9.3))):
+    dependencies:
+      '@remix-run/server-runtime': 2.17.2(typescript@5.9.3)
+      remix-auth: 3.7.0(@remix-run/react@2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@remix-run/server-runtime@2.17.2(typescript@5.9.3))
+      remix-auth-oauth2: 1.11.2(@remix-run/server-runtime@2.17.2(typescript@5.9.3))(remix-auth@3.7.0(@remix-run/react@2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@remix-run/server-runtime@2.17.2(typescript@5.9.3)))
+    transitivePeerDependencies:
+      - supports-color
+
+  remix-auth-oauth2@1.11.2(@remix-run/server-runtime@2.17.2(typescript@5.9.3))(remix-auth@3.7.0(@remix-run/react@2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@remix-run/server-runtime@2.17.2(typescript@5.9.3))):
+    dependencies:
+      '@remix-run/server-runtime': 2.17.2(typescript@5.9.3)
+      debug: 4.4.3
+      remix-auth: 3.7.0(@remix-run/react@2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@remix-run/server-runtime@2.17.2(typescript@5.9.3))
+      uuid: 9.0.1
+    transitivePeerDependencies:
+      - supports-color
+
+  remix-auth@3.7.0(@remix-run/react@2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3))(@remix-run/server-runtime@2.17.2(typescript@5.9.3)):
+    dependencies:
+      '@remix-run/react': 2.17.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.9.3)
+      '@remix-run/server-runtime': 2.17.2(typescript@5.9.3)
+      uuid: 8.3.2
+
   require-like@0.1.2: {}
 
   resolve-from@4.0.0: {}
@@ -8795,6 +8894,10 @@ snapshots:
       which-typed-array: 1.1.19
 
   utils-merge@1.0.1: {}
+
+  uuid@8.3.2: {}
+
+  uuid@9.0.1: {}
 
   uvu@0.5.6:
     dependencies:
