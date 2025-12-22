@@ -21,7 +21,7 @@ export default function Index() {
   return (
     <div className="flex flex-col gap-12 pb-12">
       {/* Writing Section */}
-      <section id="writing" className="container px-4 md:px-12 py-16 md:py-24 max-w-4xl mx-auto">
+      <section id="writing" className="px-6 md:px-12 py-16 md:py-24">
         <div className="flex items-center justify-between border-b border-border/40 pb-4 mb-8">
           <h2 className="text-3xl font-bold tracking-tight">Recent Writing</h2>
           <Link to="/archive" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center">

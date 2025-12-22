@@ -11,7 +11,7 @@ export function Sidebar() {
     ];
 
     return (
-        <aside className="w-full md:w-80 md:fixed md:inset-y-0 md:border-r border-border/40 bg-background/50 backdrop-blur-sm p-8 flex flex-col justify-between overflow-y-auto">
+        <aside className="w-full md:w-64 lg:w-80 md:sticky md:top-0 md:h-screen p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-border/40 bg-background/50 backdrop-blur-sm">
             <div className="space-y-12">
                 {/* Brand/Logo */}
                 <div className="flex flex-col gap-4">

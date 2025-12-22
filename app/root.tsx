@@ -61,13 +61,15 @@ function Document({ children }: { children: React.ReactNode }) {
         <ThemeScript />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary">
-        <div className="flex min-h-screen flex-col md:flex-row">
-          <Sidebar />
-          <main className="flex-1 md:pl-80">
-            <div className="w-full">
-              {children}
-            </div>
-          </main>
+        <div className="mx-auto max-w-[1200px]">
+          <div className="flex min-h-screen flex-col md:flex-row">
+            <Sidebar />
+            <main className="flex-1">
+              <div className="w-full h-full">
+                {children}
+              </div>
+            </main>
+          </div>
         </div>
         <ScrollRestoration />
         <Scripts />
