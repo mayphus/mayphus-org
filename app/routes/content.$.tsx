@@ -1,5 +1,5 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { getPost } from "~/models/content.server";
 import React, { useState, useEffect } from "react";
 import { cn } from "~/lib/utils";
@@ -91,7 +91,9 @@ export default function BlogPost() {
             <article className="max-w-3xl mx-auto">
                 <div className="space-y-4">
                     <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                        {postMetadata.title}
+                        <Link to="/" className="hover:opacity-80 transition-opacity">
+                            {postMetadata.title}
+                        </Link>
                     </h1>
                     <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                         <time>{new Date(postMetadata.date).toLocaleDateString("en-US", {
