@@ -9,6 +9,8 @@ export const meta: MetaFunction = () => [
   },
 ];
 
+// --- Types ---
+
 type Vec3 = {
   x: number;
   y: number;
@@ -44,8 +46,10 @@ type Star = {
   twinkle: number;
 };
 
+// --- Constants ---
+
 const ORBIT_ELEMENTS: OrbitElements = {
-  semiMajorAxis: 4.2,
+  semiMajorAxis: 4.2, // AU
   eccentricity: 0.74,
   inclinationDeg: 118,
   ascendingNodeDeg: 82,
@@ -54,17 +58,25 @@ const ORBIT_ELEMENTS: OrbitElements = {
 
 const ORBIT_PERIOD_SECONDS = 96;
 const ORBIT_STEPS = 540;
+const REFERENCE_ORBIT_RADIUS = 1.4;
+const REFERENCE_ORBIT_STEPS = 240;
+const STAR_COUNT = 140;
+const CANVAS_ASPECT_RATIO = 16 / 9;
+const MIN_CANVAS_HEIGHT_PX = 320;
 
-const degToRad = (value: number) => (value * Math.PI) / 180;
+// --- Math Utilities ---
 
-const clamp = (value: number, min: number, max: number) =>
+const degToRad = (degrees: number): number => (degrees * Math.PI) / 180;
+
+const clamp = (value: number, min: number, max: number): number =>
   Math.min(max, Math.max(min, value));
 
-const formatNumber = (value: number, digits = 2) => {
+const formatNumber = (value: number, digits = 2): string => {
   const fixed = value.toFixed(digits);
   return fixed.replace(/\.?0+$/, "");
 };
 
+// Rotation functions using standard matrix transformations for 3D points
 const rotateX = (point: Vec3, angle: number): Vec3 => {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
@@ -96,30 +108,37 @@ const rotateZ = (point: Vec3, angle: number): Vec3 => {
 };
 
 const applyRotation = (point: Vec3, rotation: Rotation): Vec3 => {
+  // Order of rotation matters: X -> Y -> Z is used here
   let rotated = rotateX(point, rotation.x);
   rotated = rotateY(rotated, rotation.y);
   rotated = rotateZ(rotated, rotation.z);
   return rotated;
 };
 
+// Calculate a point on an orbit given orbital elements and true anomaly
 const orbitPointFromAnomaly = (
   elements: OrbitElements,
   anomaly: number,
 ): Vec3 => {
   const { semiMajorAxis, eccentricity } = elements;
+  // Polar equation for an ellipse from the focus
   const radius =
     (semiMajorAxis * (1 - eccentricity * eccentricity)) /
     (1 + eccentricity * Math.cos(anomaly));
+
+  // Point in the orbital plane (z=0)
   const basePoint = {
     x: radius * Math.cos(anomaly),
     y: radius * Math.sin(anomaly),
     z: 0,
   };
 
+  // Rotate to the actual orbital plane
   const argPeriapsis = degToRad(elements.argPeriapsisDeg);
   const inclination = degToRad(elements.inclinationDeg);
   const ascendingNode = degToRad(elements.ascendingNodeDeg);
 
+  // Apply orbital rotations in specific order
   let oriented = rotateZ(basePoint, argPeriapsis);
   oriented = rotateX(oriented, inclination);
   oriented = rotateZ(oriented, ascendingNode);
@@ -169,11 +188,13 @@ const createStars = (
   return stars;
 };
 
+// Perspective projection
 const projectPoint = (
   point: Vec3,
   viewScale: number,
   depth: number,
 ): ProjectedPoint => {
+  // Simple perspective divide
   const scale = depth / (depth - point.z);
   return {
     x: point.x * scale * viewScale,
@@ -193,10 +214,14 @@ const projectPoints = (
     projectPoint(applyRotation(point, rotation), viewScale, depth),
   );
 
+// --- Components ---
+
 function OrbitCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rotationRef = useRef<Rotation>({ x: -0.6, y: 0.8, z: 0 });
+
+  // Track drag state
   const dragRef = useRef({ active: false, lastX: 0, lastY: 0 });
 
   useEffect(() => {
@@ -211,8 +236,11 @@ function OrbitCanvas() {
       return;
     }
 
+    // Pre-calculate points
     const orbitPoints = createOrbitPoints(ORBIT_ELEMENTS, ORBIT_STEPS);
-    const referencePoints = createCirclePoints(1.4, 240);
+    const referencePoints = createCirclePoints(REFERENCE_ORBIT_RADIUS, REFERENCE_ORBIT_STEPS);
+
+    // View parameters
     const depth = 20;
     let stars: Star[] = [];
     let viewScale = 1;
@@ -220,15 +248,18 @@ function OrbitCanvas() {
     let height = 0;
 
     const updateSize = () => {
+      if (!container) return;
       const rect = container.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
       const dpr = window.devicePixelRatio || 1;
+
       canvas.width = Math.max(1, Math.floor(width * dpr));
       canvas.height = Math.max(1, Math.floor(height * dpr));
+
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       viewScale = Math.min(width, height) * 0.3;
-      stars = createStars(140, width, height);
+      stars = createStars(STAR_COUNT, width, height);
     };
 
     updateSize();
@@ -236,13 +267,17 @@ function OrbitCanvas() {
     const observer = new ResizeObserver(() => updateSize());
     observer.observe(container);
 
+    // Event Handlers
     const handlePointerDown = (event: PointerEvent) => {
       dragRef.current = {
         active: true,
         lastX: event.clientX,
         lastY: event.clientY,
       };
-      canvas.setPointerCapture(event.pointerId);
+      // Important for tracking drag outside canvas
+      if (canvas.setPointerCapture) {
+        canvas.setPointerCapture(event.pointerId);
+      }
     };
 
     const handlePointerMove = (event: PointerEvent) => {
@@ -251,8 +286,10 @@ function OrbitCanvas() {
       }
       const deltaX = event.clientX - dragRef.current.lastX;
       const deltaY = event.clientY - dragRef.current.lastY;
+
       dragRef.current.lastX = event.clientX;
       dragRef.current.lastY = event.clientY;
+
       rotationRef.current = {
         x: clamp(rotationRef.current.x + deltaY * 0.004, -1.4, 1.4),
         y: rotationRef.current.y + deltaX * 0.004,
@@ -262,7 +299,7 @@ function OrbitCanvas() {
 
     const handlePointerUp = (event: PointerEvent) => {
       dragRef.current = { ...dragRef.current, active: false };
-      if (canvas.hasPointerCapture(event.pointerId)) {
+      if (canvas.hasPointerCapture && canvas.hasPointerCapture(event.pointerId)) {
         canvas.releasePointerCapture(event.pointerId);
       }
     };
@@ -274,6 +311,7 @@ function OrbitCanvas() {
 
     const startTime = performance.now();
 
+    // Drawing Helper
     const drawPath = (
       points: ProjectedPoint[],
       strokeStyle: string,
@@ -284,8 +322,10 @@ function OrbitCanvas() {
       context.lineWidth = lineWidth;
       context.lineJoin = "round";
       context.lineCap = "round";
+
       let started = false;
       context.beginPath();
+
       for (const point of points) {
         if (predicate && !predicate(point)) {
           if (started) {
@@ -295,8 +335,10 @@ function OrbitCanvas() {
           }
           continue;
         }
+
         const x = width / 2 + point.x;
         const y = height / 2 + point.y;
+
         if (!started) {
           context.moveTo(x, y);
           started = true;
@@ -315,6 +357,7 @@ function OrbitCanvas() {
       const now = performance.now();
       const elapsed = (now - startTime) / 1000;
 
+      // Auto-rotate if not dragging
       if (!dragRef.current.active) {
         rotationRef.current = {
           x: rotationRef.current.x,
@@ -325,11 +368,13 @@ function OrbitCanvas() {
 
       const rotation = rotationRef.current;
       const orbitPhase = (elapsed / ORBIT_PERIOD_SECONDS) % 1;
+
       const currentPoint = orbitPointFromAnomaly(
         ORBIT_ELEMENTS,
         orbitPhase * Math.PI * 2,
       );
 
+      // Project all points
       const orbitProjected = projectPoints(
         orbitPoints,
         rotation,
@@ -348,6 +393,7 @@ function OrbitCanvas() {
         depth,
       );
 
+      // Clear & Background
       const gradient = context.createRadialGradient(
         width * 0.5,
         height * 0.5,
@@ -358,9 +404,11 @@ function OrbitCanvas() {
       );
       gradient.addColorStop(0, "rgba(24, 36, 64, 0.9)");
       gradient.addColorStop(1, "rgba(2, 6, 23, 1)");
+
       context.fillStyle = gradient;
       context.fillRect(0, 0, width, height);
 
+      // Draw Stars
       for (const star of stars) {
         const twinkle = 0.6 + 0.4 * Math.sin(elapsed * star.twinkle);
         context.fillStyle = `rgba(255, 255, 255, ${star.alpha * twinkle})`;
@@ -369,15 +417,22 @@ function OrbitCanvas() {
         context.fill();
       }
 
+      // Draw Paths
+      // Reference orbit (faint)
       drawPath(referenceProjected, "rgba(148, 163, 184, 0.2)", 1);
+
+      // Main orbit (back)
       drawPath(orbitProjected, "rgba(34, 211, 238, 0.2)", 1.2);
+
+      // Main orbit (front/bright)
       drawPath(
         orbitProjected,
         "rgba(125, 211, 252, 0.75)",
         1.6,
-        (point) => point.z > 0,
+        (point) => point.z > 0, // Only draw parts closer to camera
       );
 
+      // Draw Sun
       context.beginPath();
       context.fillStyle = "rgba(255, 190, 92, 0.95)";
       context.shadowColor = "rgba(255, 190, 92, 0.7)";
@@ -386,6 +441,7 @@ function OrbitCanvas() {
       context.fill();
       context.shadowBlur = 0;
 
+      // Draw Object
       context.beginPath();
       context.fillStyle = "rgba(56, 189, 248, 0.95)";
       context.shadowColor = "rgba(56, 189, 248, 0.8)";
@@ -419,7 +475,10 @@ function OrbitCanvas() {
     <div
       ref={containerRef}
       className="relative overflow-hidden rounded-2xl border border-border bg-slate-950"
-      style={{ aspectRatio: "16 / 9", minHeight: "320px" }}
+      style={{
+        aspectRatio: `${CANVAS_ASPECT_RATIO}`,
+        minHeight: `${MIN_CANVAS_HEIGHT_PX}px`
+      }}
     >
       <canvas
         ref={canvasRef}
@@ -435,9 +494,10 @@ function OrbitCanvas() {
 }
 
 export default function Playground() {
-  const [timestamp, setTimestamp] = useState("");
+  const [timestamp, setTimestamp] = useState<string>("");
 
   useEffect(() => {
+    // Client-side only
     setTimestamp(new Date().toUTCString());
   }, []);
 

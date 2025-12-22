@@ -14,7 +14,7 @@ export function parseDate(dateStr: string | undefined): string {
 
     // Handle Org mode timestamps: [2024-01-22 Mon 11:45] or [2024-01-22 Mon]
     // Relaxed regex: allow flexible spacing and optional day/time
-    const orgTimestamp = clean.match(/^\[(\d{4}-\d{2}-\d{2})(?:\s+[a-zA-Z]{3})?(?:\s+(\d{2}:\d{2}))?\]$/);
+    const orgTimestamp = clean.match(/^\[(\d{4}-\d{2}-\d{2})(?:\s+[a-zA-Z]{3})?(?:\s+(\d{2}:\d{2}))?\s*\]$/);
 
     if (orgTimestamp) {
         const datePart = orgTimestamp[1];

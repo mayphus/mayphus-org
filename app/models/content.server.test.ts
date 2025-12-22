@@ -1,71 +1,34 @@
-import { describe, it, expect } from 'vitest';
-import { parseDate, normalizePost } from './content.utils';
+import { describe, it, expect, vi } from 'vitest';
+import * as contentServer from './content.server';
+
+// Mock content.utils to isolate server logic
+vi.mock('./content.utils', () => ({
+  normalizePost: vi.fn((path, mod) => {
+    // Return a simplified post object based on input
+    return {
+      slug: path.replace('/content/', '').replace('.org', ''),
+      title: mod.attributes?.title || 'Untitled',
+      date: mod.attributes?.date || '2024-01-01T00:00:00',
+      tags: [],
+      Component: mod.default,
+    };
+  }),
+}));
 
 describe('content.server', () => {
-  describe('parseDate', () => {
-    it('returns current ISO string if dateStr is undefined', () => {
-      // Mocking Date to ensure consistent result is hard without setup, 
-      // but we can check if it returns a valid date string.
-      // For strictness, let's just check it returns a string that looks like a date.
-      const result = parseDate(undefined);
-      expect(typeof result).toBe('string');
-      expect(new Date(result).toString()).not.toBe('Invalid Date');
-    });
+  // Since we can't easily mock import.meta.glob in this environment without complex setup,
+  // we will test the sorting and retrieval logic assuming the module imports work.
+  // Ideally, valid integration tests would run in a real Vite environment.
+  // However, we can inspect the exported functions.
 
-    it('parses Org mode timestamps with time', () => {
-      const input = '[2024-01-22 Mon 11:45]';
-      const expected = '2024-01-22T11:45:00';
-      expect(parseDate(input)).toBe(expected);
-    });
-
-    it('parses Org mode timestamps without time', () => {
-      const input = '[2024-01-22 Mon]';
-      const expected = '2024-01-22T00:00:00';
-      expect(parseDate(input)).toBe(expected);
-    });
-
-    it('returns the input cleaned if it does not match org pattern', () => {
-      const input = '2024-01-01';
-      expect(parseDate(input)).toBe(input);
-    });
+  it('exports getPosts and getPost functions', () => {
+    expect(typeof contentServer.getPosts).toBe('function');
+    expect(typeof contentServer.getPost).toBe('function');
   });
 
-  describe('normalizePost', () => {
-    const mockComponent = () => null;
-
-    it('extracts slug from path', () => {
-      const path = '/content/blog/post-1.org';
-      const mod = { default: mockComponent, attributes: { title: 'Test' } };
-      const post = normalizePost(path, mod);
-      expect(post.slug).toBe('blog/post-1');
-    });
-
-    it('handles missing attributes gracefully', () => {
-      const path = '/content/test.org';
-      const mod = { default: mockComponent };
-      const post = normalizePost(path, mod);
-      expect(post.title).toBe('Untitled');
-      expect(post.tags).toEqual([]);
-    });
-
-    it('parses tags string into array', () => {
-      const path = '/content/test.org';
-      const mod = { 
-        default: mockComponent, 
-        attributes: { filetags: ':tag1:tag2:' } 
-      };
-      const post = normalizePost(path, mod);
-      expect(post.tags).toEqual(['tag1', 'tag2']);
-    });
-    
-     it('parses tags string with spaces into array', () => {
-      const path = '/content/test.org';
-      const mod = { 
-        default: mockComponent, 
-        attributes: { filetags: 'tag1 tag2' } 
-      };
-      const post = normalizePost(path, mod);
-      expect(post.tags).toEqual(['tag1', 'tag2']);
-    });
-  });
+  // Note: Detailed unit testing of getPosts/getPost requires mocking import.meta.glob
+  // which is a Vite-specific feature. In a typical unit test setup, this is often mocked
+  // globally or via a specific test setup file.
+  // For now, we rely on the utility tests ensuring the data transformation is correct.
 });
+
