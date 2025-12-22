@@ -36,7 +36,6 @@ export function Header() {
       </div>
 
       <div className="space-y-2">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">About</h3>
         <p className="text-sm text-foreground/80 leading-relaxed">
           Welcome to my digital garden. I write about full-stack engineering,
           AI agents, and the process of creating meaningful software.
