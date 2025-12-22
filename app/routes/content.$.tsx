@@ -103,7 +103,7 @@ export default function BlogPost() {
                         })}</time>
                         {postMetadata.tags?.map(tag => (
                             <span key={tag} className="rounded-md bg-secondary px-2 py-1 text-xs text-secondary-foreground">
-                                #{tag}
+                                {tag}
                             </span>
                         ))}
                     </div>

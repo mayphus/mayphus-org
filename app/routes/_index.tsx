@@ -1,6 +1,6 @@
 import { json, type MetaFunction } from "@remix-run/cloudflare";
 import { Link, useLoaderData } from "@remix-run/react";
-import { ArrowRight, CalendarDays, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { getPosts } from "~/models/content.server";
 
 export const meta: MetaFunction = () => {
@@ -95,18 +95,19 @@ export default function Index() {
             <Link
               key={post.slug}
               to={`/content/${post.slug}`}
-              className="group relative flex flex-col justify-between rounded-xl border border-border/50 bg-card p-6 shadow-sm transition-all hover:shadow-md hover:border-primary/20 hover:bg-accent/5 overflow-hidden"
+              className="group relative flex flex-col justify-between rounded-xl border border-border/50 bg-card p-6 transition-all hover:bg-muted/50 hover:border-border overflow-hidden"
             >
               <div className="space-y-3">
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                  <span className="flex items-center">
-                    <CalendarDays className="mr-1 h-3 w-3" />
-                    {new Date(post.date).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric"
-                    })}
-                  </span>
+                <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                  {post.tags && post.tags.length > 0 ? (
+                    post.tags.map((tag: string) => (
+                      <span key={tag} className="inline-flex items-center rounded-full bg-secondary/50 px-2.5 py-0.5 font-medium">
+                        {tag}
+                      </span>
+                    ))
+                  ) : (
+                    <div className="h-4" />
+                  )}
                 </div>
                 <h3 className="text-xl font-bold tracking-tight group-hover:text-primary transition-colors">
                   {post.title}
@@ -117,12 +118,6 @@ export default function Index() {
                   </p>
                 )}
               </div>
-
-              <div className="mt-6 flex items-center text-sm font-medium text-primary opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0">
-                Read Article <ArrowRight className="ml-1 h-4 w-4" />
-              </div>
-
-              <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 scale-x-0 opacity-0 transition-all duration-300 group-hover:scale-x-100 group-hover:opacity-100" />
             </Link>
           ))}
         </div>
