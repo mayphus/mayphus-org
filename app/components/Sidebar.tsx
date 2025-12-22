@@ -12,7 +12,7 @@ export function Sidebar() {
     ];
 
     return (
-        <aside className="w-full md:w-64 lg:w-80 md:sticky md:top-0 md:h-screen px-8 py-8 md:py-16 flex flex-col justify-between border-b md:border-b-0 md:border-r border-border/40 bg-background/50 backdrop-blur-sm">
+        <aside className="hidden md:flex w-full md:w-64 lg:w-80 md:sticky md:top-0 md:h-screen px-8 py-8 md:py-16 flex-col justify-between border-b md:border-b-0 md:border-r border-border/40 bg-background/50 backdrop-blur-sm">
             <div className="space-y-12">
                 {/* Brand/Logo */}
                 <div className="flex flex-col gap-4">

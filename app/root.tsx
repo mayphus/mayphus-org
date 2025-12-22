@@ -11,6 +11,7 @@ import React from "react";
 import type { LinksFunction } from "@remix-run/cloudflare";
 import globalStylesUrl from "./styles/global.css?url";
 import { Sidebar } from "./components/Sidebar";
+import { Header } from "./components/Header";
 import { TableOfContents } from "./components/TableOfContents";
 
 // Font imports
@@ -64,6 +65,7 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary">
         <div className="mx-auto max-w-[1600px]">
           <div className="flex min-h-screen flex-col md:flex-row">
+            <Header />
             <Sidebar />
             <main className="flex-1 min-w-0">
               <div className="w-full h-full">
