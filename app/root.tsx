@@ -11,7 +11,7 @@ import React from "react";
 import type { LinksFunction } from "@remix-run/cloudflare";
 import globalStylesUrl from "./styles/global.css?url";
 import { Sidebar } from "./components/Sidebar";
-import { StudioSidebar } from "./components/StudioSidebar";
+import { Chat } from "./components/Chat";
 import { Header } from "./components/Header";
 import { TableOfContents } from "./components/TableOfContents";
 import { useLocation } from "@remix-run/react";
@@ -74,7 +74,7 @@ function Document({ children }: { children: React.ReactNode }) {
         <div className="mx-auto max-w-[1600px]">
           <div className="flex min-h-screen flex-col md:flex-row">
             {!isMinimal && <Header />}
-            {isStudio && <StudioSidebar />}
+            {isStudio && <Chat />}
             {!isMinimal && <Sidebar />}
             <main className="flex-1 min-w-0">
               <div className="w-full h-full">
