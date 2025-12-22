@@ -52,7 +52,7 @@ export function Chat() {
             {/* Message Area */}
             <div
                 ref={scrollRef}
-                className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-hide"
+                className="flex-1 overflow-y-auto p-8 space-y-6 scrollbar-hide"
             >
                 {messages.map((m, i) => (
                     <div
