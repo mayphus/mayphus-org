@@ -7,7 +7,7 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
     const env = (context as any).env;
     const authenticator = getAuthenticator(env);
     return await authenticator.isAuthenticated(request, {
-        successRedirect: "/admin",
+        successRedirect: "/studio",
     });
 }
 

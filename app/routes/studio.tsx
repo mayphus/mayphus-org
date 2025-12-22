@@ -18,7 +18,7 @@ export default function Admin() {
     return (
         <div className="container mx-auto p-8">
             <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+                <h1 className="text-3xl font-bold">Studio</h1>
                 <Form method="post" action="/logout">
                     <Button type="submit" variant="destructive">
                         Logout

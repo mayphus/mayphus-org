@@ -11,8 +11,10 @@ import React from "react";
 import type { LinksFunction } from "@remix-run/cloudflare";
 import globalStylesUrl from "./styles/global.css?url";
 import { Sidebar } from "./components/Sidebar";
+import { StudioSidebar } from "./components/StudioSidebar";
 import { Header } from "./components/Header";
 import { TableOfContents } from "./components/TableOfContents";
+import { useLocation } from "@remix-run/react";
 
 // Font imports
 import "@fontsource/inter/400.css";
@@ -54,6 +56,9 @@ function ThemeScript() {
 }
 
 function Document({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const isStudio = location.pathname === "/studio";
+
   return (
     <html lang="en" className="scroll-smooth">
       <head>
@@ -66,14 +71,14 @@ function Document({ children }: { children: React.ReactNode }) {
       <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary">
         <div className="mx-auto max-w-[1600px]">
           <div className="flex min-h-screen flex-col md:flex-row">
-            <Header />
-            <Sidebar />
+            {!isStudio && <Header />}
+            {isStudio ? <StudioSidebar /> : <Sidebar />}
             <main className="flex-1 min-w-0">
               <div className="w-full h-full">
                 {children}
               </div>
             </main>
-            <TableOfContents />
+            {!isStudio && <TableOfContents />}
           </div>
         </div>
         <ScrollRestoration />
