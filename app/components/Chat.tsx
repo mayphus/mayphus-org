@@ -62,11 +62,7 @@ export function Chat() {
                             m.role === "user" ? "ml-auto items-end" : "mr-auto items-start"
                         )}
                     >
-                        <div className="flex items-center gap-2 px-1">
-                            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                                {m.role === "assistant" ? "Gemini" : "You"}
-                            </span>
-                        </div>
+
                         <div
                             className={cn(
                                 "px-4 py-2.5 text-sm transition-all",
@@ -82,11 +78,7 @@ export function Chat() {
 
                 {isLoading && (
                     <div className="flex flex-col gap-2 mr-auto items-start">
-                        <div className="flex items-center gap-2 px-1">
-                            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                                Processing...
-                            </span>
-                        </div>
+
                         <div className="bg-muted text-foreground rounded-2xl rounded-tl-none px-4 py-2.5 text-sm animate-pulse">
                             ...
                         </div>
