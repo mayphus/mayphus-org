@@ -4,9 +4,9 @@ import { getAuthenticator } from "~/services/auth.server";
 export async function action({ request, context }: ActionFunctionArgs) {
     const env = (context as any).env;
     const authenticator = getAuthenticator(env);
-    await authenticator.logout(request, { redirectTo: "/login" });
+    await authenticator.logout(request, { redirectTo: "/" });
 }
 
 export async function loader() {
-    return redirect("/login");
+    return redirect("/");
 }
