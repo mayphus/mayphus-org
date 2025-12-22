@@ -7,23 +7,21 @@ const modules = import.meta.glob<{
 
 export { type Post };
 
-export function getPosts() {
-    const posts = Object.entries(modules).map(([path, mod]) => normalizePost(path, mod));
+export function transformModulesToPosts(inputModules: Record<string, any>) {
+    const posts = Object.entries(inputModules).map(([path, mod]) => normalizePost(path, mod));
 
     return posts.sort((a, b) => {
-        const dateA = new Date(a.date || 0);
-        const dateB = new Date(b.date || 0);
-        return dateB.getTime() - dateA.getTime();
+        const timeA = new Date(a.date).getTime() || 0;
+        const timeB = new Date(b.date).getTime() || 0;
+        return timeB - timeA;
     });
 }
 
+export function getPosts() {
+    return transformModulesToPosts(modules);
+}
+
 export function getPost(slug: string) {
-    // Try exact match first
-    for (const [path, mod] of Object.entries(modules)) {
-        const post = normalizePost(path, mod);
-        if (post.slug === slug) {
-            return post;
-        }
-    }
-    return null;
+    const posts = transformModulesToPosts(modules);
+    return posts.find(p => p.slug === slug) || null;
 }

@@ -16,19 +16,84 @@ vi.mock('./content.utils', () => ({
 }));
 
 describe('content.server', () => {
-  // Since we can't easily mock import.meta.glob in this environment without complex setup,
-  // we will test the sorting and retrieval logic assuming the module imports work.
-  // Ideally, valid integration tests would run in a real Vite environment.
-  // However, we can inspect the exported functions.
-
-  it('exports getPosts and getPost functions', () => {
+  it('exports expected functions', () => {
     expect(typeof contentServer.getPosts).toBe('function');
     expect(typeof contentServer.getPost).toBe('function');
+    expect(typeof contentServer.transformModulesToPosts).toBe('function');
   });
 
-  // Note: Detailed unit testing of getPosts/getPost requires mocking import.meta.glob
-  // which is a Vite-specific feature. In a typical unit test setup, this is often mocked
-  // globally or via a specific test setup file.
-  // For now, we rely on the utility tests ensuring the data transformation is correct.
+  describe('transformModulesToPosts', () => {
+    it('transforms and sorts modules by date descending', () => {
+      const mockModules = {
+        '/content/old.org': {
+          attributes: { title: 'Old Post', date: '2023-01-01' },
+          default: () => null,
+        },
+        '/content/new.org': {
+          attributes: { title: 'New Post', date: '2024-01-01' },
+          default: () => null,
+        },
+        '/content/middle.org': {
+          attributes: { title: 'Middle Post', date: '2023-06-01' },
+          default: () => null,
+        },
+      };
+
+      const posts = contentServer.transformModulesToPosts(mockModules);
+
+      expect(posts).toHaveLength(3);
+      expect(posts[0].title).toBe('New Post');
+      expect(posts[1].title).toBe('Middle Post');
+      expect(posts[2].title).toBe('Old Post');
+    });
+
+    it('handles missing dates by putting them at the end', () => {
+      const mockModules = {
+        '/content/no-date.org': {
+          attributes: { title: 'No Date' },
+          default: () => null,
+        },
+        '/content/with-date.org': {
+          attributes: { title: 'With Date', date: '2024-01-01' },
+          default: () => null,
+        },
+      };
+
+      const posts = contentServer.transformModulesToPosts(mockModules);
+      expect(posts[0].title).toBe('With Date');
+      expect(posts[1].title).toBe('No Date');
+    });
+  });
+
+  describe('getPost', () => {
+    it('returns a post if it exists', () => {
+      // We know at least one post exists in the project
+      const posts = contentServer.getPosts();
+      if (posts.length > 0) {
+        const slug = posts[0].slug;
+        const post = contentServer.getPost(slug);
+        expect(post).not.toBeNull();
+        expect(post?.slug).toBe(slug);
+      }
+    });
+
+    it('returns null if no post matches slug', () => {
+      const post = contentServer.getPost('non-existent-slug-12345');
+      expect(post).toBeNull();
+    });
+  });
+
+  describe('getPosts', () => {
+    it('returns an array of posts', () => {
+      const posts = contentServer.getPosts();
+      expect(Array.isArray(posts)).toBe(true);
+      // Ensure they are sorted by date
+      for (let i = 1; i < posts.length; i++) {
+        const timeA = new Date(posts[i - 1].date).getTime() || 0;
+        const timeB = new Date(posts[i].date).getTime() || 0;
+        expect(timeA).toBeGreaterThanOrEqual(timeB);
+      }
+    });
+  });
 });
 
