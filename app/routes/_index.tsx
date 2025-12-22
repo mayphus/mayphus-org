@@ -22,7 +22,7 @@ export default function Index() {
     <div className="flex flex-col gap-12 pb-12">
       {/* Hero Section */}
       <section className="relative overflow-hidden py-16 md:py-24">
-        <div className="container px-4 md:px-8 relative z-10 max-w-5xl">
+        <div className="container px-4 md:px-8 relative z-10 max-w-4xl">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
             <div className="space-y-6">
               <div className="inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm font-medium text-primary">
@@ -82,7 +82,7 @@ export default function Index() {
       </section>
 
       {/* Writing Section */}
-      <section id="writing" className="container px-4 md:px-8 max-w-5xl">
+      <section id="writing" className="container px-4 md:px-8 max-w-4xl">
         <div className="flex items-center justify-between border-b border-border/40 pb-4 mb-8">
           <h2 className="text-3xl font-bold tracking-tight">Recent Writing</h2>
           <Link to="/archive" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center">

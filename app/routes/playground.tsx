@@ -502,7 +502,7 @@ export default function Playground() {
   }, []);
 
   return (
-    <div className="container max-w-5xl px-4 md:px-6 py-6 lg:py-10 space-y-8">
+    <div className="container max-w-4xl px-4 md:px-8 py-6 lg:py-10 space-y-8">
       <header className="space-y-3">
         <p className="text-sm font-semibold uppercase tracking-[0.28em] text-muted-foreground">
           Playground
