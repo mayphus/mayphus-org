@@ -22,6 +22,7 @@ import "@fontsource/ubuntu-mono/400.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: globalStylesUrl },
+  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
 ];
 
 const themeScript = `
