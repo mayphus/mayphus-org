@@ -2,6 +2,7 @@ import { json, type LoaderFunctionArgs, type MetaFunction } from "@remix-run/clo
 import { useLoaderData } from "@remix-run/react";
 import { getPost } from "~/models/content.server";
 import React, { useState, useEffect } from "react";
+import { cn } from "~/lib/utils";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
     if (!data || !data.postMetadata) {
@@ -24,7 +25,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
 }
 
 // Global glob import for client-side matching
-const posts = import.meta.glob<{ default: React.ComponentType }>("/content/**/*.org");
+const posts = import.meta.glob<{ default: React.ComponentType }>(
+    "/content/**/*.org"
+);
 
 const components = {
     h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -54,12 +57,29 @@ const components = {
     ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
         <ol className="my-6 ml-6 list-decimal [&>li]:mt-2" {...props} />
     ),
-    code: (props: React.HTMLAttributes<HTMLElement>) => (
-        <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold" {...props} />
-    ),
+    code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+        // If it's a code block (inside <pre>), it likely has a language class
+        const isBlock = className?.includes("language-");
+        return (
+            <code
+                className={cn(
+                    "relative font-mono text-sm",
+                    isBlock ? "text-zinc-50" : "rounded bg-muted px-[0.3rem] py-[0.2rem] font-semibold",
+                    className
+                )}
+                {...props}
+            />
+        );
+    },
     // Pre is often used for code blocks, ensuring it scrolls and has background
-    pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
-        <pre className="mb-4 mt-6 overflow-x-auto rounded-lg border bg-muted py-4" {...props} />
+    pre: ({ className, ...props }: React.HTMLAttributes<HTMLPreElement>) => (
+        <pre
+            className={cn(
+                "mb-4 mt-6 overflow-x-auto rounded-lg border bg-zinc-950 py-4",
+                className
+            )}
+            {...props}
+        />
     ),
 };
 

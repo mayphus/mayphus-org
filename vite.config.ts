@@ -4,7 +4,6 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import org from "./app/lib/plugins/vite-plugin-org";
 import uniorgSlug from "uniorg-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeShiki from "@shikijs/rehype";
 import { customHeadline } from "./app/lib/plugins/headline";
 import { extractKeywords } from "uniorg-extract-keywords";
 import { initFrontmatter, keywordsToFrontmatter } from "./app/lib/plugins/frontmatter";
@@ -22,7 +21,6 @@ export default defineConfig({
             ],
             rehypePlugins: [
                 [rehypeAutolinkHeadings, { behavior: "wrap", properties: { className: ["no-underline", "text-inherit"] } }],
-                [rehypeShiki, { themes: { light: "min-light", dark: "min-dark" } }]
             ],
             jsxImportSource: "react"
         }),
