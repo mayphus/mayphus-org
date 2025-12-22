@@ -29,16 +29,32 @@ const posts = import.meta.glob<{ default: React.ComponentType }>(
     "/content/**/*.org"
 );
 
+const generateId = (children: React.ReactNode): string => {
+    if (!children) return "";
+    const text = React.Children.toArray(children)
+        .map((child) => {
+            if (typeof child === "string" || typeof child === "number") return child;
+            return "";
+        })
+        .join("");
+    return text
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w-]/g, "");
+};
+
 const components = {
     h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl" {...props} />
     ),
-    h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-        <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0" {...props} />
-    ),
-    h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-        <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight" {...props} />
-    ),
+    h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+        const id = generateId(props.children);
+        return <h2 id={id} className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0" {...props} />;
+    },
+    h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
+        const id = generateId(props.children);
+        return <h3 id={id} className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight" {...props} />;
+    },
     h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
         <h4 className="mt-8 scroll-m-20 text-xl font-semibold tracking-tight" {...props} />
     ),
