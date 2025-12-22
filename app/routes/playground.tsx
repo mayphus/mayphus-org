@@ -1,11 +1,13 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import { useEffect, useRef, useState } from "react";
+import { cn } from "~/lib/utils";
+import { Button } from "~/components/ui/button";
 
 export const meta: MetaFunction = () => [
-  { title: "Playground - 3I/ATLAS Orbit" },
+  { title: "Playground - Interstellar Comet 3I/ATLAS" },
   {
     name: "description",
-    content: "Interactive 3D sketch of the current 3I/ATLAS orbit.",
+    content: "Interactive 3D sketch of the interstellar comet 3I/ATLAS orbit.",
   },
 ];
 
@@ -24,8 +26,8 @@ type Rotation = {
 };
 
 type OrbitElements = {
-  semiMajorAxis: number;
-  eccentricity: number;
+  perihelion: number; // q (AU)
+  eccentricity: number; // e
   inclinationDeg: number;
   ascendingNodeDeg: number;
   argPeriapsisDeg: number;
@@ -49,20 +51,18 @@ type Star = {
 // --- Constants ---
 
 const ORBIT_ELEMENTS: OrbitElements = {
-  semiMajorAxis: 4.2, // AU
-  eccentricity: 0.74,
-  inclinationDeg: 118,
-  ascendingNodeDeg: 82,
-  argPeriapsisDeg: 56,
+  perihelion: 1.356, // AU
+  eccentricity: 6.139, // Hyperbolic
+  inclinationDeg: 175.11,
+  ascendingNodeDeg: 322.15,
+  argPeriapsisDeg: 128.01,
 };
 
-const ORBIT_PERIOD_SECONDS = 96;
-const ORBIT_STEPS = 540;
-const REFERENCE_ORBIT_RADIUS = 1.4;
-const REFERENCE_ORBIT_STEPS = 240;
-const STAR_COUNT = 140;
+const ORBIT_PERIOD_SECONDS = 30;
+const ORBIT_STEPS = 600;
+const EARTH_ORBIT_RADIUS = 1.0;
+const STAR_COUNT = 150;
 const CANVAS_ASPECT_RATIO = 16 / 9;
-const MIN_CANVAS_HEIGHT_PX = 320;
 
 // --- Math Utilities ---
 
@@ -72,11 +72,12 @@ const clamp = (value: number, min: number, max: number): number =>
   Math.min(max, Math.max(min, value));
 
 const formatNumber = (value: number, digits = 2): string => {
-  const fixed = value.toFixed(digits);
-  return fixed.replace(/\.?0+$/, "");
+  return value.toLocaleString(undefined, {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  });
 };
 
-// Rotation functions using standard matrix transformations for 3D points
 const rotateX = (point: Vec3, angle: number): Vec3 => {
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
@@ -108,93 +109,52 @@ const rotateZ = (point: Vec3, angle: number): Vec3 => {
 };
 
 const applyRotation = (point: Vec3, rotation: Rotation): Vec3 => {
-  // Order of rotation matters: X -> Y -> Z is used here
   let rotated = rotateX(point, rotation.x);
   rotated = rotateY(rotated, rotation.y);
   rotated = rotateZ(rotated, rotation.z);
   return rotated;
 };
 
-// Calculate a point on an orbit given orbital elements and true anomaly
-const orbitPointFromAnomaly = (
-  elements: OrbitElements,
-  anomaly: number,
-): Vec3 => {
-  const { semiMajorAxis, eccentricity } = elements;
-  // Polar equation for an ellipse from the focus
-  const radius =
-    (semiMajorAxis * (1 - eccentricity * eccentricity)) /
-    (1 + eccentricity * Math.cos(anomaly));
+const orbitPointFromAnomaly = (elements: OrbitElements, anomaly: number): Vec3 => {
+  const { perihelion, eccentricity } = elements;
+  const radius = (perihelion * (1 + eccentricity)) / (1 + eccentricity * Math.cos(anomaly));
 
-  // Point in the orbital plane (z=0)
   const basePoint = {
     x: radius * Math.cos(anomaly),
     y: radius * Math.sin(anomaly),
     z: 0,
   };
 
-  // Rotate to the actual orbital plane
   const argPeriapsis = degToRad(elements.argPeriapsisDeg);
   const inclination = degToRad(elements.inclinationDeg);
   const ascendingNode = degToRad(elements.ascendingNodeDeg);
 
-  // Apply orbital rotations in specific order
   let oriented = rotateZ(basePoint, argPeriapsis);
   oriented = rotateX(oriented, inclination);
   oriented = rotateZ(oriented, ascendingNode);
   return oriented;
 };
 
-const createOrbitPoints = (
-  elements: OrbitElements,
-  steps: number,
-): Vec3[] => {
+const createOrbitPoints = (elements: OrbitElements, steps: number): Vec3[] => {
   const points: Vec3[] = [];
+  const maxAnomaly = Math.acos(-1 / elements.eccentricity) * 0.96;
   for (let i = 0; i <= steps; i += 1) {
-    const anomaly = (i / steps) * Math.PI * 2;
+    const anomaly = -maxAnomaly + (i / steps) * 2 * maxAnomaly;
     points.push(orbitPointFromAnomaly(elements, anomaly));
   }
   return points;
 };
 
-const createCirclePoints = (radius: number, steps: number): Vec3[] => {
+const createEarthOrbit = (radius: number, steps: number): Vec3[] => {
   const points: Vec3[] = [];
   for (let i = 0; i <= steps; i += 1) {
     const angle = (i / steps) * Math.PI * 2;
-    points.push({
-      x: radius * Math.cos(angle),
-      y: radius * Math.sin(angle),
-      z: 0,
-    });
+    points.push({ x: radius * Math.cos(angle), y: radius * Math.sin(angle), z: 0 });
   }
   return points;
 };
 
-const createStars = (
-  count: number,
-  width: number,
-  height: number,
-): Star[] => {
-  const stars: Star[] = [];
-  for (let i = 0; i < count; i += 1) {
-    stars.push({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      radius: 0.4 + Math.random() * 1.2,
-      alpha: 0.3 + Math.random() * 0.7,
-      twinkle: 0.4 + Math.random() * 1.6,
-    });
-  }
-  return stars;
-};
-
-// Perspective projection
-const projectPoint = (
-  point: Vec3,
-  viewScale: number,
-  depth: number,
-): ProjectedPoint => {
-  // Simple perspective divide
+const projectPoint = (point: Vec3, viewScale: number, depth: number): ProjectedPoint => {
   const scale = depth / (depth - point.z);
   return {
     x: point.x * scale * viewScale,
@@ -204,257 +164,140 @@ const projectPoint = (
   };
 };
 
-const projectPoints = (
-  points: Vec3[],
-  rotation: Rotation,
-  viewScale: number,
-  depth: number,
-): ProjectedPoint[] =>
-  points.map((point) =>
-    projectPoint(applyRotation(point, rotation), viewScale, depth),
-  );
-
 // --- Components ---
 
 function OrbitCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rotationRef = useRef<Rotation>({ x: -0.6, y: 0.8, z: 0 });
-
-  // Track drag state
   const dragRef = useRef({ active: false, lastX: 0, lastY: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
-    if (!canvas || !container) {
-      return;
-    }
+    if (!canvas || !container) return;
 
     const context = canvas.getContext("2d");
-    if (!context) {
-      return;
-    }
+    if (!context) return;
 
-    // Pre-calculate points
     const orbitPoints = createOrbitPoints(ORBIT_ELEMENTS, ORBIT_STEPS);
-    const referencePoints = createCirclePoints(REFERENCE_ORBIT_RADIUS, REFERENCE_ORBIT_STEPS);
+    const earthPoints = createEarthOrbit(EARTH_ORBIT_RADIUS, 120);
 
-    // View parameters
-    const depth = 20;
-    let stars: Star[] = [];
     let viewScale = 1;
     let width = 0;
     let height = 0;
+    const stars = Array.from({ length: STAR_COUNT }).map(() => ({
+      x: Math.random(),
+      y: Math.random(),
+      radius: 0.2 + Math.random() * 0.8,
+      alpha: 0.2 + Math.random() * 0.8,
+      twinkle: 0.5 + Math.random() * 2,
+    }));
 
     const updateSize = () => {
-      if (!container) return;
       const rect = container.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
       const dpr = window.devicePixelRatio || 1;
-
-      canvas.width = Math.max(1, Math.floor(width * dpr));
-      canvas.height = Math.max(1, Math.floor(height * dpr));
-
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-      viewScale = Math.min(width, height) * 0.3;
-      stars = createStars(STAR_COUNT, width, height);
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      context.scale(dpr, dpr);
+      viewScale = Math.min(width, height) * 0.35;
     };
 
     updateSize();
+    window.addEventListener("resize", updateSize);
 
-    const observer = new ResizeObserver(() => updateSize());
-    observer.observe(container);
-
-    // Event Handlers
-    const handlePointerDown = (event: PointerEvent) => {
-      dragRef.current = {
-        active: true,
-        lastX: event.clientX,
-        lastY: event.clientY,
-      };
-      // Important for tracking drag outside canvas
-      if (canvas.setPointerCapture) {
-        canvas.setPointerCapture(event.pointerId);
-      }
+    const handlePointerDown = (e: PointerEvent) => {
+      dragRef.current = { active: true, lastX: e.clientX, lastY: e.clientY };
+      canvas.setPointerCapture(e.pointerId);
     };
 
-    const handlePointerMove = (event: PointerEvent) => {
-      if (!dragRef.current.active) {
-        return;
-      }
-      const deltaX = event.clientX - dragRef.current.lastX;
-      const deltaY = event.clientY - dragRef.current.lastY;
-
-      dragRef.current.lastX = event.clientX;
-      dragRef.current.lastY = event.clientY;
-
-      rotationRef.current = {
-        x: clamp(rotationRef.current.x + deltaY * 0.004, -1.4, 1.4),
-        y: rotationRef.current.y + deltaX * 0.004,
-        z: rotationRef.current.z,
-      };
+    const handlePointerMove = (e: PointerEvent) => {
+      if (!dragRef.current.active) return;
+      const dx = e.clientX - dragRef.current.lastX;
+      const dy = e.clientY - dragRef.current.lastY;
+      dragRef.current.lastX = e.clientX;
+      dragRef.current.lastY = e.clientY;
+      rotationRef.current.y += dx * 0.005;
+      rotationRef.current.x = clamp(rotationRef.current.x + dy * 0.005, -1.5, 1.5);
     };
 
-    const handlePointerUp = (event: PointerEvent) => {
-      dragRef.current = { ...dragRef.current, active: false };
-      if (canvas.hasPointerCapture && canvas.hasPointerCapture(event.pointerId)) {
-        canvas.releasePointerCapture(event.pointerId);
-      }
+    const handlePointerUp = (e: PointerEvent) => {
+      dragRef.current.active = false;
+      canvas.releasePointerCapture(e.pointerId);
     };
 
     canvas.addEventListener("pointerdown", handlePointerDown);
     canvas.addEventListener("pointermove", handlePointerMove);
     canvas.addEventListener("pointerup", handlePointerUp);
-    canvas.addEventListener("pointerleave", handlePointerUp);
 
+    let animationId: number;
     const startTime = performance.now();
 
-    // Drawing Helper
-    const drawPath = (
-      points: ProjectedPoint[],
-      strokeStyle: string,
-      lineWidth: number,
-      predicate?: (point: ProjectedPoint) => boolean,
-    ) => {
-      context.strokeStyle = strokeStyle;
-      context.lineWidth = lineWidth;
-      context.lineJoin = "round";
-      context.lineCap = "round";
-
-      let started = false;
+    const drawPath = (points: Vec3[], rotation: Rotation, color: string, width: number, dashed = false) => {
       context.beginPath();
+      context.strokeStyle = color;
+      context.lineWidth = width;
+      if (dashed) context.setLineDash([4, 4]);
+      else context.setLineDash([]);
 
-      for (const point of points) {
-        if (predicate && !predicate(point)) {
-          if (started) {
-            context.stroke();
-            context.beginPath();
-            started = false;
-          }
-          continue;
-        }
-
-        const x = width / 2 + point.x;
-        const y = height / 2 + point.y;
-
-        if (!started) {
-          context.moveTo(x, y);
-          started = true;
-        } else {
-          context.lineTo(x, y);
-        }
-      }
-      if (started) {
-        context.stroke();
-      }
+      points.forEach((p, i) => {
+        const rotated = applyRotation(p, rotation);
+        const projected = projectPoint(rotated, viewScale, 20);
+        const x = canvas.width / (2 * (window.devicePixelRatio || 1)) + projected.x;
+        const y = canvas.height / (2 * (window.devicePixelRatio || 1)) + projected.y;
+        if (i === 0) context.moveTo(x, y);
+        else context.lineTo(x, y);
+      });
+      context.stroke();
     };
 
-    let animationId = 0;
+    const render = (time: number) => {
+      const elapsed = (time - startTime) / 1000;
+      context.clearRect(0, 0, width, height);
 
-    const render = () => {
-      const now = performance.now();
-      const elapsed = (now - startTime) / 1000;
-
-      // Auto-rotate if not dragging
-      if (!dragRef.current.active) {
-        rotationRef.current = {
-          x: rotationRef.current.x,
-          y: rotationRef.current.y + 0.0009,
-          z: rotationRef.current.z,
-        };
-      }
-
-      const rotation = rotationRef.current;
-      const orbitPhase = (elapsed / ORBIT_PERIOD_SECONDS) % 1;
-
-      const currentPoint = orbitPointFromAnomaly(
-        ORBIT_ELEMENTS,
-        orbitPhase * Math.PI * 2,
-      );
-
-      // Project all points
-      const orbitProjected = projectPoints(
-        orbitPoints,
-        rotation,
-        viewScale,
-        depth,
-      );
-      const referenceProjected = projectPoints(
-        referencePoints,
-        rotation,
-        viewScale,
-        depth,
-      );
-      const currentProjected = projectPoint(
-        applyRotation(currentPoint, rotation),
-        viewScale,
-        depth,
-      );
-
-      // Clear & Background
-      const gradient = context.createRadialGradient(
-        width * 0.5,
-        height * 0.5,
-        0,
-        width * 0.5,
-        height * 0.5,
-        Math.max(width, height),
-      );
-      gradient.addColorStop(0, "rgba(24, 36, 64, 0.9)");
-      gradient.addColorStop(1, "rgba(2, 6, 23, 1)");
-
-      context.fillStyle = gradient;
+      // Background
+      context.fillStyle = "#020617";
       context.fillRect(0, 0, width, height);
 
-      // Draw Stars
-      for (const star of stars) {
-        const twinkle = 0.6 + 0.4 * Math.sin(elapsed * star.twinkle);
-        context.fillStyle = `rgba(255, 255, 255, ${star.alpha * twinkle})`;
+      // Stars
+      stars.forEach(s => {
+        const t = 0.5 + 0.5 * Math.sin(elapsed * s.twinkle);
+        context.fillStyle = `rgba(255, 255, 255, ${s.alpha * t})`;
         context.beginPath();
-        context.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        context.arc(s.x * width, s.y * height, s.radius, 0, Math.PI * 2);
         context.fill();
-      }
+      });
 
-      // Draw Paths
-      // Reference orbit (faint)
-      drawPath(referenceProjected, "rgba(148, 163, 184, 0.2)", 1);
+      const rotation = rotationRef.current;
+      if (!dragRef.current.active) rotation.y += 0.001;
 
-      // Main orbit (back)
-      drawPath(orbitProjected, "rgba(34, 211, 238, 0.2)", 1.2);
-
-      // Main orbit (front/bright)
-      drawPath(
-        orbitProjected,
-        "rgba(125, 211, 252, 0.75)",
-        1.6,
-        (point) => point.z > 0, // Only draw parts closer to camera
-      );
-
-      // Draw Sun
+      // Sun
+      context.fillStyle = "#fbbf24";
+      context.shadowBlur = 15;
+      context.shadowColor = "#fbbf24";
       context.beginPath();
-      context.fillStyle = "rgba(255, 190, 92, 0.95)";
-      context.shadowColor = "rgba(255, 190, 92, 0.7)";
-      context.shadowBlur = 16;
-      context.arc(width / 2, height / 2, 6, 0, Math.PI * 2);
+      context.arc(width / 2, height / 2, 5, 0, Math.PI * 2);
       context.fill();
       context.shadowBlur = 0;
 
-      // Draw Object
+      // Orbits
+      drawPath(earthPoints, rotation, "rgba(71, 85, 105, 0.3)", 1, true);
+      drawPath(orbitPoints, rotation, "rgba(56, 189, 248, 0.6)", 2);
+
+      // Comet
+      const phase = (elapsed / ORBIT_PERIOD_SECONDS) % 1;
+      const maxAnomaly = Math.acos(-1 / ORBIT_ELEMENTS.eccentricity) * 0.96;
+      const currentAnomaly = -maxAnomaly + phase * 2 * maxAnomaly;
+      const cometPos = orbitPointFromAnomaly(ORBIT_ELEMENTS, currentAnomaly);
+      const rotatedComet = applyRotation(cometPos, rotation);
+      const projectedComet = projectPoint(rotatedComet, viewScale, 20);
+
+      context.fillStyle = "#38bdf8";
       context.beginPath();
-      context.fillStyle = "rgba(56, 189, 248, 0.95)";
-      context.shadowColor = "rgba(56, 189, 248, 0.8)";
-      context.shadowBlur = 12;
-      context.arc(
-        width / 2 + currentProjected.x,
-        height / 2 + currentProjected.y,
-        4.5 * currentProjected.scale,
-        0,
-        Math.PI * 2,
-      );
+      context.arc(width / 2 + projectedComet.x, height / 2 + projectedComet.y, 4 * projectedComet.scale, 0, Math.PI * 2);
       context.fill();
-      context.shadowBlur = 0;
 
       animationId = requestAnimationFrame(render);
     };
@@ -463,122 +306,74 @@ function OrbitCanvas() {
 
     return () => {
       cancelAnimationFrame(animationId);
-      observer.disconnect();
-      canvas.removeEventListener("pointerdown", handlePointerDown);
-      canvas.removeEventListener("pointermove", handlePointerMove);
-      canvas.removeEventListener("pointerup", handlePointerUp);
-      canvas.removeEventListener("pointerleave", handlePointerUp);
+      window.removeEventListener("resize", updateSize);
     };
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="relative overflow-hidden rounded-2xl border border-border bg-slate-950"
-      style={{
-        aspectRatio: `${CANVAS_ASPECT_RATIO}`,
-        minHeight: `${MIN_CANVAS_HEIGHT_PX}px`
-      }}
-    >
-      <canvas
-        ref={canvasRef}
-        className="h-full w-full touch-none"
-        role="img"
-        aria-label="3D orbit of 3I/ATLAS"
-      />
-      <div className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/10 px-3 py-1 text-xs text-white">
-        Drag to rotate the orbit.
-      </div>
+    <div ref={containerRef} className="w-full aspect-video rounded-2xl border border-border overflow-hidden bg-slate-950">
+      <canvas ref={canvasRef} className="w-full h-full touch-none" />
     </div>
   );
 }
 
 export default function Playground() {
-  const [timestamp, setTimestamp] = useState<string>("");
-
-  useEffect(() => {
-    // Client-side only
-    setTimestamp(new Date().toUTCString());
-  }, []);
-
   return (
-    <div className="px-6 md:px-12 py-10 lg:py-16 space-y-8">
-      <header className="space-y-3">
-        <p className="text-sm font-semibold uppercase tracking-[0.28em] text-muted-foreground">
-          Playground
+    <div className="max-w-6xl mx-auto px-6 py-12 space-y-12">
+      <header className="space-y-4">
+        <h1 className="text-4xl font-bold tracking-tight">Interstellar Comet 3I/ATLAS</h1>
+        <p className="text-xl text-muted-foreground max-w-2xl">
+          Visualizing the high-energy hyperbolic trajectory of C/2025 N1 (ATLAS),
+          the third confirmed interstellar object.
         </p>
-        <div className="space-y-2">
-          <h1 className="text-3xl font-semibold text-foreground">
-            3I/ATLAS Orbit
-          </h1>
-          <p className="text-muted-foreground">
-            A lightweight 3D orbit sketch that tracks a simulated current
-            position. Drag to rotate the view.
-          </p>
-        </div>
       </header>
 
       <OrbitCanvas />
 
-      <section className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-xl border border-border bg-card p-4">
-          <h2 className="text-sm font-semibold text-foreground">
-            Orbit elements (illustrative)
-          </h2>
-          <dl className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center justify-between">
-              <dt>Semi-major axis</dt>
-              <dd className="text-foreground">
-                {formatNumber(ORBIT_ELEMENTS.semiMajorAxis, 2)} AU
-              </dd>
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="p-6 rounded-2xl border border-border bg-card space-y-4">
+          <h2 className="text-lg font-semibold">Orbital Elements</h2>
+          <div className="space-y-3 font-mono text-sm text-muted-foreground">
+            <div className="flex justify-between">
+              <span>Perihelion Distance (q)</span>
+              <span className="text-foreground">1.356 AU</span>
             </div>
-            <div className="flex items-center justify-between">
-              <dt>Eccentricity</dt>
-              <dd className="text-foreground">
-                {formatNumber(ORBIT_ELEMENTS.eccentricity, 2)}
-              </dd>
+            <div className="flex justify-between">
+              <span>Eccentricity (e)</span>
+              <span className="text-emerald-500 font-bold">6.139</span>
             </div>
-            <div className="flex items-center justify-between">
-              <dt>Inclination</dt>
-              <dd className="text-foreground">
-                {formatNumber(ORBIT_ELEMENTS.inclinationDeg, 1)} deg
-              </dd>
+            <div className="flex justify-between">
+              <span>Inclination (i)</span>
+              <span className="text-foreground">175.11°</span>
             </div>
-            <div className="flex items-center justify-between">
-              <dt>Ascending node</dt>
-              <dd className="text-foreground">
-                {formatNumber(ORBIT_ELEMENTS.ascendingNodeDeg, 1)} deg
-              </dd>
+            <div className="flex justify-between">
+              <span>Long. of Asc. Node</span>
+              <span className="text-foreground">322.15°</span>
             </div>
-            <div className="flex items-center justify-between">
-              <dt>Argument of periapsis</dt>
-              <dd className="text-foreground">
-                {formatNumber(ORBIT_ELEMENTS.argPeriapsisDeg, 1)} deg
-              </dd>
+            <div className="flex justify-between">
+              <span>Arg. of Periapsis</span>
+              <span className="text-foreground">128.01°</span>
             </div>
-          </dl>
+          </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-4">
-          <h2 className="text-sm font-semibold text-foreground">Status</h2>
-          <dl className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center justify-between">
-              <dt>Scene timestamp (UTC)</dt>
-              <dd className="text-foreground">
-                {timestamp || "Loading..."}
-              </dd>
-            </div>
-            <div className="flex items-center justify-between">
-              <dt>Orbit period (sim)</dt>
-              <dd className="text-foreground">{ORBIT_PERIOD_SECONDS}s</dd>
-            </div>
-            <div className="pt-2 text-xs text-muted-foreground">
-              Swap in live ephemeris data to sync the orbit with real
-              observations.
-            </div>
-          </dl>
+        <div className="p-6 rounded-2xl border border-border bg-card space-y-4">
+          <h2 className="text-lg font-semibold">Discovery & Origin</h2>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            Discovered on July 1, 2025, by the ATLAS survey. Its massive eccentricity
+            confirms it originated from outside our solar system, following an
+            unbound trajectory that will eventually carry it back into deep space.
+          </p>
+          <div className="flex gap-4 pt-2">
+            <span className="inline-flex items-center rounded-full bg-blue-500/10 px-2.5 py-0.5 text-xs font-medium text-blue-500 ring-1 ring-inset ring-blue-500/20">
+              Interstellar
+            </span>
+            <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-500 ring-1 ring-inset ring-emerald-500/20">
+              Hyperbolic
+            </span>
+          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

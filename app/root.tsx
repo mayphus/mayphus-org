@@ -59,7 +59,8 @@ function Document({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const isStudio = location.pathname === "/studio";
   const isLogin = location.pathname === "/login";
-  const isMinimal = isStudio || isLogin;
+  const isPlayground = location.pathname === "/playground";
+  const isMinimal = isStudio || isLogin || isPlayground;
 
   return (
     <html lang="en" className="scroll-smooth">
