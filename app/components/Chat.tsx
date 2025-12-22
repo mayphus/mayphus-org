@@ -48,7 +48,7 @@ export function Chat() {
     };
 
     return (
-        <aside className="hidden md:flex w-full md:w-80 lg:w-96 md:sticky md:top-0 md:h-screen flex-col border-r border-border/40 bg-transparent transition-all duration-300">
+        <aside className="hidden md:flex w-full md:w-64 lg:w-80 md:sticky md:top-0 md:h-screen flex-col border-r border-border/40 bg-transparent transition-all duration-300">
             {/* Message Area */}
             <div
                 ref={scrollRef}
