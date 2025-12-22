@@ -61,9 +61,28 @@ const components = {
     p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
         <p className="leading-7 [&:not(:first-child)]:mt-6" {...props} />
     ),
-    a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-        <a className="font-medium text-primary underline underline-offset-4" {...props} />
-    ),
+    a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+        const href = props.href;
+
+        if (href && (href.startsWith("file:") || href.startsWith("file://"))) {
+            // Remove file: or file:// prefix
+            const cleanPath = href.replace(/^file:(?:\/\/)?/, "");
+
+            // Remove .org extension if present
+            const slugPath = cleanPath.replace(/\.org$/, "");
+
+            return (
+                <Link
+                    to={`/content/${slugPath}`}
+                    className="font-medium text-primary underline underline-offset-4"
+                >
+                    {props.children}
+                </Link>
+            );
+        }
+
+        return <a className="font-medium text-primary underline underline-offset-4" {...props} />;
+    },
     blockquote: (props: React.BlockquoteHTMLAttributes<HTMLQuoteElement>) => (
         <blockquote className="mt-6 border-l-2 pl-6 italic" {...props} />
     ),
