@@ -1,8 +1,8 @@
 export function Footer() {
   return (
-    <footer className="border-t">
-      <div className="container max-w-3xl py-6 text-sm text-muted-foreground">
-        <p>Mayphus</p>
+    <footer className="border-t border-border/40">
+      <div className="container max-w-5xl px-4 md:px-8 py-8 flex items-center justify-between text-sm text-muted-foreground">
+        <p>© 2025 Mayphus. All rights reserved.</p>
       </div>
     </footer>
   );

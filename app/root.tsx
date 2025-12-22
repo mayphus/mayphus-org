@@ -11,6 +11,13 @@ import React from "react";
 import type { LinksFunction } from "@remix-run/cloudflare";
 import globalStylesUrl from "./styles/global.css?url";
 import { Footer } from "./components/Footer";
+import { SiteHeader } from "./components/SiteHeader";
+
+// Font imports
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/ubuntu-mono/400.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: globalStylesUrl },
@@ -46,7 +53,7 @@ function ThemeScript() {
 
 function Document({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -54,9 +61,10 @@ function Document({ children }: { children: React.ReactNode }) {
         <Links />
         <ThemeScript />
       </head>
-      <body className="min-h-screen bg-background text-foreground antialiased">
-        <div className="flex min-h-screen flex-col">
-          <main className="container max-w-3xl flex-1 py-10">
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary">
+        <div className="relative flex min-h-screen flex-col bg-background">
+          <SiteHeader />
+          <main className="flex-1">
             {children}
           </main>
           <Footer />
@@ -88,18 +96,18 @@ export function ErrorBoundary() {
         <Links />
         <ThemeScript />
       </head>
-      <body className="min-h-screen bg-background text-foreground antialiased">
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         <div className="container max-w-3xl py-10">
           {isRouteErrorResponse(error) ? (
             <>
-              <h1>{error.status}</h1>
-              <p>{error.statusText}</p>
+              <h1 className="text-4xl font-bold">{error.status}</h1>
+              <p className="text-xl text-muted-foreground">{error.statusText}</p>
             </>
           ) : (
             <>
-              <h1>Error</h1>
-              <p>Something went wrong</p>
-              <pre>
+              <h1 className="text-4xl font-bold">Error</h1>
+              <p className="text-xl text-muted-foreground">Something went wrong</p>
+              <pre className="mt-4 overflow-auto rounded bg-muted p-4 font-mono text-sm">
                 {error instanceof Error ? error.stack : String(error)}
               </pre>
             </>
