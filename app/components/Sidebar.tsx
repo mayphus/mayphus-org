@@ -1,5 +1,4 @@
 import { Link, useLocation } from "@remix-run/react";
-import { useState, useEffect } from "react";
 import { cn } from "~/lib/utils";
 import { Github, Twitter, Mail } from "lucide-react";
 

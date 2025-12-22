@@ -1,6 +1,5 @@
 import { json, type MetaFunction } from "@remix-run/cloudflare";
 import { Link, useLoaderData } from "@remix-run/react";
-import { ArrowRight, Sparkles } from "lucide-react";
 import { getPosts } from "~/models/content.server";
 
 export const meta: MetaFunction = () => {
