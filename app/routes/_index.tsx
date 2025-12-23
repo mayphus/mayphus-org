@@ -1,6 +1,8 @@
 import { json, type MetaFunction } from "@remix-run/cloudflare";
 import { Link, useLoaderData } from "@remix-run/react";
 import { getPosts } from "~/models/content.server";
+import { Card, CardHeader, CardTitle, CardDescription } from "~/components/ui/card";
+import { Badge } from "~/components/ui/badge";
 
 export const meta: MetaFunction = () => {
   return [
@@ -30,29 +32,31 @@ export default function Index() {
             <Link
               key={post.slug}
               to={`/content/${post.slug}`}
-              className="group relative flex flex-col justify-between rounded-xl border border-border/50 bg-card p-5 transition-all hover:bg-muted/30 hover:border-border overflow-hidden"
+              className="group"
             >
-              <div className="space-y-2">
-                <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wider text-muted-foreground">
-                  {post.tags && post.tags.length > 0 ? (
-                    post.tags.map((tag: string) => (
-                      <span key={tag} className="inline-flex items-center rounded bg-secondary/40 px-1.5 py-0.5 font-semibold">
-                        {tag}
-                      </span>
-                    ))
-                  ) : (
-                    <div className="h-4" />
+              <Card className="h-full transition-all hover:bg-muted/30 hover:border-border overflow-hidden border-border/50">
+                <CardHeader className="p-5 space-y-3">
+                  <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {post.tags && post.tags.length > 0 ? (
+                      post.tags.map((tag: string) => (
+                        <Badge key={tag} variant="secondary" className="rounded-sm px-1 font-semibold text-[10px] uppercase tracking-wider">
+                          {tag}
+                        </Badge>
+                      ))
+                    ) : (
+                      <div className="h-4" />
+                    )}
+                  </div>
+                  <CardTitle className="text-lg font-bold tracking-tight group-hover:text-primary transition-colors leading-snug">
+                    {post.title}
+                  </CardTitle>
+                  {post.description && (
+                    <CardDescription className="text-muted-foreground/80 text-xs line-clamp-2 leading-relaxed">
+                      {post.description}
+                    </CardDescription>
                   )}
-                </div>
-                <h3 className="text-lg font-bold tracking-tight group-hover:text-primary transition-colors leading-snug">
-                  {post.title}
-                </h3>
-                {post.description && (
-                  <p className="text-muted-foreground/80 text-xs line-clamp-2 leading-relaxed">
-                    {post.description}
-                  </p>
-                )}
-              </div>
+                </CardHeader>
+              </Card>
             </Link>
           ))}
         </div>
