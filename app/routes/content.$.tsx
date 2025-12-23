@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { cn } from "~/lib/utils";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
+import { Skeleton } from "~/components/ui/skeleton";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
     if (!data || !data.postMetadata) {
@@ -174,7 +175,17 @@ function PostContent({ slug }: { slug: string }) {
     }, [slug]);
 
     if (!Component) {
-        return <div className="mt-8 text-muted-foreground">Loading...</div>;
+        return (
+            <div className="mt-8 space-y-4">
+                <Skeleton className="h-10 w-[80%]" />
+                <Skeleton className="h-4 w-[60%]" />
+                <div className="space-y-2 pt-4">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-[90%]" />
+                </div>
+            </div>
+        );
     }
 
     return <Component components={components} />;

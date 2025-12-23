@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "@remix-run/react";
 import { cn } from "~/lib/utils";
 import { ScrollArea } from "./ui/scroll-area";
+import { Separator } from "./ui/separator";
 
 export function TableOfContents() {
     const location = useLocation();
@@ -44,10 +45,16 @@ export function TableOfContents() {
     useEffect(() => {
         if (toc.length === 0) return;
 
+        const handleScroll = () => {
+            if (window.scrollY < 100) {
+                setActiveId("");
+            }
+        };
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
+                    if (entry.isIntersecting && window.scrollY > 100) {
                         setActiveId(entry.target.id);
                     }
                 });
@@ -58,30 +65,34 @@ export function TableOfContents() {
             }
         );
 
+        window.addEventListener("scroll", handleScroll);
         const headingElements = toc.map(item => document.getElementById(item.id)).filter(Boolean);
         headingElements.forEach(el => observer.observe(el!));
 
-        return () => observer.disconnect();
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("scroll", handleScroll);
+        };
     }, [toc]);
 
     if (toc.length === 0) return null;
 
     return (
-        <aside className="hidden xl:block w-64 lg:w-72 shrink-0 md:sticky md:top-0 md:h-screen border-l border-border/40 bg-background/50 backdrop-blur-sm">
-            <ScrollArea className="h-full px-8 py-8 md:py-16">
+        <aside className="hidden xl:block w-64 lg:w-72 shrink-0 md:sticky md:top-0 md:h-screen transition-all duration-300">
+            <ScrollArea className="h-full px-4 py-8 md:py-16">
                 <nav className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
-                    <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Table of Contents</h3>
-                    <div className="flex flex-col gap-2">
+                    <h3 className="sticky top-0 h-6 bg-background/50 text-[0.8rem] font-medium text-muted-foreground">On This Page</h3>
+                    <div className="flex flex-col gap-2 pt-2">
                         {toc.map((item) => (
                             <a
                                 key={item.id}
                                 href={`#${item.id}`}
                                 className={cn(
-                                    "text-sm transition-all duration-200 hover:text-primary",
-                                    item.level === 3 ? "pl-4 text-xs" : "font-medium",
+                                    "text-[0.8rem] transition-colors duration-200",
+                                    item.level === 3 ? "pl-4" : "",
                                     activeId === item.id
-                                        ? "text-primary translate-x-1"
-                                        : "text-muted-foreground"
+                                        ? "text-foreground font-medium"
+                                        : "text-muted-foreground hover:text-foreground"
                                 )}
                                 onClick={(e) => {
                                     e.preventDefault();
