@@ -18,7 +18,7 @@ export default function Admin() {
     const { user } = useLoaderData<typeof loader>();
 
     return (
-        <div className="container mx-auto p-8">
+        <div className="container mx-auto p-5 md:p-8">
             <div className="flex items-center justify-between">
                 <h1 className="text-3xl font-bold">Studio</h1>
                 <Form method="post" action="/logout">

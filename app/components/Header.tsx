@@ -13,7 +13,7 @@ export function Header() {
   if (location.pathname !== "/") return null;
 
   return (
-    <header className="flex md:hidden w-full flex-col border-b border-border/40 bg-background/50 backdrop-blur-sm px-6 py-6 gap-6">
+    <header className="flex md:hidden w-full flex-col border-b border-border/40 bg-background/50 backdrop-blur-sm px-5 py-5 gap-6">
       <div className="flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
           <img src="/favicon.svg" alt="Logo" className="h-8 w-8" />

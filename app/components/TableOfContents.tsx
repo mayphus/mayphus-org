@@ -79,7 +79,7 @@ export function TableOfContents() {
 
     return (
         <aside className="hidden xl:block w-64 lg:w-72 shrink-0 md:sticky md:top-0 md:h-screen transition-all duration-300">
-            <ScrollArea className="h-full px-4 py-8 md:py-16">
+            <ScrollArea className="h-full px-4 py-8 md:py-12">
                 <nav className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-500">
                     <h3 className="sticky top-0 h-6 bg-background/50 text-[0.8rem] font-medium text-muted-foreground">On This Page</h3>
                     <div className="flex flex-col gap-2 pt-2">

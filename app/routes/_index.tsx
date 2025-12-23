@@ -23,7 +23,7 @@ export default function Index() {
   return (
     <div className="flex flex-col gap-12 pb-12">
       {/* Writing Section */}
-      <section id="writing" className="px-6 md:px-12 py-8 md:py-16">
+      <section id="writing" className="px-5 md:px-8 py-8 md:py-12">
         <div className="flex items-center pb-4 mb-8">
           <h2 className="text-3xl font-bold tracking-tight">Writing</h2>
         </div>

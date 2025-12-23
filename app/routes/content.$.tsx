@@ -130,8 +130,8 @@ export default function BlogPost() {
     const { postMetadata } = useLoaderData<typeof loader>();
 
     return (
-        <div className="px-6 md:px-12 py-8 md:py-16">
-            <article className="mx-auto">
+        <div className="px-5 md:px-8 py-8 md:py-12">
+            <article className="mx-auto max-w-3xl">
                 <div className="space-y-4">
                     <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
                         <Link to="/" className="hover:opacity-80 transition-opacity">

@@ -72,15 +72,13 @@ function Document({ children }: { children: React.ReactNode }) {
         <ThemeScript />
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-primary/20 selection:text-primary">
-        <div className="mx-auto max-w-[1600px]">
+        <div className="mx-auto max-w-[1400px]">
           <div className="flex min-h-screen flex-col md:flex-row">
             {!isMinimal && <Header />}
             {isStudio && <Chat />}
             {!isMinimal && <Sidebar />}
             <main className="flex-1 min-w-0">
-              <div className="w-full h-full">
-                {children}
-              </div>
+              {children}
             </main>
             {!isMinimal && <TableOfContents />}
           </div>
