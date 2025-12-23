@@ -5,11 +5,25 @@ import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 
 export async function loader({ request, context }: LoaderFunctionArgs) {
-    const env = (context as any).env;
-    const authenticator = getAuthenticator(env);
-    return await authenticator.isAuthenticated(request, {
-        successRedirect: "/studio",
-    });
+    // In Cloudflare Pages, env is in context.env. In local dev, it might be in process.env or context.env depending on setup.
+    // We add a fallback to empty object to prevent crashes if context is unexpected.
+    const env = (context as any).env || process.env || {};
+
+    // Ensure SESSION_SECRET exists to avoid authenticator crash
+    if (!env.SESSION_SECRET) {
+        // For local development safety if .env isn't picked up
+        env.SESSION_SECRET = "dev-secret-fallback";
+    }
+
+    try {
+        const authenticator = getAuthenticator(env);
+        return await authenticator.isAuthenticated(request, {
+            successRedirect: "/studio",
+        });
+    } catch (error) {
+        console.error("Auth error:", error);
+        return null;
+    }
 }
 
 export default function Login() {

@@ -7,6 +7,12 @@
     "directory": "./build/client",
     "not_found_handling": "404-page"
   },
+  "vars": {
+    "SESSION_SECRET": "local-dev-session-secret",
+    "GITHUB_CLIENT_ID": "local-github-client-id",
+    "GITHUB_CLIENT_SECRET": "local-github-client-secret",
+    "GITHUB_CALLBACK_URL": "http://localhost:5173/auth/github/callback"
+  },
   "routes": [
     {
       "pattern": "mayphus.org",
