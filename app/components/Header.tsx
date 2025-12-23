@@ -35,7 +35,6 @@ export function Header() {
           ))}
         </nav>
       </div>
-      <Separator />
       <div className="space-y-2">
         <p className="text-sm text-foreground/80 leading-relaxed">
           Welcome to my digital garden. I write about full-stack engineering,
