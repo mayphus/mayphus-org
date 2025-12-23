@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@remix-run/react";
 import { cn } from "~/lib/utils";
-import { Separator } from "./ui/separator";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export function Header() {
   const location = useLocation();
@@ -16,8 +16,11 @@ export function Header() {
     <header className="flex md:hidden w-full flex-col border-b border-border/40 bg-background/50 backdrop-blur-sm px-5 py-5 gap-6">
       <div className="flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-          <img src="/favicon.svg" alt="Logo" className="h-8 w-8" />
-          <span className="font-bold text-xl tracking-tight">Mayphus</span>
+          <Avatar className="h-8 w-8 border border-border">
+            <AvatarImage src="/favicon.svg" alt="Mayphus" />
+            <AvatarFallback>MY</AvatarFallback>
+          </Avatar>
+          <span className="font-bold text-lg tracking-tight">Mayphus</span>
         </Link>
 
         <nav className="flex items-center gap-4 text-sm font-medium">
@@ -26,8 +29,8 @@ export function Header() {
               key={item.path}
               to={item.path}
               className={cn(
-                "transition-colors hover:text-primary",
-                location.pathname === item.path ? "text-primary" : "text-muted-foreground"
+                "transition-colors text-sm",
+                location.pathname === item.path ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"
               )}
             >
               {item.name}
