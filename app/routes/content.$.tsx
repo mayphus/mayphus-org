@@ -130,7 +130,7 @@ export default function BlogPost() {
     const { postMetadata } = useLoaderData<typeof loader>();
 
     return (
-        <div className="px-5 md:px-8 py-8 md:py-12">
+        <div className="p-5">
             <article className="mx-auto max-w-3xl">
                 <div className="space-y-4">
                     <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">

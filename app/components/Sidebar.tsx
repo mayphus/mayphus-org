@@ -16,7 +16,7 @@ export function Sidebar() {
     return (
         <aside className="hidden md:flex w-full md:w-64 lg:w-80 md:sticky md:top-0 md:h-screen bg-background/50 backdrop-blur-sm">
             <ScrollArea className="h-full w-full">
-                <div className="flex flex-col h-full px-6 py-8 md:py-12 gap-10">
+                <div className="flex flex-col h-full p-5 gap-8">
                     {/* Brand/Profile */}
                     <div className="flex flex-col gap-6">
                         <Link to="/" className="group flex items-center gap-4 transition-all">

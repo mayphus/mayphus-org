@@ -52,7 +52,7 @@ export function Chat() {
     return (
         <aside className="hidden md:flex w-full md:w-64 lg:w-80 md:sticky md:top-0 md:h-screen flex-col border-r border-border/40 bg-transparent transition-all duration-300">
             {/* Message Area */}
-            <ScrollArea className="flex-1 p-6 h-[calc(100vh-100px)]">
+            <ScrollArea className="flex-1 p-5 h-[calc(100vh-100px)]">
                 <div className="space-y-6">
                     {messages.map((m, i) => (
                         <div
@@ -88,7 +88,7 @@ export function Chat() {
             </ScrollArea>
 
             {/* Input Area */}
-            <div className="p-6">
+            <div className="p-5">
                 <form
                     onSubmit={handleSubmit}
                     className="flex items-center gap-2"
