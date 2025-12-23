@@ -1,5 +1,6 @@
 import { Link, useLocation } from "@remix-run/react";
 import { cn } from "~/lib/utils";
+import { Separator } from "./ui/separator";
 
 export function Header() {
   const location = useLocation();
@@ -34,7 +35,7 @@ export function Header() {
           ))}
         </nav>
       </div>
-
+      <Separator />
       <div className="space-y-2">
         <p className="text-sm text-foreground/80 leading-relaxed">
           Welcome to my digital garden. I write about full-stack engineering,

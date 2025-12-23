@@ -2,6 +2,9 @@ import type { MetaFunction } from "@remix-run/cloudflare";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "~/lib/utils";
 import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Badge } from "~/components/ui/badge";
+import { Separator } from "~/components/ui/separator";
 
 export const meta: MetaFunction = () => [
   { title: "Playground - Interstellar Comet 3I/ATLAS" },
@@ -331,9 +334,11 @@ export default function Playground() {
       <OrbitCanvas />
 
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="p-6 rounded-2xl border border-border bg-card space-y-4">
-          <h2 className="text-lg font-semibold">Orbital Elements</h2>
-          <div className="space-y-3 font-mono text-sm text-muted-foreground">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Orbital Elements</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 font-mono text-sm text-muted-foreground">
             <div className="flex justify-between">
               <span>Perihelion Distance (q)</span>
               <span className="text-foreground">1.356 AU</span>
@@ -354,25 +359,29 @@ export default function Playground() {
               <span>Arg. of Periapsis</span>
               <span className="text-foreground">128.01°</span>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
-        <div className="p-6 rounded-2xl border border-border bg-card space-y-4">
-          <h2 className="text-lg font-semibold">Discovery & Origin</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Discovered on July 1, 2025, by the ATLAS survey. Its massive eccentricity
-            confirms it originated from outside our solar system, following an
-            unbound trajectory that will eventually carry it back into deep space.
-          </p>
-          <div className="flex gap-4 pt-2">
-            <span className="inline-flex items-center rounded-full bg-blue-500/10 px-2.5 py-0.5 text-xs font-medium text-blue-500 ring-1 ring-inset ring-blue-500/20">
-              Interstellar
-            </span>
-            <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-500 ring-1 ring-inset ring-emerald-500/20">
-              Hyperbolic
-            </span>
-          </div>
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Discovery & Origin</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Discovered on July 1, 2025, by the ATLAS survey. Its massive eccentricity
+              confirms it originated from outside our solar system, following an
+              unbound trajectory that will eventually carry it back into deep space.
+            </p>
+            <div className="flex gap-4 pt-2">
+              <Badge variant="outline" className="bg-blue-500/10 text-blue-500 border-blue-500/20">
+                Interstellar
+              </Badge>
+              <Badge variant="outline" className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
+                Hyperbolic
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Link, useLocation } from "@remix-run/react";
 import { cn } from "~/lib/utils";
 import { Github, Twitter, Mail } from "lucide-react";
+import { Separator } from "./ui/separator";
 
 export function Sidebar() {
     const location = useLocation();
@@ -37,6 +38,7 @@ export function Sidebar() {
                     </div>
                 </div>
 
+                <Separator />
                 {/* Introduction (About) */}
                 <div className="space-y-4">
                     <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">About</h3>
@@ -46,7 +48,8 @@ export function Sidebar() {
                     </p>
                 </div>
 
-                {/* Navigation */}
+                <Separator />
+                {/* Navigation status */}
                 <div className="space-y-8">
                     <nav className="space-y-4">
                         <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Navigation</h3>

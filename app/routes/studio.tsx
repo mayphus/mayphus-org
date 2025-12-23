@@ -2,6 +2,8 @@ import { json, type LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { Form, useLoaderData } from "@remix-run/react";
 import { getAuthenticator } from "~/services/auth.server";
 import { Button } from "~/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 
 export async function loader({ request, context }: LoaderFunctionArgs) {
     const env = (context as any).env;
@@ -27,18 +29,23 @@ export default function Admin() {
             </div>
 
             <div className="mt-8">
-                <div className="rounded-lg border p-6">
-                    <h2 className="text-xl font-semibold mb-4">Welcome back, {user.name}!</h2>
-                    <div className="flex items-center gap-4">
-                        {user.avatarUrl && (
-                            <img src={user.avatarUrl} alt={user.name} className="w-16 h-16 rounded-full" />
-                        )}
-                        <div>
-                            <p className="text-muted-foreground">{user.email}</p>
-                            <p className="text-xs text-muted-foreground font-mono mt-1">ID: {user.id}</p>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-xl font-semibold">Welcome back, {user.name}!</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex items-center gap-4">
+                            <Avatar className="w-16 h-16">
+                                {user.avatarUrl && <AvatarImage src={user.avatarUrl} alt={user.name} />}
+                                <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <p className="text-muted-foreground">{user.email}</p>
+                                <p className="text-xs text-muted-foreground font-mono mt-1">ID: {user.id}</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </CardContent>
+                </Card>
             </div>
         </div>
     );

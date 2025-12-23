@@ -3,6 +3,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { getPosts } from "~/models/content.server";
 import { Card, CardHeader, CardTitle, CardDescription } from "~/components/ui/card";
 import { Badge } from "~/components/ui/badge";
+import { Separator } from "~/components/ui/separator";
 
 export const meta: MetaFunction = () => {
   return [
@@ -23,9 +24,10 @@ export default function Index() {
     <div className="flex flex-col gap-12 pb-12">
       {/* Writing Section */}
       <section id="writing" className="px-6 md:px-12 py-8 md:py-16">
-        <div className="flex items-center border-b border-border/40 pb-4 mb-8">
+        <div className="flex items-center pb-4 mb-8">
           <h2 className="text-3xl font-bold tracking-tight">Writing</h2>
         </div>
+        <Separator className="mb-8" />
 
         <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (

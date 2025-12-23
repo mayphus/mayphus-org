@@ -3,6 +3,8 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { getPost } from "~/models/content.server";
 import React, { useState, useEffect } from "react";
 import { cn } from "~/lib/utils";
+import { Badge } from "~/components/ui/badge";
+import { Separator } from "~/components/ui/separator";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
     if (!data || !data.postMetadata) {
@@ -49,7 +51,12 @@ const components = {
     ),
     h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
         const id = generateId(props.children);
-        return <h2 id={id} className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0" {...props} />;
+        return (
+            <div className="mt-10 mb-2">
+                <h2 id={id} className="scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0" {...props} />
+                <Separator className="mt-2" />
+            </div>
+        );
     },
     h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => {
         const id = generateId(props.children);
@@ -137,9 +144,9 @@ export default function BlogPost() {
                             day: "numeric",
                         })}</time>
                         {postMetadata.tags?.map(tag => (
-                            <span key={tag} className="rounded-md bg-secondary px-2 py-1 text-xs text-secondary-foreground">
+                            <Badge key={tag} variant="secondary">
                                 {tag}
-                            </span>
+                            </Badge>
                         ))}
                     </div>
                 </div>

@@ -3,6 +3,8 @@ import { useFetcher } from "@remix-run/react";
 import { Send } from "lucide-react";
 import { cn } from "~/lib/utils";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { ScrollArea } from "./ui/scroll-area";
 
 interface Message {
     role: "user" | "assistant";
@@ -50,41 +52,40 @@ export function Chat() {
     return (
         <aside className="hidden md:flex w-full md:w-64 lg:w-80 md:sticky md:top-0 md:h-screen flex-col border-r border-border/40 bg-transparent transition-all duration-300">
             {/* Message Area */}
-            <div
-                ref={scrollRef}
-                className="flex-1 overflow-y-auto p-8 space-y-6 scrollbar-hide"
-            >
-                {messages.map((m, i) => (
-                    <div
-                        key={i}
-                        className={cn(
-                            "group flex flex-col gap-2 max-w-[90%]",
-                            m.role === "user" ? "ml-auto items-end" : "mr-auto items-start"
-                        )}
-                    >
-
+            <ScrollArea className="flex-1 p-8 h-[calc(100vh-100px)]">
+                <div className="space-y-6">
+                    {messages.map((m, i) => (
                         <div
+                            key={i}
                             className={cn(
-                                "px-4 py-2.5 text-sm transition-all",
-                                m.role === "user"
-                                    ? "bg-primary text-primary-foreground rounded-2xl rounded-tr-none"
-                                    : "bg-muted text-foreground rounded-2xl rounded-tl-none"
+                                "group flex flex-col gap-2 max-w-[90%]",
+                                m.role === "user" ? "ml-auto items-end" : "mr-auto items-start"
                             )}
                         >
-                            {m.content}
-                        </div>
-                    </div>
-                ))}
 
-                {isLoading && (
-                    <div className="flex flex-col gap-2 mr-auto items-start">
-
-                        <div className="bg-muted text-foreground rounded-2xl rounded-tl-none px-4 py-2.5 text-sm animate-pulse">
-                            ...
+                            <div
+                                className={cn(
+                                    "px-4 py-2.5 text-sm transition-all",
+                                    m.role === "user"
+                                        ? "bg-primary text-primary-foreground rounded-2xl rounded-tr-none"
+                                        : "bg-muted text-foreground rounded-2xl rounded-tl-none"
+                                )}
+                            >
+                                {m.content}
+                            </div>
                         </div>
-                    </div>
-                )}
-            </div>
+                    ))}
+
+                    {isLoading && (
+                        <div className="flex flex-col gap-2 mr-auto items-start">
+
+                            <div className="bg-muted text-foreground rounded-2xl rounded-tl-none px-4 py-2.5 text-sm animate-pulse">
+                                ...
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </ScrollArea>
 
             {/* Input Area */}
             <div className="p-6">
@@ -92,12 +93,12 @@ export function Chat() {
                     onSubmit={handleSubmit}
                     className="flex items-center gap-2"
                 >
-                    <input
+                    <Input
                         type="text"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder="Type a message..."
-                        className="flex-1 bg-muted rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary/40 transition-all border border-border/50"
+                        className="flex-1"
                         disabled={isLoading}
                     />
                     <Button
